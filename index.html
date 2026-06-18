@@ -426,7 +426,7 @@
         </div>
         <div class="portfolio-info"><h4>Listing_Name_9</h4><p>Listing_Description_9</p></div>
       </div>
-      
+
       <div class="portfolio-card" onclick="openLightbox('Amazon Listing/Listing_10.jpg', 'Listing_Name_10')">
         <div class="portfolio-thumb">
           <img src="Amazon Listing/LT10.jpg" alt="Listing 10" />
@@ -698,6 +698,243 @@
 </div>
 
 <script>
+  /* ══════════════════════════════════════════
+     PHOTOSHOP-STYLE ORANGE CURSOR
+  ══════════════════════════════════════════ */
+  const cursorCanvas = document.createElement('canvas');
+  cursorCanvas.width = 32; cursorCanvas.height = 32;
+  Object.assign(cursorCanvas.style, {
+    position: 'fixed', top: '0', left: '0', pointerEvents: 'none',
+    zIndex: '999999', willChange: 'transform'
+  });
+  document.body.appendChild(cursorCanvas);
+  const cc = cursorCanvas.getContext('2d');
+
+  function drawPSCursor(pressing) {
+    cc.clearRect(0, 0, 32, 32);
+    const s = pressing ? 0.88 : 1;
+    cc.save();
+    cc.translate(1, 1);
+    cc.scale(s, s);
+
+    // Shadow / outline
+    cc.shadowColor = 'rgba(0,0,0,0.7)';
+    cc.shadowBlur  = 3;
+    cc.shadowOffsetX = 1; cc.shadowOffsetY = 1;
+
+    // Classic PS arrow: origin at top-left tip
+    cc.beginPath();
+    cc.moveTo(0, 0);
+    cc.lineTo(0, 20);
+    cc.lineTo(4, 16);
+    cc.lineTo(7, 22);
+    cc.lineTo(9.5, 21);
+    cc.lineTo(6.5, 15);
+    cc.lineTo(11, 15);
+    cc.closePath();
+
+    // Orange fill with inner gradient
+    const grad = cc.createLinearGradient(0, 0, 11, 22);
+    grad.addColorStop(0,   '#ffb347');
+    grad.addColorStop(0.4, '#f39c12');
+    grad.addColorStop(1,   '#d35400');
+    cc.fillStyle = grad;
+    cc.fill();
+
+    // White crisp outline
+    cc.shadowColor = 'transparent';
+    cc.strokeStyle = '#ffffff';
+    cc.lineWidth   = 1.2;
+    cc.stroke();
+
+    cc.restore();
+  }
+
+  drawPSCursor(false);
+  document.body.style.cursor = 'none';
+
+  /* force none on hover states too */
+  const styleTag = document.createElement('style');
+  styleTag.textContent = '*, *:hover { cursor: none !important; }';
+  document.head.appendChild(styleTag);
+
+  /* ══════════════════════════════════════════
+     STORM LIGHTNING TRAIL
+  ══════════════════════════════════════════ */
+  const lightning = document.createElement('canvas');
+  lightning.id = 'lightning-canvas';
+  Object.assign(lightning.style, {
+    position: 'fixed', inset: '0', pointerEvents: 'none',
+    zIndex: '999997', width: '100%', height: '100%'
+  });
+  document.body.appendChild(lightning);
+
+  function resizeLightning() {
+    lightning.width  = window.innerWidth;
+    lightning.height = window.innerHeight;
+  }
+  resizeLightning();
+  window.addEventListener('resize', resizeLightning);
+
+  const lc = lightning.getContext('2d');
+
+  /* Trail: ring buffer of recent cursor positions */
+  const TRAIL_LEN = 28;
+  const trail = [];
+  let mouseX = -999, mouseY = -999;
+  let clicking = false;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX; mouseY = e.clientY;
+    cursorCanvas.style.transform = `translate(${mouseX}px,${mouseY}px)`;
+    trail.push({ x: mouseX, y: mouseY, t: Date.now() });
+    if (trail.length > TRAIL_LEN) trail.shift();
+  });
+  document.addEventListener('mousedown', e => { clicking = true;  drawPSCursor(true);  spawnClickBurst(e.clientX, e.clientY); });
+  document.addEventListener('mouseup',   ()  => { clicking = false; drawPSCursor(false); });
+
+  /* ── Storm bolt generator ── */
+  function jaggedPath(x1, y1, x2, y2, roughness, depth) {
+    if (depth === 0) return [[x1, y1], [x2, y2]];
+    const mx = (x1 + x2) / 2 + (Math.random() - 0.5) * roughness;
+    const my = (y1 + y2) / 2 + (Math.random() - 0.5) * roughness;
+    return [
+      ...jaggedPath(x1, y1, mx, my, roughness * 0.55, depth - 1),
+      ...jaggedPath(mx, my, x2, y2, roughness * 0.55, depth - 1).slice(1)
+    ];
+  }
+
+  /* Active storm bolts */
+  const stormBolts = [];
+
+  function spawnTrailBolt() {
+    if (trail.length < 6) return;
+    const now = Date.now();
+
+    // Pick a segment along the recent trail
+    const base  = Math.max(0, trail.length - 14);
+    const idx   = base + Math.floor(Math.random() * (trail.length - base - 1));
+    if (idx >= trail.length - 1) return;
+
+    const p1 = trail[idx];
+    const p2 = trail[idx + 1];
+
+    // Main bolt along cursor path + jagged offshoot
+    const dx = p2.x - p1.x, dy = p2.y - p1.y;
+    const len = Math.sqrt(dx * dx + dy * dy) || 1;
+
+    // Perpendicular offset for branches
+    const px = -dy / len, py = dx / len;
+    const branchLen = 18 + Math.random() * 40;
+    const branchDir = Math.random() < 0.5 ? 1 : -1;
+
+    const ex = p1.x + px * branchLen * branchDir + (Math.random() - 0.5) * 20;
+    const ey = p1.y + py * branchLen * branchDir + (Math.random() - 0.5) * 20;
+
+    const rough = 14 + Math.random() * 20;
+    const pts   = jaggedPath(p1.x, p1.y, ex, ey, rough, 3);
+
+    stormBolts.push({
+      pts,
+      born:    now,
+      life:    80 + Math.random() * 120,
+      width:   0.8 + Math.random() * 1.4,
+      branch:  Math.random() < 0.4   // spawn sub-branch?
+    });
+
+    // Occasionally spawn a longer dramatic bolt along the trail
+    if (Math.random() < 0.25 && trail.length > 10) {
+      const i0 = Math.max(0, trail.length - 10);
+      const tStart = trail[i0];
+      const tEnd   = trail[trail.length - 1];
+      const pts2   = jaggedPath(tStart.x, tStart.y, tEnd.x, tEnd.y, 22, 4);
+      stormBolts.push({ pts: pts2, born: now, life: 160 + Math.random() * 80, width: 1.5, branch: false });
+    }
+  }
+
+  function spawnClickBurst(cx, cy) {
+    for (let i = 0; i < 8; i++) {
+      const angle = (i / 8) * Math.PI * 2;
+      const r     = 30 + Math.random() * 60;
+      const ex    = cx + Math.cos(angle) * r;
+      const ey    = cy + Math.sin(angle) * r;
+      const pts   = jaggedPath(cx, cy, ex, ey, 18, 4);
+      stormBolts.push({ pts, born: Date.now(), life: 200 + Math.random() * 150, width: 1.8, branch: true });
+    }
+  }
+
+  /* ── Render loop ── */
+  let lastBoltSpawn = 0;
+
+  function render() {
+    lc.clearRect(0, 0, lightning.width, lightning.height);
+    const now = Date.now();
+
+    // Spawn new trail bolts
+    if (now - lastBoltSpawn > 30 && trail.length > 4) {
+      spawnTrailBolt();
+      if (clicking) spawnTrailBolt();
+      lastBoltSpawn = now;
+    }
+
+    // Draw all active bolts
+    for (let i = stormBolts.length - 1; i >= 0; i--) {
+      const b = stormBolts[i];
+      const age = now - b.born;
+      if (age >= b.life) { stormBolts.splice(i, 1); continue; }
+
+      const t       = age / b.life;          // 0→1
+      const alpha   = Math.pow(1 - t, 1.6); // fade out
+
+      // Core bright bolt
+      lc.beginPath();
+      lc.moveTo(b.pts[0][0], b.pts[0][1]);
+      for (let j = 1; j < b.pts.length; j++) lc.lineTo(b.pts[j][0], b.pts[j][1]);
+
+      // Outer glow (wide, dim)
+      lc.shadowColor   = '#f39c12';
+      lc.shadowBlur    = 18;
+      lc.strokeStyle   = `rgba(243,156,18,${alpha * 0.35})`;
+      lc.lineWidth     = b.width * 4;
+      lc.lineCap       = 'round';
+      lc.lineJoin      = 'round';
+      lc.stroke();
+
+      // Mid glow
+      lc.shadowBlur    = 8;
+      lc.strokeStyle   = `rgba(255,180,50,${alpha * 0.6})`;
+      lc.lineWidth     = b.width * 2;
+      lc.stroke();
+
+      // Bright core
+      lc.shadowBlur    = 3;
+      lc.strokeStyle   = `rgba(255,230,120,${alpha})`;
+      lc.lineWidth     = b.width * 0.6;
+      lc.stroke();
+
+      // Optional sub-branch
+      if (b.branch && b.pts.length > 3 && age < b.life * 0.5) {
+        const mid = b.pts[Math.floor(b.pts.length / 2)];
+        const bex = mid[0] + (Math.random() - 0.5) * 30;
+        const bey = mid[1] + (Math.random() - 0.5) * 30;
+        const bpts = jaggedPath(mid[0], mid[1], bex, bey, 10, 2);
+        lc.beginPath();
+        lc.moveTo(bpts[0][0], bpts[0][1]);
+        for (let j = 1; j < bpts.length; j++) lc.lineTo(bpts[j][0], bpts[j][1]);
+        lc.strokeStyle = `rgba(255,200,80,${alpha * 0.5})`;
+        lc.lineWidth   = b.width * 0.4;
+        lc.shadowBlur  = 5;
+        lc.stroke();
+      }
+    }
+
+    requestAnimationFrame(render);
+  }
+  render();
+
+  /* ══════════════════════════════════════════
+     TABS / LIGHTBOX (unchanged)
+  ══════════════════════════════════════════ */
   function showTab(id, btn) {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
