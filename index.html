@@ -22,40 +22,56 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
+
+    /* Header */
     header { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 5%; background: rgba(18,18,18,0.95); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #333; }
     .logo { font-size: 1.5rem; font-weight: bold; letter-spacing: 1px; }
     nav a { margin-left: 2rem; color: var(--text); font-weight: 500; transition: color 0.3s; font-size: 0.9rem; text-transform: uppercase; }
     nav a:hover { color: var(--primary); }
+
+    /* Hero */
     .hero { min-height: 85vh; display: flex; align-items: center; padding: 0 5%; }
     .hero-content h3 { color: var(--text-muted); margin-bottom: 0; font-weight: 400; }
     .hero-content h1 { font-size: clamp(3rem, 8vw, 5rem); margin: 0; line-height: 1.1; }
     .hero-content p { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 1.5rem 0 2.5rem 0; }
+
+    /* Buttons */
     .btn { display: inline-block; padding: 12px 30px; background: linear-gradient(45deg, var(--primary), var(--secondary)); color: #fff; border-radius: 30px; font-weight: bold; transition: transform 0.3s, box-shadow 0.3s; }
     .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(243, 156, 18, 0.3); }
+
+    /* Section */
     .section-title { text-align: center; margin-bottom: 4rem; }
     .section-title h2 { font-size: 2.5rem; margin: 0; }
-    .section-title p { color: var(--primary); letter-spacing: 2px; text-transform: uppercase; font-size: 0.9rem; margin-bottom: 0.5rem; font-weight: bold; }
     .services, .skills, .portfolio { padding: 6rem 5%; }
+
+    /* Services Cards */
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
     .card { background: var(--card-bg); padding: 2.5rem 2rem; border-radius: 15px; transition: transform 0.3s, border-color 0.3s; border-bottom: 3px solid transparent; }
     .card:hover { transform: translateY(-10px); border-bottom: 3px solid var(--primary); }
     .card h3 { margin-top: 0; font-size: 1.3rem; border-left: 3px solid var(--primary); padding-left: 10px; }
     .card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0; }
 
-    /* Portfolio Section */
-    .portfolio-tabs { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
+    /* Portfolio Tabs */
+    .portfolio-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
     .tab-btn {
-      padding: 10px 28px;
+      padding: 10px 22px;
       border-radius: 30px;
       border: 2px solid #333;
       background: transparent;
       color: var(--text-muted);
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       font-weight: 600;
       cursor: pointer;
       text-transform: uppercase;
       letter-spacing: 1px;
       transition: all 0.3s;
+      white-space: nowrap;
     }
     .tab-btn:hover, .tab-btn.active {
       background: linear-gradient(45deg, var(--primary), var(--secondary));
@@ -64,11 +80,14 @@
     }
     .tab-content { display: none; }
     .tab-content.active { display: block; }
+
+    /* Portfolio Grid & Cards */
     .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
     .portfolio-card {
       background: var(--card-bg);
       border-radius: 15px;
       overflow: hidden;
+      cursor: pointer;
       transition: transform 0.3s, box-shadow 0.3s;
       border-bottom: 3px solid transparent;
     }
@@ -76,12 +95,6 @@
     .portfolio-thumb {
       width: 100%;
       height: 200px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3rem;
-      font-weight: 900;
-      letter-spacing: 2px;
       position: relative;
       overflow: hidden;
     }
@@ -91,7 +104,7 @@
       inset: 0;
       background: rgba(0,0,0,0.25);
     }
-
+    .portfolio-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
     .portfolio-badge {
       position: absolute;
       top: 14px;
@@ -106,28 +119,6 @@
       text-transform: uppercase;
       letter-spacing: 1px;
     }
-    .portfolio-info { padding: 1.5rem; }
-    .portfolio-info h4 {
-      margin: 0 0 0.5rem 0;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--text);
-      border-left: 3px solid var(--primary);
-      padding-left: 10px;
-    }
-    .portfolio-info p { color: var(--text-muted); font-size: 0.88rem; margin: 0 0 1rem 0; line-height: 1.5; }
-    .portfolio-tags { display: flex; flex-wrap: wrap; gap: 6px; }
-    .tag {
-      font-size: 0.75rem;
-      padding: 3px 10px;
-      border-radius: 20px;
-      border: 1px solid #333;
-      color: var(--text-muted);
-    }
-
-    /* Hover overlay on thumbnail */
-    .portfolio-card { cursor: pointer; }
-    .portfolio-thumb { position: relative; overflow: hidden; }
     .thumb-overlay {
       position: absolute;
       inset: 0;
@@ -153,8 +144,18 @@
     }
     .portfolio-card:hover .thumb-overlay-icon { opacity: 1; transform: scale(1); }
     .thumb-overlay-icon svg { width: 24px; height: 24px; fill: #fff; }
+    .portfolio-info { padding: 1.5rem; }
+    .portfolio-info h4 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      border-left: 3px solid var(--primary);
+      padding-left: 10px;
+    }
+    .portfolio-info p { color: var(--text-muted); font-size: 0.88rem; margin: 0; line-height: 1.5; }
 
-    /* Lightbox Layout Styling */
+    /* Lightbox */
     #lightbox {
       display: none;
       position: fixed;
@@ -164,7 +165,7 @@
       align-items: center;
       justify-content: center;
       padding: 20px;
-      overflow: auto; /* Agar photo screen se badi hojaye toh scroll ho sake */
+      overflow: auto;
     }
     #lightbox.open { display: flex; }
     #lightbox-inner {
@@ -174,8 +175,6 @@
       flex-direction: column;
       align-items: center;
     }
-    
-    /* MODIFIED: Zoom settings for Lightbox Image */
     #lightbox-img {
       width: auto;
       height: auto;
@@ -185,16 +184,10 @@
       border-radius: 10px;
       box-shadow: 0 30px 80px rgba(0,0,0,0.8);
       display: block;
-      cursor: zoom-in; /* Hover karne pe zoom icon dikhega */
-      transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth zooming transition */
+      cursor: zoom-in;
+      transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
-    
-    /* NEW: Jab class .zoomed active ho tab photo badi ho jaye */
-    #lightbox-img.zoomed {
-      transform: scale(1.5); /* 1.5x zoom animation */
-      cursor: zoom-out; /* Click karne pe normal hone ka wave sign */
-    }
-    
+    #lightbox-img.zoomed { transform: scale(1.5); cursor: zoom-out; }
     #lightbox-caption {
       margin-top: 20px;
       color: #fff;
@@ -205,12 +198,7 @@
       text-align: center;
       transition: opacity 0.3s;
     }
-    
-    /* Caption hidden when zoomed so image focus is preserved */
-    #lightbox-img.zoomed ~ #lightbox-caption {
-      opacity: 0;
-    }
-
+    #lightbox-img.zoomed ~ #lightbox-caption { opacity: 0; }
     #lightbox-close {
       position: fixed;
       top: 20px;
@@ -227,26 +215,31 @@
     }
     #lightbox-close:hover { opacity: 1; transform: rotate(90deg); }
 
+    /* Skills */
+    .skills { background: rgba(30,30,30,0.3); }
+
+    /* Footer */
     footer { text-align: center; padding: 4rem 5%; background: #0a0a0a; border-top: 1px solid #222; }
     footer h2 { margin-bottom: 0.5rem; }
-    .social-links { margin-top: 2rem; }
+    .social-links { margin-top: 2rem; display: flex; justify-content: center; flex-wrap: wrap; gap: 0.5rem 0; }
     .social-links a { display: inline-block; margin: 0 15px; font-weight: bold; border-bottom: 1px solid transparent; padding-bottom: 2px; transition: border-color 0.3s; }
     .social-links a:hover { border-color: var(--primary); }
   </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <header>
   <div class="logo">Talha <span>Humayun</span></div>
   <nav>
     <a href="#home">Home</a>
     <a href="#services">Services</a>
     <a href="#portfolio">Portfolio</a>
-    <a href="#skills">Toolkit</a>
     <a href="#contact">Contact</a>
   </nav>
 </header>
 
+<!-- HERO -->
 <section class="hero" id="home">
   <div class="hero-content">
     <h3>Hello, I'm</h3>
@@ -256,6 +249,7 @@
   </div>
 </section>
 
+<!-- SERVICES -->
 <section class="services" id="services">
   <div class="section-title">
     <h2>My <span>Services</span></h2>
@@ -280,102 +274,382 @@
   </div>
 </section>
 
+<!-- PORTFOLIO -->
 <section class="portfolio" id="portfolio" style="background: rgba(30,30,30,0.3);">
   <div class="section-title">
     <h2>My <span>Portfolio</span></h2>
   </div>
 
+  <!-- TAB BUTTONS -->
   <div class="portfolio-tabs">
-    <button class="tab-btn active" onclick="showTab('storefront')">StoreFront</button>
+    <button class="tab-btn active"        onclick="showTab('storefront', this)">StoreFront</button>
+    <button class="tab-btn"               onclick="showTab('listing', this)">Amazon Listing</button>
+    <button class="tab-btn"               onclick="showTab('brandstory', this)">Brand Story</button>
+    <button class="tab-btn"               onclick="showTab('aplus', this)">Amazon A+ &amp; Premium A+</button>
+    <button class="tab-btn"               onclick="showTab('socialmedia', this)">Social Media</button>
+    <button class="tab-btn"               onclick="showTab('carousel', this)">Carousel</button>
   </div>
 
+  <!-- ===== STOREFRONT ===== -->
   <div id="storefront" class="tab-content active">
     <div class="portfolio-grid">
 
       <div class="portfolio-card" onclick="openLightbox('Store Front/Storefront_1.jpg', 'Name_1')">
         <div class="portfolio-thumb">
-          <img src="Store Front/T1.jpg" alt="Storefront 1 Thumbnail" style="width:100%;height:100%;object-fit:cover;display:block;" />
+          <img src="Store Front/T1.jpg" alt="Storefront 1" />
           <span class="portfolio-badge">Storefront</span>
-          <div class="thumb-overlay">
-            <div class="thumb-overlay-icon">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-            </div>
-          </div>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
         </div>
-        <div class="portfolio-info">
-          <h4>Name_1</h4>
-          <p>Description_1</p>
-        </div>
+        <div class="portfolio-info"><h4>Name_1</h4><p>Description_1</p></div>
       </div>
 
       <div class="portfolio-card" onclick="openLightbox('Store Front/Storefront_2.jpg', 'Name_2')">
         <div class="portfolio-thumb">
-          <img src="Store Front/T2.jpg" alt="Storefront 2 Thumbnail" style="width:100%;height:100%;object-fit:cover;display:block;" />
+          <img src="Store Front/T2.jpg" alt="Storefront 2" />
           <span class="portfolio-badge">Storefront</span>
-          <div class="thumb-overlay">
-            <div class="thumb-overlay-icon">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-            </div>
-          </div>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
         </div>
-        <div class="portfolio-info">
-          <h4>Name_2</h4>
-          <p>Description_2</p>
-        </div>
+        <div class="portfolio-info"><h4>Name_2</h4><p>Description_2</p></div>
       </div>
 
       <div class="portfolio-card" onclick="openLightbox('Store Front/Storefront_3.jpg', 'Name_3')">
         <div class="portfolio-thumb">
-          <img src="Store Front/T3.jpg" alt="Storefront 3 Thumbnail" style="width:100%;height:100%;object-fit:cover;display:block;" />
+          <img src="Store Front/T3.jpg" alt="Storefront 3" />
           <span class="portfolio-badge">Storefront</span>
-          <div class="thumb-overlay">
-            <div class="thumb-overlay-icon">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-            </div>
-          </div>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
         </div>
-        <div class="portfolio-info">
-          <h4>Name_3</h4>
-          <p>Description_3</p>
-        </div>
+        <div class="portfolio-info"><h4>Name_3</h4><p>Description_3</p></div>
       </div>
 
       <div class="portfolio-card" onclick="openLightbox('Store Front/Storefront_4.jpg', 'Name_4')">
         <div class="portfolio-thumb">
-          <img src="Store Front/T4.jpg" alt="Storefront 4 Thumbnail" style="width:100%;height:100%;object-fit:cover;display:block;" />
+          <img src="Store Front/T4.jpg" alt="Storefront 4" />
           <span class="portfolio-badge">Storefront</span>
-          <div class="thumb-overlay">
-            <div class="thumb-overlay-icon">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-            </div>
-          </div>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
         </div>
-        <div class="portfolio-info">
-          <h4>Name_4</h4>
-          <p>Description_4</p>
-        </div>
+        <div class="portfolio-info"><h4>Name_4</h4><p>Description_4</p></div>
       </div>
 
       <div class="portfolio-card" onclick="openLightbox('Store Front/Storefront_5.jpg', 'Name_5')">
         <div class="portfolio-thumb">
-          <img src="Store Front/T5.jpg" alt="Storefront 5 Thumbnail" style="width:100%;height:100%;object-fit:cover;display:block;" />
+          <img src="Store Front/T5.jpg" alt="Storefront 5" />
           <span class="portfolio-badge">Storefront</span>
-          <div class="thumb-overlay">
-            <div class="thumb-overlay-icon">
-              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-            </div>
-          </div>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
         </div>
-        <div class="portfolio-info">
-          <h4>Name_5</h4>
-          <p>Description_5</p>
-        </div>
+        <div class="portfolio-info"><h4>Name_5</h4><p>Description_5</p></div>
       </div>
 
     </div>
   </div>
+
+  <!-- ===== AMAZON LISTING ===== -->
+  <div id="listing" class="tab-content">
+    <div class="portfolio-grid">
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon Listing/Listing_1.jpg', 'Listing_Name_1')">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT1.jpg" alt="Listing 1" />
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Listing_Name_1</h4><p>Listing_Description_1</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon Listing/Listing_2.jpg', 'Listing_Name_2')">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT2.jpg" alt="Listing 2" />
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Listing_Name_2</h4><p>Listing_Description_2</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon Listing/Listing_3.jpg', 'Listing_Name_3')">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT3.jpg" alt="Listing 3" />
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Listing_Name_3</h4><p>Listing_Description_3</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon Listing/Listing_4.jpg', 'Listing_Name_4')">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT4.jpg" alt="Listing 4" />
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Listing_Name_4</h4><p>Listing_Description_4</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon Listing/Listing_5.jpg', 'Listing_Name_5')">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT5.jpg" alt="Listing 5" />
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Listing_Name_5</h4><p>Listing_Description_5</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon Listing/Listing_6.jpg', 'Listing_Name_6')">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT6.jpg" alt="Listing 6" />
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Listing_Name_6</h4><p>Listing_Description_6</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon Listing/Listing_7.jpg', 'Listing_Name_7')">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT7.jpg" alt="Listing 7" />
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Listing_Name_7</h4><p>Listing_Description_7</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon Listing/Listing_8.jpg', 'Listing_Name_8')">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT8.jpg" alt="Listing 8" />
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Listing_Name_8</h4><p>Listing_Description_8</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon Listing/Listing_9.jpg', 'Listing_Name_9')">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT9.jpg" alt="Listing 9" />
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Listing_Name_9</h4><p>Listing_Description_9</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon Listing/Listing_10.jpg', 'Listing_Name_10')">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT10.jpg" alt="Listing 10" />
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Listing_Name_10</h4><p>Listing_Description_10</p></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== BRAND STORY ===== -->
+  <div id="brandstory" class="tab-content">
+    <div class="portfolio-grid">
+
+      <div class="portfolio-card" onclick="openLightbox('Brand Story/BS_1.jpg', 'BS_Name_1')">
+        <div class="portfolio-thumb">
+          <img src="Brand Story/BST1.jpg" alt="Brand Story 1" />
+          <span class="portfolio-badge">Brand Story</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>BS_Name_1</h4><p>BS_Description_1</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Brand Story/BS_2.jpg', 'BS_Name_2')">
+        <div class="portfolio-thumb">
+          <img src="Brand Story/BST2.jpg" alt="Brand Story 2" />
+          <span class="portfolio-badge">Brand Story</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>BS_Name_2</h4><p>BS_Description_2</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Brand Story/BS_3.jpg', 'BS_Name_3')">
+        <div class="portfolio-thumb">
+          <img src="Brand Story/BST3.jpg" alt="Brand Story 3" />
+          <span class="portfolio-badge">Brand Story</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>BS_Name_3</h4><p>BS_Description_3</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Brand Story/BS_4.jpg', 'BS_Name_4')">
+        <div class="portfolio-thumb">
+          <img src="Brand Story/BST4.jpg" alt="Brand Story 4" />
+          <span class="portfolio-badge">Brand Story</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>BS_Name_4</h4><p>BS_Description_4</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Brand Story/BS_5.jpg', 'BS_Name_5')">
+        <div class="portfolio-thumb">
+          <img src="Brand Story/BST5.jpg" alt="Brand Story 5" />
+          <span class="portfolio-badge">Brand Story</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>BS_Name_5</h4><p>BS_Description_5</p></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== AMAZON A+ & PREMIUM A+ ===== -->
+  <div id="aplus" class="tab-content">
+    <div class="portfolio-grid">
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon A+/AP_1.jpg', 'AP_Name_1')">
+        <div class="portfolio-thumb">
+          <img src="Amazon A+/APT1.jpg" alt="A+ Content 1" />
+          <span class="portfolio-badge">A+ Content</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>AP_Name_1</h4><p>AP_Description_1</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon A+/AP_2.jpg', 'AP_Name_2')">
+        <div class="portfolio-thumb">
+          <img src="Amazon A+/APT2.jpg" alt="A+ Content 2" />
+          <span class="portfolio-badge">A+ Content</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>AP_Name_2</h4><p>AP_Description_2</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon A+/AP_3.jpg', 'AP_Name_3')">
+        <div class="portfolio-thumb">
+          <img src="Amazon A+/APT3.jpg" alt="A+ Content 3" />
+          <span class="portfolio-badge">A+ Content</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>AP_Name_3</h4><p>AP_Description_3</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon A+/AP_4.jpg', 'AP_Name_4')">
+        <div class="portfolio-thumb">
+          <img src="Amazon A+/APT4.jpg" alt="A+ Content 4" />
+          <span class="portfolio-badge">A+ Content</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>AP_Name_4</h4><p>AP_Description_4</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon A+/AP_5.jpg', 'AP_Name_5')">
+        <div class="portfolio-thumb">
+          <img src="Amazon A+/APT5.jpg" alt="A+ Content 5" />
+          <span class="portfolio-badge">A+ Content</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>AP_Name_5</h4><p>AP_Description_5</p></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== SOCIAL MEDIA ===== -->
+  <div id="socialmedia" class="tab-content">
+    <div class="portfolio-grid">
+
+      <div class="portfolio-card" onclick="openLightbox('Social Media/SM_1.jpg', 'SM_Name_1')">
+        <div class="portfolio-thumb">
+          <img src="Social Media/SMT1.jpg" alt="Social Media 1" />
+          <span class="portfolio-badge">Social Media</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>SM_Name_1</h4><p>SM_Description_1</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Social Media/SM_2.jpg', 'SM_Name_2')">
+        <div class="portfolio-thumb">
+          <img src="Social Media/SMT2.jpg" alt="Social Media 2" />
+          <span class="portfolio-badge">Social Media</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>SM_Name_2</h4><p>SM_Description_2</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Social Media/SM_3.jpg', 'SM_Name_3')">
+        <div class="portfolio-thumb">
+          <img src="Social Media/SMT3.jpg" alt="Social Media 3" />
+          <span class="portfolio-badge">Social Media</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>SM_Name_3</h4><p>SM_Description_3</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Social Media/SM_4.jpg', 'SM_Name_4')">
+        <div class="portfolio-thumb">
+          <img src="Social Media/SMT4.jpg" alt="Social Media 4" />
+          <span class="portfolio-badge">Social Media</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>SM_Name_4</h4><p>SM_Description_4</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Social Media/SM_5.jpg', 'SM_Name_5')">
+        <div class="portfolio-thumb">
+          <img src="Social Media/SMT5.jpg" alt="Social Media 5" />
+          <span class="portfolio-badge">Social Media</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>SM_Name_5</h4><p>SM_Description_5</p></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== CAROUSEL ===== -->
+  <div id="carousel" class="tab-content">
+    <div class="portfolio-grid">
+
+      <div class="portfolio-card" onclick="openLightbox('Carousel/CR_1.jpg', 'CR_Name_1')">
+        <div class="portfolio-thumb">
+          <img src="Carousel/CRT1.jpg" alt="Carousel 1" />
+          <span class="portfolio-badge">Carousel</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>CR_Name_1</h4><p>CR_Description_1</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Carousel/CR_2.jpg', 'CR_Name_2')">
+        <div class="portfolio-thumb">
+          <img src="Carousel/CRT2.jpg" alt="Carousel 2" />
+          <span class="portfolio-badge">Carousel</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>CR_Name_2</h4><p>CR_Description_2</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Carousel/CR_3.jpg', 'CR_Name_3')">
+        <div class="portfolio-thumb">
+          <img src="Carousel/CRT3.jpg" alt="Carousel 3" />
+          <span class="portfolio-badge">Carousel</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>CR_Name_3</h4><p>CR_Description_3</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Carousel/CR_4.jpg', 'CR_Name_4')">
+        <div class="portfolio-thumb">
+          <img src="Carousel/CRT4.jpg" alt="Carousel 4" />
+          <span class="portfolio-badge">Carousel</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>CR_Name_4</h4><p>CR_Description_4</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Carousel/CR_5.jpg', 'CR_Name_5')">
+        <div class="portfolio-thumb">
+          <img src="Carousel/CRT5.jpg" alt="Carousel 5" />
+          <span class="portfolio-badge">Carousel</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>CR_Name_5</h4><p>CR_Description_5</p></div>
+      </div>
+
+    </div>
+  </div>
+
 </section>
 
+<!-- SKILLS -->
 <section class="skills" id="skills">
   <div class="section-title">
     <h2>Software <span>Expertise</span></h2>
@@ -400,16 +674,21 @@
   </div>
 </section>
 
+<!-- FOOTER / CONTACT -->
 <footer id="contact">
   <h2>Ready to start your next project?</h2>
   <p style="color: var(--text-muted); margin-bottom: 2rem;">Let's collaborate and create something extraordinary.</p>
   <a href="mailto:your.email@example.com" class="btn">Get In Touch</a>
   <div class="social-links">
     <a href="https://www.linkedin.com/in/humayuncreative/" target="_blank">LinkedIn</a>
+    <a href="https://www.behance.net/your-profile" target="_blank">Behance</a>
+    <a href="https://www.instagram.com/your-profile" target="_blank">Instagram</a>
+    <a href="https://dribbble.com/your-profile" target="_blank">Dribbble</a>
   </div>
   <p style="margin-top: 3rem; color: var(--text-muted); font-size: 0.85rem;">&copy; 2024 Talha Humayun. All rights reserved.</p>
 </footer>
 
+<!-- LIGHTBOX -->
 <div id="lightbox" onclick="closeLightbox()">
   <button id="lightbox-close" onclick="closeLightbox()">&#x2715;</button>
   <div id="lightbox-inner" onclick="event.stopPropagation()">
@@ -419,21 +698,18 @@
 </div>
 
 <script>
-  function showTab(id) {
+  function showTab(id, btn) {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
     document.getElementById(id).classList.add('active');
-    event.target.classList.add('active');
+    btn.classList.add('active');
   }
 
   function openLightbox(imgSrc, caption) {
-    const lb = document.getElementById('lightbox');
+    const lb  = document.getElementById('lightbox');
     const img = document.getElementById('lightbox-img');
     const cap = document.getElementById('lightbox-caption');
-    
-    // Reset zoom state when a new picture is opened
     img.classList.remove('zoomed');
-    
     img.src = imgSrc;
     cap.textContent = caption;
     lb.classList.add('open');
@@ -442,17 +718,14 @@
 
   function closeLightbox() {
     document.getElementById('lightbox').classList.remove('open');
-    // Ensure the zoom clean-up fires right after close actions
     document.getElementById('lightbox-img').classList.remove('zoomed');
     document.getElementById('lightbox-img').src = '';
     document.body.style.overflow = '';
   }
 
-  // NEW JavaScript Function: It toggles the zoom scaling on target event clicks
   function toggleZoom(event) {
-    event.stopPropagation(); // Lightbox wrapper ko band hone se rokta hai
-    const img = document.getElementById('lightbox-img');
-    img.classList.toggle('zoomed');
+    event.stopPropagation();
+    document.getElementById('lightbox-img').classList.toggle('zoomed');
   }
 
   document.addEventListener('keydown', function(e) {
