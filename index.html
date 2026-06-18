@@ -154,45 +154,63 @@
     .portfolio-card:hover .thumb-overlay-icon { opacity: 1; transform: scale(1); }
     .thumb-overlay-icon svg { width: 24px; height: 24px; fill: #fff; }
 
-    /* Lightbox */
+    /* Lightbox Layout Styling */
     #lightbox {
       display: none;
       position: fixed;
       inset: 0;
       z-index: 9999;
-      background: rgba(0,0,0,0.92);
+      background: rgba(0,0,0,0.94);
       align-items: center;
       justify-content: center;
       padding: 20px;
+      overflow: auto; /* Agar photo screen se badi hojaye toh scroll ho sake */
     }
     #lightbox.open { display: flex; }
     #lightbox-inner {
       position: relative;
       max-width: 95vw;
-      max-height: 92vh;
       display: flex;
       flex-direction: column;
       align-items: center;
     }
+    
+    /* MODIFIED: Zoom settings for Lightbox Image */
     #lightbox-img {
       width: auto;
       height: auto;
-      max-width: 95vw;
-      max-height: 88vh;
+      max-width: 90vw;
+      max-height: 80vh;
       object-fit: contain;
       border-radius: 10px;
       box-shadow: 0 30px 80px rgba(0,0,0,0.8);
       display: block;
+      cursor: zoom-in; /* Hover karne pe zoom icon dikhega */
+      transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Smooth zooming transition */
     }
+    
+    /* NEW: Jab class .zoomed active ho tab photo badi ho jaye */
+    #lightbox-img.zoomed {
+      transform: scale(1.5); /* 1.5x zoom animation */
+      cursor: zoom-out; /* Click karne pe normal hone ka wave sign */
+    }
+    
     #lightbox-caption {
-      margin-top: 14px;
+      margin-top: 20px;
       color: #fff;
       font-size: 1rem;
       font-weight: 600;
       letter-spacing: 1px;
       opacity: 0.85;
       text-align: center;
+      transition: opacity 0.3s;
     }
+    
+    /* Caption hidden when zoomed so image focus is preserved */
+    #lightbox-img.zoomed ~ #lightbox-caption {
+      opacity: 0;
+    }
+
     #lightbox-close {
       position: fixed;
       top: 20px;
@@ -263,7 +281,6 @@
   </div>
 </section>
 
-<!-- PORTFOLIO SECTION -->
 <section class="portfolio" id="portfolio" style="background: rgba(30,30,30,0.3);">
   <div class="section-title">
     <p>Selected Work</p>
@@ -277,10 +294,9 @@
   <div id="storefront" class="tab-content active">
     <div class="portfolio-grid">
 
-      <!-- Storefront_1 -->
       <div class="portfolio-card" onclick="openLightbox('Store Front/Storefront_1.jpg', 'Name_1')">
         <div class="portfolio-thumb">
-          <img src="Thumbnail_1.jpg" alt="Storefront 1 Thumbnail" style="width:100%;height:100%;object-fit:cover;display:block;" />
+          <img src="Store Front/Storefront_1.jpg" alt="Storefront 1 Thumbnail" style="width:100%;height:100%;object-fit:cover;display:block;" />
           <span class="portfolio-badge">Storefront</span>
           <div class="thumb-overlay">
             <div class="thumb-overlay-icon">
@@ -294,10 +310,9 @@
         </div>
       </div>
 
-      <!-- Storefront_2 -->
       <div class="portfolio-card" onclick="openLightbox('Store Front/Storefront_2.jpg', 'Name_2')">
         <div class="portfolio-thumb">
-          <img src="Thumbnail_2.jpg" alt="Storefront 2 Thumbnail" style="width:100%;height:100%;object-fit:cover;display:block;" />
+          <img src="Store Front/Storefront_2.jpg" alt="Storefront 2 Thumbnail" style="width:100%;height:100%;object-fit:cover;display:block;" />
           <span class="portfolio-badge">Storefront</span>
           <div class="thumb-overlay">
             <div class="thumb-overlay-icon">
@@ -311,10 +326,9 @@
         </div>
       </div>
 
-      <!-- Storefront_3 -->
       <div class="portfolio-card" onclick="openLightbox('Store Front/Storefront_3.jpg', 'Name_3')">
         <div class="portfolio-thumb">
-          <img src="Thumbnail_3.jpg" alt="Storefront 3 Thumbnail" style="width:100%;height:100%;object-fit:cover;display:block;" />
+          <img src="Store Front/Storefront_3.jpg" alt="Storefront 3 Thumbnail" style="width:100%;height:100%;object-fit:cover;display:block;" />
           <span class="portfolio-badge">Storefront</span>
           <div class="thumb-overlay">
             <div class="thumb-overlay-icon">
@@ -328,10 +342,9 @@
         </div>
       </div>
 
-      <!-- Storefront_4 -->
       <div class="portfolio-card" onclick="openLightbox('Store Front/Storefront_4.jpg', 'Name_4')">
         <div class="portfolio-thumb">
-          <img src="Thumbnail_4.jpg" alt="Storefront 4 Thumbnail" style="width:100%;height:100%;object-fit:cover;display:block;" />
+          <img src="Store Front/Storefront_4.jpg" alt="Storefront 4 Thumbnail" style="width:100%;height:100%;object-fit:cover;display:block;" />
           <span class="portfolio-badge">Storefront</span>
           <div class="thumb-overlay">
             <div class="thumb-overlay-icon">
@@ -345,10 +358,9 @@
         </div>
       </div>
 
-      <!-- Storefront_5 -->
       <div class="portfolio-card" onclick="openLightbox('Store Front/Storefront_5.jpg', 'Name_5')">
         <div class="portfolio-thumb">
-          <img src="Thumbnail_5.jpg" alt="Storefront 5 Thumbnail" style="width:100%;height:100%;object-fit:cover;display:block;" />
+          <img src="Store Front/Storefront_5.jpg" alt="Storefront 5 Thumbnail" style="width:100%;height:100%;object-fit:cover;display:block;" />
           <span class="portfolio-badge">Storefront</span>
           <div class="thumb-overlay">
             <div class="thumb-overlay-icon">
@@ -402,11 +414,10 @@
   <p style="margin-top: 3rem; color: var(--text-muted); font-size: 0.85rem;">&copy; 2024 Talha Humayun. All rights reserved.</p>
 </footer>
 
-<!-- Lightbox -->
 <div id="lightbox" onclick="closeLightbox()">
   <button id="lightbox-close" onclick="closeLightbox()">&#x2715;</button>
   <div id="lightbox-inner" onclick="event.stopPropagation()">
-    <img id="lightbox-img" src="" alt="" />
+    <img id="lightbox-img" src="" alt="" onclick="toggleZoom(event)" />
     <div id="lightbox-caption"></div>
   </div>
 </div>
@@ -423,6 +434,10 @@
     const lb = document.getElementById('lightbox');
     const img = document.getElementById('lightbox-img');
     const cap = document.getElementById('lightbox-caption');
+    
+    // Reset zoom state when a new picture is opened
+    img.classList.remove('zoomed');
+    
     img.src = imgSrc;
     cap.textContent = caption;
     lb.classList.add('open');
@@ -431,8 +446,17 @@
 
   function closeLightbox() {
     document.getElementById('lightbox').classList.remove('open');
+    // Ensure the zoom clean-up fires right after close actions
+    document.getElementById('lightbox-img').classList.remove('zoomed');
     document.getElementById('lightbox-img').src = '';
     document.body.style.overflow = '';
+  }
+
+  // NEW JavaScript Function: It toggles the zoom scaling on target event clicks
+  function toggleZoom(event) {
+    event.stopPropagation(); // Lightbox wrapper ko band hone se rokta hai
+    const img = document.getElementById('lightbox-img');
+    img.classList.toggle('zoomed');
   }
 
   document.addEventListener('keydown', function(e) {
