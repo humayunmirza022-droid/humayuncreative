@@ -40,9 +40,34 @@
     .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(243, 156, 18, 0.3); }
 
     /* Section */
-    .section-title { text-align: center; margin-bottom: 4rem; }
-    .section-title h2 { font-size: 2.5rem; margin: 0; }
-    .services, .skills, .portfolio { padding: 6rem 5%; }
+    .section-title { text-align: center; margin-bottom: 3rem; }
+    .section-title h2 { font-size: 2.5rem; margin: 0 0 0.4rem 0; }
+    .section-title p { color: var(--text-muted); font-size: 1rem; margin: 0; }
+    .services, .skills { padding: 6rem 5%; }
+
+    /* Portfolio wrapper — three separate sections */
+    .portfolio-section {
+      padding: 5rem 5%;
+    }
+    .portfolio-section:nth-child(odd) {
+      background: rgba(30,30,30,0.3);
+    }
+    .portfolio-section:nth-child(even) {
+      background: var(--bg);
+    }
+
+    /* Section category label */
+    .section-eyebrow {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
 
     /* Services Cards */
     .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
@@ -155,6 +180,102 @@
     }
     .portfolio-info p { color: var(--text-muted); font-size: 0.88rem; margin: 0; line-height: 1.5; }
 
+    /* Video Editing Section — special styling */
+    .video-section {
+      padding: 5rem 5%;
+      background: #0d0d0d;
+    }
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    .video-card {
+      background: var(--card-bg);
+      border-radius: 15px;
+      overflow: hidden;
+      border-bottom: 3px solid transparent;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+    }
+    .video-card:hover { transform: translateY(-10px); border-bottom: 3px solid var(--secondary); box-shadow: 0 15px 40px rgba(0,0,0,0.5); }
+    .video-thumb {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #161616;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .video-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .video-play-btn {
+      position: absolute;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 4;
+      opacity: 0.9;
+      transition: opacity 0.3s, transform 0.3s;
+      box-shadow: 0 6px 24px rgba(243,156,18,0.4);
+    }
+    .video-card:hover .video-play-btn { opacity: 1; transform: scale(1.1); }
+    .video-play-btn svg { width: 26px; height: 26px; fill: #fff; margin-left: 3px; }
+    .video-placeholder {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #1a1a1a, #242424);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      color: var(--text-muted);
+    }
+    .video-placeholder svg { width: 40px; height: 40px; opacity: 0.35; fill: var(--primary); }
+    .video-placeholder span { font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; opacity: 0.5; }
+    .video-info { padding: 1.5rem; }
+    .video-info h4 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      border-left: 3px solid var(--secondary);
+      padding-left: 10px;
+    }
+    .video-info p { color: var(--text-muted); font-size: 0.88rem; margin: 0; }
+    .video-badge {
+      display: inline-block;
+      margin-top: 0.75rem;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--secondary);
+      border: 1px solid var(--secondary);
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    /* Divider between portfolio sections */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 0 5%;
+      margin: 0;
+    }
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #333, transparent);
+    }
+
     /* Lightbox */
     #lightbox {
       display: none;
@@ -234,7 +355,7 @@
   <nav>
     <a href="#home">Home</a>
     <a href="#services">Services</a>
-    <a href="#portfolio">Portfolio</a>
+    <a href="#ecommerce-portfolio">Portfolio</a>
     <a href="#contact">Contact</a>
   </nav>
 </header>
@@ -274,76 +395,28 @@
   </div>
 </section>
 
-<!-- PORTFOLIO -->
-<section class="portfolio" id="portfolio" style="background: rgba(30,30,30,0.3);">
+
+<!-- ═══════════════════════════════════════════════════
+     PORTFOLIO SECTION 1 — E-COMMERCE & AMAZON
+═══════════════════════════════════════════════════ -->
+<section class="portfolio-section" id="ecommerce-portfolio">
   <div class="section-title">
-    <h2>My <span>Portfolio</span></h2>
+    <span class="section-eyebrow">E-Commerce & Amazon</span>
+    <h2>Amazon <span>Portfolio</span></h2>
+    <p>Listing images, A+ content, brand stories, and full storefronts</p>
   </div>
 
-  <!-- TAB BUTTONS -->
+  <!-- TAB BUTTONS — E-Commerce -->
   <div class="portfolio-tabs">
-    <button class="tab-btn active"        onclick="showTab('storefront', this)">StoreFront</button>
-    <button class="tab-btn"               onclick="showTab('listing', this)">Amazon Listing</button>
-    <button class="tab-btn"               onclick="showTab('brandstory', this)">Brand Story</button>
-    <button class="tab-btn"               onclick="showTab('aplus', this)">Amazon A+ &amp; Premium A+</button>
-    <button class="tab-btn"               onclick="showTab('socialmedia', this)">Social Media</button>
-    <button class="tab-btn"               onclick="showTab('carousel', this)">Carousel</button>
-  </div>
-
-  <!-- ===== STOREFRONT ===== -->
-  <div id="storefront" class="tab-content active">
-    <div class="portfolio-grid">
-
-      <div class="portfolio-card" onclick="openLightbox('Store Front/Storefront_1.jpg', 'The DustPick Project')">
-        <div class="portfolio-thumb">
-          <img src="Store Front/T1.jpg" alt="Storefront 1" />
-          <span class="portfolio-badge">Storefront</span>
-          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
-        </div>
-        <div class="portfolio-info"><h4>The DustPick Project</h4><p>A modern e-commerce layout designed to highlight the features and benefits of the DustPick cleaning tool. This project emphasizes clear typography, intuitive iconography, and seamless photo integration to create a highly scannable and engaging user experience.</p></div>
-      </div>
-
-      <div class="portfolio-card" onclick="openLightbox('Store Front/Storefront_2.jpg', 'The Sukkah Store')">
-        <div class="portfolio-thumb">
-          <img src="Store Front/T2.jpg" alt="Storefront 2" />
-          <span class="portfolio-badge">Storefront</span>
-          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
-        </div>
-        <div class="portfolio-info"><h4>The Sukkah Store Project</h4><p>An elegant, long-form e-commerce layout designed to merchandise hand-painted Sukkah tapestries. This project highlights strong visual hierarchy, custom iconography, and the seamless integration of product photography and descriptive copy to create an immersive, premium shopping experience.</p></div>
-      </div>
-
-      <div class="portfolio-card" onclick="openLightbox('Store Front/Storefront_3.jpg', 'Kaffa Energy')">
-        <div class="portfolio-thumb">
-          <img src="Store Front/T3.jpg" alt="Storefront 3" />
-          <span class="portfolio-badge">Storefront</span>
-          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
-        </div>
-        <div class="portfolio-info"><h4>Kaffa Energy Project</h4><p>A complete visual layout for the Kaffa Energy e-commerce storefront. This project blends dynamic product compositing, engaging lifestyle photography, and clean iconography to create a cohesive, conversion-focused shopping experience that clearly highlights the unique benefits of zero-nicotine energy pouches.</p></div>
-      </div>
-
-      <div class="portfolio-card" onclick="openLightbox('Store Front/Storefront_4.jpg', 'Name_4')">
-        <div class="portfolio-thumb">
-          <img src="Store Front/T4.jpg" alt="Storefront 4" />
-          <span class="portfolio-badge">Storefront</span>
-          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
-        </div>
-        <div class="portfolio-info"><h4>Name_4</h4><p>Description_4</p></div>
-      </div>
-
-      <div class="portfolio-card" onclick="openLightbox('Store Front/Storefront_5.jpg', 'Name_5')">
-        <div class="portfolio-thumb">
-          <img src="Store Front/T5.jpg" alt="Storefront 5" />
-          <span class="portfolio-badge">Storefront</span>
-          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
-        </div>
-        <div class="portfolio-info"><h4>Name_5</h4><p>Description_5</p></div>
-      </div>
-
-    </div>
+    <button class="tab-btn active" onclick="showTab('listing', this, 'ecom')">Amazon Listing</button>
+    <button class="tab-btn"       onclick="showTab('aplus', this, 'ecom')">Amazon A+ &amp; Premium A+</button>
+    <button class="tab-btn"       onclick="showTab('mainimages', this, 'ecom')">Main Images</button>
+    <button class="tab-btn"       onclick="showTab('storefront', this, 'ecom')">StoreFront</button>
+    <button class="tab-btn"       onclick="showTab('brandstory', this, 'ecom')">Brand Story</button>
   </div>
 
   <!-- ===== AMAZON LISTING ===== -->
-  <div id="listing" class="tab-content">
+  <div id="listing" class="tab-content ecom-tab active">
     <div class="portfolio-grid">
 
       <div class="portfolio-card" onclick="openLightbox('Amazon Listing/Listing_1.jpg', 'Listing_Name_1')">
@@ -439,60 +512,8 @@
     </div>
   </div>
 
-  <!-- ===== BRAND STORY ===== -->
-  <div id="brandstory" class="tab-content">
-    <div class="portfolio-grid">
-
-      <div class="portfolio-card" onclick="openLightbox('Brand Story/BS_1.jpg', 'BS_Name_1')">
-        <div class="portfolio-thumb">
-          <img src="Brand Story/BST1.jpg" alt="Brand Story 1" />
-          <span class="portfolio-badge">Brand Story</span>
-          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
-        </div>
-        <div class="portfolio-info"><h4>BS_Name_1</h4><p>BS_Description_1</p></div>
-      </div>
-
-      <div class="portfolio-card" onclick="openLightbox('Brand Story/BS_2.jpg', 'BS_Name_2')">
-        <div class="portfolio-thumb">
-          <img src="Brand Story/BST2.jpg" alt="Brand Story 2" />
-          <span class="portfolio-badge">Brand Story</span>
-          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
-        </div>
-        <div class="portfolio-info"><h4>BS_Name_2</h4><p>BS_Description_2</p></div>
-      </div>
-
-      <div class="portfolio-card" onclick="openLightbox('Brand Story/BS_3.jpg', 'BS_Name_3')">
-        <div class="portfolio-thumb">
-          <img src="Brand Story/BST3.jpg" alt="Brand Story 3" />
-          <span class="portfolio-badge">Brand Story</span>
-          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
-        </div>
-        <div class="portfolio-info"><h4>BS_Name_3</h4><p>BS_Description_3</p></div>
-      </div>
-
-      <div class="portfolio-card" onclick="openLightbox('Brand Story/BS_4.jpg', 'BS_Name_4')">
-        <div class="portfolio-thumb">
-          <img src="Brand Story/BST4.jpg" alt="Brand Story 4" />
-          <span class="portfolio-badge">Brand Story</span>
-          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
-        </div>
-        <div class="portfolio-info"><h4>BS_Name_4</h4><p>BS_Description_4</p></div>
-      </div>
-
-      <div class="portfolio-card" onclick="openLightbox('Brand Story/BS_5.jpg', 'BS_Name_5')">
-        <div class="portfolio-thumb">
-          <img src="Brand Story/BST5.jpg" alt="Brand Story 5" />
-          <span class="portfolio-badge">Brand Story</span>
-          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
-        </div>
-        <div class="portfolio-info"><h4>BS_Name_5</h4><p>BS_Description_5</p></div>
-      </div>
-
-    </div>
-  </div>
-
   <!-- ===== AMAZON A+ & PREMIUM A+ ===== -->
-  <div id="aplus" class="tab-content">
+  <div id="aplus" class="tab-content ecom-tab">
     <div class="portfolio-grid">
 
       <div class="portfolio-card" onclick="openLightbox('Amazon A+/AP_1.jpg', 'AP_Name_1')">
@@ -543,8 +564,163 @@
     </div>
   </div>
 
+  <!-- ===== MAIN IMAGES ===== -->
+  <div id="mainimages" class="tab-content ecom-tab">
+    <div class="portfolio-grid">
+      <!-- Add your Main Images cards here using the same card structure -->
+      <!-- Example placeholder cards: -->
+      <div class="portfolio-card" onclick="openLightbox('Main Images/MI_1.jpg', 'MI_Name_1')">
+        <div class="portfolio-thumb">
+          <img src="Main Images/MIT1.jpg" alt="Main Image 1" />
+          <span class="portfolio-badge">Main Image</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>MI_Name_1</h4><p>MI_Description_1</p></div>
+      </div>
+      <div class="portfolio-card" onclick="openLightbox('Main Images/MI_2.jpg', 'MI_Name_2')">
+        <div class="portfolio-thumb">
+          <img src="Main Images/MIT2.jpg" alt="Main Image 2" />
+          <span class="portfolio-badge">Main Image</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>MI_Name_2</h4><p>MI_Description_2</p></div>
+      </div>
+      <div class="portfolio-card" onclick="openLightbox('Main Images/MI_3.jpg', 'MI_Name_3')">
+        <div class="portfolio-thumb">
+          <img src="Main Images/MIT3.jpg" alt="Main Image 3" />
+          <span class="portfolio-badge">Main Image</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>MI_Name_3</h4><p>MI_Description_3</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== STOREFRONT ===== -->
+  <div id="storefront" class="tab-content ecom-tab">
+    <div class="portfolio-grid">
+
+      <div class="portfolio-card" onclick="openLightbox('Store Front/Storefront_1.jpg', 'The DustPick Project')">
+        <div class="portfolio-thumb">
+          <img src="Store Front/T1.jpg" alt="Storefront 1" />
+          <span class="portfolio-badge">Storefront</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>The DustPick Project</h4><p>A modern e-commerce layout designed to highlight the features and benefits of the DustPick cleaning tool.</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Store Front/Storefront_2.jpg', 'The Sukkah Store')">
+        <div class="portfolio-thumb">
+          <img src="Store Front/T2.jpg" alt="Storefront 2" />
+          <span class="portfolio-badge">Storefront</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>The Sukkah Store Project</h4><p>An elegant, long-form e-commerce layout for hand-painted Sukkah tapestries.</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Store Front/Storefront_3.jpg', 'Kaffa Energy')">
+        <div class="portfolio-thumb">
+          <img src="Store Front/T3.jpg" alt="Storefront 3" />
+          <span class="portfolio-badge">Storefront</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Kaffa Energy Project</h4><p>Dynamic product compositing and lifestyle photography for zero-nicotine energy pouches.</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Store Front/Storefront_4.jpg', 'Name_4')">
+        <div class="portfolio-thumb">
+          <img src="Store Front/T4.jpg" alt="Storefront 4" />
+          <span class="portfolio-badge">Storefront</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Name_4</h4><p>Description_4</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Store Front/Storefront_5.jpg', 'Name_5')">
+        <div class="portfolio-thumb">
+          <img src="Store Front/T5.jpg" alt="Storefront 5" />
+          <span class="portfolio-badge">Storefront</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Name_5</h4><p>Description_5</p></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== BRAND STORY ===== -->
+  <div id="brandstory" class="tab-content ecom-tab">
+    <div class="portfolio-grid">
+
+      <div class="portfolio-card" onclick="openLightbox('Brand Story/BS_1.jpg', 'BS_Name_1')">
+        <div class="portfolio-thumb">
+          <img src="Brand Story/BST1.jpg" alt="Brand Story 1" />
+          <span class="portfolio-badge">Brand Story</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>BS_Name_1</h4><p>BS_Description_1</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Brand Story/BS_2.jpg', 'BS_Name_2')">
+        <div class="portfolio-thumb">
+          <img src="Brand Story/BST2.jpg" alt="Brand Story 2" />
+          <span class="portfolio-badge">Brand Story</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>BS_Name_2</h4><p>BS_Description_2</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Brand Story/BS_3.jpg', 'BS_Name_3')">
+        <div class="portfolio-thumb">
+          <img src="Brand Story/BST3.jpg" alt="Brand Story 3" />
+          <span class="portfolio-badge">Brand Story</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>BS_Name_3</h4><p>BS_Description_3</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Brand Story/BS_4.jpg', 'BS_Name_4')">
+        <div class="portfolio-thumb">
+          <img src="Brand Story/BST4.jpg" alt="Brand Story 4" />
+          <span class="portfolio-badge">Brand Story</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>BS_Name_4</h4><p>BS_Description_4</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Brand Story/BS_5.jpg', 'BS_Name_5')">
+        <div class="portfolio-thumb">
+          <img src="Brand Story/BST5.jpg" alt="Brand Story 5" />
+          <span class="portfolio-badge">Brand Story</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>BS_Name_5</h4><p>BS_Description_5</p></div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     PORTFOLIO SECTION 2 — SOCIAL MEDIA & CONTENT
+═══════════════════════════════════════════════════ -->
+<section class="portfolio-section" id="social-portfolio">
+  <div class="section-title">
+    <span class="section-eyebrow">Social Media & Content</span>
+    <h2>Social <span>Portfolio</span></h2>
+    <p>Scroll-stopping posts, carousels, and digital content</p>
+  </div>
+
+  <!-- TAB BUTTONS — Social -->
+  <div class="portfolio-tabs">
+    <button class="tab-btn active" onclick="showTab('socialmedia', this, 'social')">Social Media</button>
+    <button class="tab-btn"       onclick="showTab('carousel', this, 'social')">Carousel</button>
+  </div>
+
   <!-- ===== SOCIAL MEDIA ===== -->
-  <div id="socialmedia" class="tab-content">
+  <div id="socialmedia" class="tab-content social-tab active">
     <div class="portfolio-grid">
 
       <div class="portfolio-card" onclick="openLightbox('Social Media/SM_1.jpg', 'SM_Name_1')">
@@ -596,7 +772,7 @@
   </div>
 
   <!-- ===== CAROUSEL ===== -->
-  <div id="carousel" class="tab-content">
+  <div id="carousel" class="tab-content social-tab">
     <div class="portfolio-grid">
 
       <div class="portfolio-card" onclick="openLightbox('Carousel/CR_1.jpg', 'CR_Name_1')">
@@ -648,6 +824,101 @@
   </div>
 
 </section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     PORTFOLIO SECTION 3 — VIDEO EDITING
+═══════════════════════════════════════════════════ -->
+<section class="video-section" id="video-portfolio">
+  <div class="section-title">
+    <span class="section-eyebrow">Motion & Video</span>
+    <h2>Video <span>Editing</span></h2>
+    <p>Product videos, brand reels, and social motion content</p>
+  </div>
+
+  <div class="video-grid">
+
+    <!-- Video Card 1 — replace src with your actual video thumbnail or embed URL -->
+    <div class="video-card">
+      <div class="video-placeholder">
+        <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+        <span>Video Coming Soon</span>
+      </div>
+      <div class="video-info">
+        <h4>Video_Name_1</h4>
+        <p>Video_Description_1</p>
+        <span class="video-badge">Product Video</span>
+      </div>
+    </div>
+
+    <!-- Video Card 2 -->
+    <div class="video-card">
+      <div class="video-placeholder">
+        <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+        <span>Video Coming Soon</span>
+      </div>
+      <div class="video-info">
+        <h4>Video_Name_2</h4>
+        <p>Video_Description_2</p>
+        <span class="video-badge">Brand Reel</span>
+      </div>
+    </div>
+
+    <!-- Video Card 3 -->
+    <div class="video-card">
+      <div class="video-placeholder">
+        <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+        <span>Video Coming Soon</span>
+      </div>
+      <div class="video-info">
+        <h4>Video_Name_3</h4>
+        <p>Video_Description_3</p>
+        <span class="video-badge">Social Reel</span>
+      </div>
+    </div>
+
+    <!-- Video Card 4 -->
+    <div class="video-card">
+      <div class="video-placeholder">
+        <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+        <span>Video Coming Soon</span>
+      </div>
+      <div class="video-info">
+        <h4>Video_Name_4</h4>
+        <p>Video_Description_4</p>
+        <span class="video-badge">Product Video</span>
+      </div>
+    </div>
+
+    <!-- Video Card 5 -->
+    <div class="video-card">
+      <div class="video-placeholder">
+        <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+        <span>Video Coming Soon</span>
+      </div>
+      <div class="video-info">
+        <h4>Video_Name_5</h4>
+        <p>Video_Description_5</p>
+        <span class="video-badge">Brand Reel</span>
+      </div>
+    </div>
+
+    <!-- Video Card 6 -->
+    <div class="video-card">
+      <div class="video-placeholder">
+        <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+        <span>Video Coming Soon</span>
+      </div>
+      <div class="video-info">
+        <h4>Video_Name_6</h4>
+        <p>Video_Description_6</p>
+        <span class="video-badge">Social Reel</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 
 <!-- SKILLS -->
 <section class="skills" id="skills">
@@ -716,13 +987,9 @@
     cc.save();
     cc.translate(1, 1);
     cc.scale(s, s);
-
-    // Shadow / outline
     cc.shadowColor = 'rgba(0,0,0,0.7)';
     cc.shadowBlur  = 3;
     cc.shadowOffsetX = 1; cc.shadowOffsetY = 1;
-
-    // Classic PS arrow: origin at top-left tip
     cc.beginPath();
     cc.moveTo(0, 0);
     cc.lineTo(0, 20);
@@ -732,28 +999,21 @@
     cc.lineTo(6.5, 15);
     cc.lineTo(11, 15);
     cc.closePath();
-
-    // Orange fill with inner gradient
     const grad = cc.createLinearGradient(0, 0, 11, 22);
     grad.addColorStop(0,   '#ffb347');
     grad.addColorStop(0.4, '#f39c12');
     grad.addColorStop(1,   '#d35400');
     cc.fillStyle = grad;
     cc.fill();
-
-    // White crisp outline
     cc.shadowColor = 'transparent';
     cc.strokeStyle = '#ffffff';
     cc.lineWidth   = 1.2;
     cc.stroke();
-
     cc.restore();
   }
 
   drawPSCursor(false);
   document.body.style.cursor = 'none';
-
-  /* force none on hover states too */
   const styleTag = document.createElement('style');
   styleTag.textContent = '*, *:hover { cursor: none !important; }';
   document.head.appendChild(styleTag);
@@ -777,8 +1037,6 @@
   window.addEventListener('resize', resizeLightning);
 
   const lc = lightning.getContext('2d');
-
-  /* Trail: ring buffer of recent cursor positions */
   const TRAIL_LEN = 28;
   const trail = [];
   let mouseX = -999, mouseY = -999;
@@ -793,7 +1051,6 @@
   document.addEventListener('mousedown', e => { clicking = true;  drawPSCursor(true);  spawnClickBurst(e.clientX, e.clientY); });
   document.addEventListener('mouseup',   ()  => { clicking = false; drawPSCursor(false); });
 
-  /* ── Storm bolt generator ── */
   function jaggedPath(x1, y1, x2, y2, roughness, depth) {
     if (depth === 0) return [[x1, y1], [x2, y2]];
     const mx = (x1 + x2) / 2 + (Math.random() - 0.5) * roughness;
@@ -804,45 +1061,26 @@
     ];
   }
 
-  /* Active storm bolts */
   const stormBolts = [];
 
   function spawnTrailBolt() {
     if (trail.length < 6) return;
     const now = Date.now();
-
-    // Pick a segment along the recent trail
     const base  = Math.max(0, trail.length - 14);
     const idx   = base + Math.floor(Math.random() * (trail.length - base - 1));
     if (idx >= trail.length - 1) return;
-
     const p1 = trail[idx];
     const p2 = trail[idx + 1];
-
-    // Main bolt along cursor path + jagged offshoot
     const dx = p2.x - p1.x, dy = p2.y - p1.y;
     const len = Math.sqrt(dx * dx + dy * dy) || 1;
-
-    // Perpendicular offset for branches
     const px = -dy / len, py = dx / len;
     const branchLen = 18 + Math.random() * 40;
     const branchDir = Math.random() < 0.5 ? 1 : -1;
-
     const ex = p1.x + px * branchLen * branchDir + (Math.random() - 0.5) * 20;
     const ey = p1.y + py * branchLen * branchDir + (Math.random() - 0.5) * 20;
-
     const rough = 14 + Math.random() * 20;
     const pts   = jaggedPath(p1.x, p1.y, ex, ey, rough, 3);
-
-    stormBolts.push({
-      pts,
-      born:    now,
-      life:    80 + Math.random() * 120,
-      width:   0.8 + Math.random() * 1.4,
-      branch:  Math.random() < 0.4   // spawn sub-branch?
-    });
-
-    // Occasionally spawn a longer dramatic bolt along the trail
+    stormBolts.push({ pts, born: now, life: 80 + Math.random() * 120, width: 0.8 + Math.random() * 1.4, branch: Math.random() < 0.4 });
     if (Math.random() < 0.25 && trail.length > 10) {
       const i0 = Math.max(0, trail.length - 10);
       const tStart = trail[i0];
@@ -863,35 +1101,25 @@
     }
   }
 
-  /* ── Render loop ── */
   let lastBoltSpawn = 0;
 
   function render() {
     lc.clearRect(0, 0, lightning.width, lightning.height);
     const now = Date.now();
-
-    // Spawn new trail bolts
     if (now - lastBoltSpawn > 30 && trail.length > 4) {
       spawnTrailBolt();
       if (clicking) spawnTrailBolt();
       lastBoltSpawn = now;
     }
-
-    // Draw all active bolts
     for (let i = stormBolts.length - 1; i >= 0; i--) {
       const b = stormBolts[i];
       const age = now - b.born;
       if (age >= b.life) { stormBolts.splice(i, 1); continue; }
-
-      const t       = age / b.life;          // 0→1
-      const alpha   = Math.pow(1 - t, 1.6); // fade out
-
-      // Core bright bolt
+      const t       = age / b.life;
+      const alpha   = Math.pow(1 - t, 1.6);
       lc.beginPath();
       lc.moveTo(b.pts[0][0], b.pts[0][1]);
       for (let j = 1; j < b.pts.length; j++) lc.lineTo(b.pts[j][0], b.pts[j][1]);
-
-      // Outer glow (wide, dim)
       lc.shadowColor   = '#f39c12';
       lc.shadowBlur    = 18;
       lc.strokeStyle   = `rgba(243,156,18,${alpha * 0.35})`;
@@ -899,20 +1127,14 @@
       lc.lineCap       = 'round';
       lc.lineJoin      = 'round';
       lc.stroke();
-
-      // Mid glow
       lc.shadowBlur    = 8;
       lc.strokeStyle   = `rgba(255,180,50,${alpha * 0.6})`;
       lc.lineWidth     = b.width * 2;
       lc.stroke();
-
-      // Bright core
       lc.shadowBlur    = 3;
       lc.strokeStyle   = `rgba(255,230,120,${alpha})`;
       lc.lineWidth     = b.width * 0.6;
       lc.stroke();
-
-      // Optional sub-branch
       if (b.branch && b.pts.length > 3 && age < b.life * 0.5) {
         const mid = b.pts[Math.floor(b.pts.length / 2)];
         const bex = mid[0] + (Math.random() - 0.5) * 30;
@@ -927,21 +1149,29 @@
         lc.stroke();
       }
     }
-
     requestAnimationFrame(render);
   }
   render();
 
   /* ══════════════════════════════════════════
-     TABS / LIGHTBOX (unchanged)
+     TABS — scoped by group class
   ══════════════════════════════════════════ */
-  function showTab(id, btn) {
-    document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-    document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+  function showTab(id, btn, group) {
+    // Hide all tabs in the same section group
+    const groupClass = group + '-tab';
+    document.querySelectorAll('.' + groupClass).forEach(el => el.classList.remove('active'));
+
+    // Deactivate only sibling tab buttons (same parent .portfolio-tabs)
+    const tabsParent = btn.closest('.portfolio-tabs');
+    tabsParent.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
     document.getElementById(id).classList.add('active');
     btn.classList.add('active');
   }
 
+  /* ══════════════════════════════════════════
+     LIGHTBOX
+  ══════════════════════════════════════════ */
   function openLightbox(imgSrc, caption) {
     const lb  = document.getElementById('lightbox');
     const img = document.getElementById('lightbox-img');
