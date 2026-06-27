@@ -407,6 +407,60 @@
 
     /* Footer */
     footer { text-align: center; padding: 4rem 5%; background: #0a0a0a; border-top: 1px solid #222; }
+
+    /* Floating WhatsApp Button */
+    .whatsapp-float {
+      position: fixed;
+      right: 24px;
+      bottom: 32px;
+      z-index: 99998;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+    .whatsapp-tooltip {
+      background: #fff;
+      color: #111;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: 20px;
+      white-space: nowrap;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+      opacity: 0;
+      transform: translateX(10px);
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+    }
+    .whatsapp-float:hover .whatsapp-tooltip {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .whatsapp-btn {
+      width: 60px;
+      height: 60px;
+      background: #25d366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 28px rgba(37,211,102,0.5), 0 2px 8px rgba(0,0,0,0.3);
+      text-decoration: none;
+      animation: waPulse 2.2s ease-in-out infinite;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .whatsapp-btn:hover {
+      transform: scale(1.12);
+      box-shadow: 0 10px 36px rgba(37,211,102,0.65), 0 4px 12px rgba(0,0,0,0.3);
+      animation: none;
+    }
+    .whatsapp-btn svg { width: 32px; height: 32px; fill: #fff; }
+    @keyframes waPulse {
+      0%   { box-shadow: 0 6px 28px rgba(37,211,102,0.5), 0 0 0 0 rgba(37,211,102,0.45); }
+      60%  { box-shadow: 0 6px 28px rgba(37,211,102,0.5), 0 0 0 16px rgba(37,211,102,0); }
+      100% { box-shadow: 0 6px 28px rgba(37,211,102,0.5), 0 0 0 0 rgba(37,211,102,0); }
+    }
     footer h2 { margin-bottom: 0.5rem; }
     .social-links { margin-top: 2rem; display: flex; justify-content: center; flex-wrap: wrap; gap: 0.5rem 0; }
     .social-links a { display: inline-block; margin: 0 15px; font-weight: bold; border-bottom: 1px solid transparent; padding-bottom: 2px; transition: border-color 0.3s; }
@@ -428,6 +482,12 @@
 
 <!-- HERO -->
 <section class="hero" id="home">
+  <div class="hero-content">
+    <h3>Hello, I'm</h3>
+    <h1>Talha <span>Humayun</span></h1>
+    <p>A passionate Creative Designer specializing in brand identity, engaging social media visuals, and high-converting E-commerce graphics. I bring stories to life through thoughtful design.</p>
+    <a href="https://www.linkedin.com/in/humayuncreative/" class="btn" target="_blank">View My LinkedIn</a>
+  </div>
   <div class="hero-photo-wrap">
     <div class="hero-photo-blob">
       <!-- Animated gradient border ring -->
@@ -450,12 +510,6 @@
         <!-- Uncomment and set your photo: <img src="profile.jpg" alt="Talha Humayun" /> -->
       </div>
     </div>
-  </div>
-  <div class="hero-content">
-    <h3>Hello, I'm</h3>
-    <h1>Talha <span>Humayun</span></h1>
-    <p>A passionate Creative Designer specializing in brand identity, engaging social media visuals, and high-converting E-commerce graphics. I bring stories to life through thoughtful design.</p>
-    <a href="https://www.linkedin.com/in/humayuncreative/" class="btn" target="_blank">View My LinkedIn</a>
   </div>
 </section>
 
@@ -1056,6 +1110,16 @@
     ✦ This entire website was designed &amp; built by me — Talha Humayun — from scratch.
   </p>
 </footer>
+
+<!-- FLOATING WHATSAPP BUTTON -->
+<div class="whatsapp-float">
+  <div class="whatsapp-tooltip">Chat on WhatsApp 💬</div>
+  <a class="whatsapp-btn" href="https://wa.me/923000000000" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16 2C8.268 2 2 8.268 2 16c0 2.494.655 4.835 1.8 6.86L2 30l7.34-1.775A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.6a11.57 11.57 0 0 1-5.93-1.628l-.424-.253-4.358 1.054 1.085-4.24-.277-.437A11.57 11.57 0 0 1 4.4 16C4.4 9.592 9.592 4.4 16 4.4S27.6 9.592 27.6 16 22.408 27.6 16 27.6zm6.38-8.68c-.35-.175-2.07-1.02-2.39-1.136-.32-.116-.553-.175-.786.175s-.9 1.136-1.103 1.37c-.203.233-.407.262-.757.087-.35-.175-1.478-.545-2.814-1.737-1.04-.928-1.742-2.074-1.946-2.424-.203-.35-.022-.539.153-.713.157-.157.35-.408.525-.612.175-.203.233-.35.35-.583.116-.233.058-.437-.029-.612-.087-.175-.786-1.895-1.077-2.595-.283-.681-.57-.588-.786-.6-.203-.01-.437-.013-.67-.013s-.612.087-.932.437c-.32.35-1.224 1.196-1.224 2.916 0 1.72 1.253 3.382 1.428 3.615.175.233 2.467 3.766 5.98 5.282.836.36 1.488.575 1.996.736.838.267 1.602.229 2.205.139.673-.1 2.07-.847 2.362-1.664.29-.816.29-1.516.203-1.664-.087-.146-.32-.233-.67-.408z"/>
+    </svg>
+  </a>
+</div>
 
 <!-- LIGHTBOX -->
 <div id="lightbox" onclick="closeLightbox()">
