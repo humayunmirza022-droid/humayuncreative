@@ -262,38 +262,29 @@
       overflow: hidden;
       border-bottom: 3px solid transparent;
       transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+      cursor: pointer;
     }
     .video-card:hover { transform: translateY(-10px); border-bottom: 3px solid var(--secondary); box-shadow: 0 15px 40px rgba(0,0,0,0.5); }
-    .video-thumb {
+
+    /* Thumbnail wrapper */
+    .video-thumb-wrap {
       width: 100%;
       aspect-ratio: 16/9;
-      background: #161616;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       position: relative;
       overflow: hidden;
+      background: #161616;
     }
-    .video-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .video-play-btn {
-      position: absolute;
-      width: 60px;
-      height: 60px;
-      border-radius: 50%;
-      background: linear-gradient(45deg, var(--primary), var(--secondary));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 4;
-      opacity: 0.9;
-      transition: opacity 0.3s, transform 0.3s;
-      box-shadow: 0 6px 24px rgba(243,156,18,0.4);
+    .video-thumb-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
     }
-    .video-card:hover .video-play-btn { opacity: 1; transform: scale(1.1); }
-    .video-play-btn svg { width: 26px; height: 26px; fill: #fff; margin-left: 3px; }
-    .video-placeholder {
-      width: 100%;
-      aspect-ratio: 16/9;
+    .video-card:hover .video-thumb-wrap img { transform: scale(1.06); }
+
+    /* Fallback when no thumbnail image */
+    .video-fallback-thumb {
+      width: 100%; height: 100%;
       background: linear-gradient(135deg, #1a1a1a, #242424);
       display: flex;
       flex-direction: column;
@@ -302,28 +293,130 @@
       gap: 0.75rem;
       color: var(--text-muted);
     }
-    .video-placeholder svg { width: 40px; height: 40px; opacity: 0.35; fill: var(--primary); }
-    .video-placeholder span { font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; opacity: 0.5; }
-    .video-info { padding: 1.5rem; }
+    .video-fallback-thumb svg { width: 40px; height: 40px; fill: var(--primary); opacity: 0.4; }
+    .video-fallback-thumb span { font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; opacity: 0.55; }
+
+    /* Play button overlay on thumbnail */
+    .video-play-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s;
+      z-index: 3;
+    }
+    .video-card:hover .video-play-overlay { background: rgba(0,0,0,0.52); }
+    .vid-play-btn {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0;
+      transform: scale(0.7);
+      transition: opacity 0.3s, transform 0.3s;
+      box-shadow: 0 8px 30px rgba(243,156,18,0.5);
+    }
+    .video-card:hover .vid-play-btn { opacity: 1; transform: scale(1); }
+    .vid-play-btn svg { width: 28px; height: 28px; fill: #fff; margin-left: 4px; }
+    .portfolio-badge {
+      position: absolute;
+      top: 12px; right: 12px;
+      z-index: 4;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 4px 11px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .video-info { padding: 1.4rem 1.5rem; }
     .video-info h4 {
-      margin: 0 0 0.5rem 0;
+      margin: 0 0 0.4rem 0;
       font-size: 1.05rem;
       font-weight: 700;
       border-left: 3px solid var(--secondary);
       padding-left: 10px;
     }
-    .video-info p { color: var(--text-muted); font-size: 0.88rem; margin: 0; }
-    .video-badge {
-      display: inline-block;
-      margin-top: 0.75rem;
-      font-size: 0.7rem;
+    .video-info p { color: var(--text-muted); font-size: 0.88rem; margin: 0 0 0.75rem 0; }
+    .video-badge-inline {
+      font-size: 0.72rem;
       font-weight: 700;
       letter-spacing: 1px;
-      text-transform: uppercase;
       color: var(--secondary);
       border: 1px solid var(--secondary);
       padding: 3px 10px;
       border-radius: 20px;
+      text-transform: uppercase;
+    }
+
+    /* ── VIDEO MODAL ── */
+    #video-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 99995;
+      background: rgba(0,0,0,0.92);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(6px);
+      animation: modalFadeIn 0.25s ease;
+    }
+    #video-modal.open { display: flex; }
+    @keyframes modalFadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    #video-modal-inner {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      background: #111;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 0 0 1px #333;
+      animation: modalSlideUp 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    @keyframes modalSlideUp {
+      from { transform: translateY(40px) scale(0.95); opacity: 0; }
+      to   { transform: translateY(0) scale(1);       opacity: 1; }
+    }
+    #video-modal-close {
+      position: absolute;
+      top: 14px; right: 18px;
+      z-index: 10;
+      background: rgba(0,0,0,0.6);
+      border: none;
+      color: #fff;
+      font-size: 1.4rem;
+      line-height: 1;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, transform 0.2s;
+    }
+    #video-modal-close:hover { background: var(--secondary); transform: rotate(90deg); }
+    #video-modal-title {
+      padding: 1.1rem 1.5rem 0.6rem;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.5px;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    #video-modal-player {
+      width: 100%;
+      aspect-ratio: 16/9;
+      display: block;
+      background: #000;
+      outline: none;
     }
 
     /* Divider between portfolio sections */
@@ -976,91 +1069,165 @@
   <div class="section-title">
     <span class="section-eyebrow">Motion & Video</span>
     <h2>Video <span>Editing</span></h2>
-    <p>Product videos, brand reels, and social motion content</p>
+    <p>Click any thumbnail to watch — product videos, brand reels, and social motion content</p>
   </div>
 
   <div class="video-grid">
 
-    <!-- Video Card 1 — replace src with your actual video thumbnail or embed URL -->
-    <div class="video-card">
-      <div class="video-placeholder">
-        <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
-        <span>Video Coming Soon</span>
+    <!-- ─── Video Card 1 ───
+         thumbnail:  Videos/Thumbnails/VT1.jpg   (your custom thumbnail image)
+         video file: Videos/Video_1.mp4
+         Change both paths and the title/description below. -->
+    <div class="video-card" onclick="openVideoModal('Videos/Video_1.mp4', 'Video_Name_1')">
+      <div class="video-thumb-wrap">
+        <img src="Videos/Thumbnails/VT1.jpg" alt="Video 1 thumbnail"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="video-fallback-thumb" style="display:none;">
+          <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+          <span>Video_Name_1</span>
+        </div>
+        <div class="video-play-overlay">
+          <div class="vid-play-btn">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <span class="portfolio-badge">Product Video</span>
       </div>
       <div class="video-info">
         <h4>Video_Name_1</h4>
         <p>Video_Description_1</p>
-        <span class="video-badge">Product Video</span>
+        <span class="video-badge-inline">▶ Click to Play</span>
       </div>
     </div>
 
-    <!-- Video Card 2 -->
-    <div class="video-card">
-      <div class="video-placeholder">
-        <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
-        <span>Video Coming Soon</span>
+    <!-- ─── Video Card 2 ─── -->
+    <div class="video-card" onclick="openVideoModal('Videos/Video_2.mp4', 'Video_Name_2')">
+      <div class="video-thumb-wrap">
+        <img src="Videos/Thumbnails/VT2.jpg" alt="Video 2 thumbnail"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="video-fallback-thumb" style="display:none;">
+          <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+          <span>Video_Name_2</span>
+        </div>
+        <div class="video-play-overlay">
+          <div class="vid-play-btn">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <span class="portfolio-badge">Brand Reel</span>
       </div>
       <div class="video-info">
         <h4>Video_Name_2</h4>
         <p>Video_Description_2</p>
-        <span class="video-badge">Brand Reel</span>
+        <span class="video-badge-inline">▶ Click to Play</span>
       </div>
     </div>
 
-    <!-- Video Card 3 -->
-    <div class="video-card">
-      <div class="video-placeholder">
-        <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
-        <span>Video Coming Soon</span>
+    <!-- ─── Video Card 3 ─── -->
+    <div class="video-card" onclick="openVideoModal('Videos/Video_3.mp4', 'Video_Name_3')">
+      <div class="video-thumb-wrap">
+        <img src="Videos/Thumbnails/VT3.jpg" alt="Video 3 thumbnail"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="video-fallback-thumb" style="display:none;">
+          <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+          <span>Video_Name_3</span>
+        </div>
+        <div class="video-play-overlay">
+          <div class="vid-play-btn">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <span class="portfolio-badge">Social Reel</span>
       </div>
       <div class="video-info">
         <h4>Video_Name_3</h4>
         <p>Video_Description_3</p>
-        <span class="video-badge">Social Reel</span>
+        <span class="video-badge-inline">▶ Click to Play</span>
       </div>
     </div>
 
-    <!-- Video Card 4 -->
-    <div class="video-card">
-      <div class="video-placeholder">
-        <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
-        <span>Video Coming Soon</span>
+    <!-- ─── Video Card 4 ─── -->
+    <div class="video-card" onclick="openVideoModal('Videos/Video_4.mp4', 'Video_Name_4')">
+      <div class="video-thumb-wrap">
+        <img src="Videos/Thumbnails/VT4.jpg" alt="Video 4 thumbnail"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="video-fallback-thumb" style="display:none;">
+          <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+          <span>Video_Name_4</span>
+        </div>
+        <div class="video-play-overlay">
+          <div class="vid-play-btn">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <span class="portfolio-badge">Product Video</span>
       </div>
       <div class="video-info">
         <h4>Video_Name_4</h4>
         <p>Video_Description_4</p>
-        <span class="video-badge">Product Video</span>
+        <span class="video-badge-inline">▶ Click to Play</span>
       </div>
     </div>
 
-    <!-- Video Card 5 -->
-    <div class="video-card">
-      <div class="video-placeholder">
-        <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
-        <span>Video Coming Soon</span>
+    <!-- ─── Video Card 5 ─── -->
+    <div class="video-card" onclick="openVideoModal('Videos/Video_5.mp4', 'Video_Name_5')">
+      <div class="video-thumb-wrap">
+        <img src="Videos/Thumbnails/VT5.jpg" alt="Video 5 thumbnail"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="video-fallback-thumb" style="display:none;">
+          <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+          <span>Video_Name_5</span>
+        </div>
+        <div class="video-play-overlay">
+          <div class="vid-play-btn">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <span class="portfolio-badge">Brand Reel</span>
       </div>
       <div class="video-info">
         <h4>Video_Name_5</h4>
         <p>Video_Description_5</p>
-        <span class="video-badge">Brand Reel</span>
+        <span class="video-badge-inline">▶ Click to Play</span>
       </div>
     </div>
 
-    <!-- Video Card 6 -->
-    <div class="video-card">
-      <div class="video-placeholder">
-        <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
-        <span>Video Coming Soon</span>
+    <!-- ─── Video Card 6 ─── -->
+    <div class="video-card" onclick="openVideoModal('Videos/Video_6.mp4', 'Video_Name_6')">
+      <div class="video-thumb-wrap">
+        <img src="Videos/Thumbnails/VT6.jpg" alt="Video 6 thumbnail"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="video-fallback-thumb" style="display:none;">
+          <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+          <span>Video_Name_6</span>
+        </div>
+        <div class="video-play-overlay">
+          <div class="vid-play-btn">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <span class="portfolio-badge">Social Reel</span>
       </div>
       <div class="video-info">
         <h4>Video_Name_6</h4>
         <p>Video_Description_6</p>
-        <span class="video-badge">Social Reel</span>
+        <span class="video-badge-inline">▶ Click to Play</span>
       </div>
     </div>
 
   </div>
 </section>
+
+<!-- VIDEO MODAL POPUP -->
+<div id="video-modal" onclick="closeVideoModal()">
+  <div id="video-modal-inner" onclick="event.stopPropagation()">
+    <button id="video-modal-close" onclick="closeVideoModal()">&#x2715;</button>
+    <div id="video-modal-title"></div>
+    <video id="video-modal-player" controls playsinline>
+      Your browser does not support HTML5 video.
+    </video>
+  </div>
+</div>
 
 
 <!-- SKILLS -->
@@ -1352,8 +1519,31 @@
     document.getElementById('lightbox-img').classList.toggle('zoomed');
   }
 
+  /* ══════════════════════════════════════════
+     VIDEO MODAL
+  ══════════════════════════════════════════ */
+  function openVideoModal(src, title) {
+    const modal  = document.getElementById('video-modal');
+    const player = document.getElementById('video-modal-player');
+    const ttl    = document.getElementById('video-modal-title');
+    ttl.textContent = title;
+    player.src = src;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    player.play().catch(() => {}); // autoplay when possible
+  }
+
+  function closeVideoModal() {
+    const modal  = document.getElementById('video-modal');
+    const player = document.getElementById('video-modal-player');
+    player.pause();
+    player.src = '';
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
   document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'Escape') { closeLightbox(); closeVideoModal(); }
   });
 </script>
 
