@@ -30,10 +30,76 @@
     nav a:hover { color: var(--primary); }
 
     /* Hero */
-    .hero { min-height: 85vh; display: flex; align-items: center; padding: 0 5%; }
+    .hero { min-height: 85vh; display: flex; align-items: center; padding: 0 5%; gap: 4rem; flex-wrap: wrap; }
+    .hero-content { flex: 1; min-width: 280px; }
     .hero-content h3 { color: var(--text-muted); margin-bottom: 0; font-weight: 400; }
     .hero-content h1 { font-size: clamp(3rem, 8vw, 5rem); margin: 0; line-height: 1.1; }
     .hero-content p { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 1.5rem 0 2.5rem 0; }
+
+    /* Profile Picture */
+    .hero-photo-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .hero-photo-blob {
+      position: relative;
+      width: 280px;
+      height: 280px;
+    }
+    .hero-photo-blob svg.blob-border {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      animation: rotateBlobBorder 8s linear infinite;
+    }
+    @keyframes rotateBlobBorder {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    .hero-photo-blob .blob-clip-wrap {
+      position: absolute;
+      inset: 14px;
+      border-radius: 50%;
+      overflow: hidden;
+      animation: morphBlob 8s ease-in-out infinite;
+      box-shadow: 0 0 40px rgba(243,156,18,0.35), 0 0 80px rgba(231,76,60,0.18);
+    }
+    @keyframes morphBlob {
+      0%   { border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; }
+      20%  { border-radius: 45% 55% 40% 60% / 55% 45% 60% 40%; }
+      40%  { border-radius: 50% 50% 60% 40% / 40% 60% 45% 55%; }
+      60%  { border-radius: 40% 60% 45% 55% / 60% 40% 55% 45%; }
+      80%  { border-radius: 55% 45% 50% 50% / 45% 55% 50% 50%; }
+      100% { border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; }
+    }
+    .hero-photo-blob .blob-clip-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .hero-photo-blob .blob-clip-wrap .photo-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      text-align: center;
+      padding: 1rem;
+    }
+    .hero-photo-blob .blob-clip-wrap .photo-placeholder svg {
+      width: 48px; height: 48px;
+      fill: var(--primary);
+      opacity: 0.5;
+    }
 
     /* Buttons */
     .btn { display: inline-block; padding: 12px 30px; background: linear-gradient(45deg, var(--primary), var(--secondary)); color: #fff; border-radius: 30px; font-weight: bold; transition: transform 0.3s, box-shadow 0.3s; }
@@ -362,6 +428,29 @@
 
 <!-- HERO -->
 <section class="hero" id="home">
+  <div class="hero-photo-wrap">
+    <div class="hero-photo-blob">
+      <!-- Animated gradient border ring -->
+      <svg class="blob-border" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="blobGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#f39c12"/>
+            <stop offset="50%" stop-color="#e74c3c"/>
+            <stop offset="100%" stop-color="#f39c12"/>
+          </linearGradient>
+        </defs>
+        <circle cx="140" cy="140" r="134" fill="none" stroke="url(#blobGrad)" stroke-width="4" stroke-dasharray="30 12" stroke-linecap="round"/>
+      </svg>
+      <div class="blob-clip-wrap">
+        <!-- Replace src with your actual photo path, e.g. src="profile.jpg" -->
+        <div class="photo-placeholder">
+          <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+          <span>Add your photo<br>src="your-photo.jpg"</span>
+        </div>
+        <!-- Uncomment and set your photo: <img src="profile.jpg" alt="Talha Humayun" /> -->
+      </div>
+    </div>
+  </div>
   <div class="hero-content">
     <h3>Hello, I'm</h3>
     <h1>Talha <span>Humayun</span></h1>
@@ -935,8 +1024,12 @@
       <p>Precision vector graphics, clean logo design, typography, and scalable brand illustrations.</p>
     </div>
     <div class="card">
-      <h3>Figma</h3>
-      <p>Rapid prototyping, wireframing, and collaborative interface design for web and mobile.</p>
+      <h3>Adobe Premiere Pro</h3>
+      <p>Professional video editing, color grading, multi-track timelines, and polished export for all platforms.</p>
+    </div>
+    <div class="card">
+      <h3>Adobe After Effects</h3>
+      <p>Motion graphics, visual effects, kinetic typography, and stunning animations that elevate any brand video.</p>
     </div>
     <div class="card">
       <h3>Canva & CapCut</h3>
@@ -955,8 +1048,13 @@
     <a href="https://www.behance.net/your-profile" target="_blank">Behance</a>
     <a href="https://www.instagram.com/your-profile" target="_blank">Instagram</a>
     <a href="https://dribbble.com/your-profile" target="_blank">Dribbble</a>
+    <a href="https://wa.me/923000000000" target="_blank" style="color:#25d366;">WhatsApp</a>
+    <a href="mailto:your.email@example.com" style="color:var(--primary);">Email</a>
   </div>
   <p style="margin-top: 3rem; color: var(--text-muted); font-size: 0.85rem;">&copy; 2024 Talha Humayun. All rights reserved.</p>
+  <p style="margin-top: 0.75rem; color: var(--text-muted); font-size: 0.82rem; font-style: italic;">
+    ✦ This entire website was designed &amp; built by me — Talha Humayun — from scratch.
+  </p>
 </footer>
 
 <!-- LIGHTBOX -->
@@ -1045,8 +1143,7 @@
   document.addEventListener('mousemove', e => {
     mouseX = e.clientX; mouseY = e.clientY;
     cursorCanvas.style.transform = `translate(${mouseX}px,${mouseY}px)`;
-    trail.push({ x: mouseX, y: mouseY, t: Date.now() });
-    if (trail.length > TRAIL_LEN) trail.shift();
+    /* trail tracking removed — only click animation enabled */
   });
   document.addEventListener('mousedown', e => { clicking = true;  drawPSCursor(true);  spawnClickBurst(e.clientX, e.clientY); });
   document.addEventListener('mouseup',   ()  => { clicking = false; drawPSCursor(false); });
@@ -1106,11 +1203,7 @@
   function render() {
     lc.clearRect(0, 0, lightning.width, lightning.height);
     const now = Date.now();
-    if (now - lastBoltSpawn > 30 && trail.length > 4) {
-      spawnTrailBolt();
-      if (clicking) spawnTrailBolt();
-      lastBoltSpawn = now;
-    }
+    /* Trail bolts on mouse move removed — only click burst animates */
     for (let i = stormBolts.length - 1; i >= 0; i--) {
       const b = stormBolts[i];
       const age = now - b.born;
