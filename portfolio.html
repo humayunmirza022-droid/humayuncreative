@@ -1,0 +1,1551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Talha Humayun | Creative Designer</title>
+  <style>
+    :root {
+      --primary: #f39c12;
+      --secondary: #e74c3c;
+      --bg: #121212;
+      --text: #ffffff;
+      --text-muted: #a0a0a0;
+      --card-bg: #1e1e1e;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; line-height: 1.6; }
+    a { color: var(--primary); text-decoration: none; }
+    h1 span, h2 span, .logo span {
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Header */
+    header { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 5%; background: rgba(18,18,18,0.95); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #333; }
+    .logo { font-size: 1.5rem; font-weight: bold; letter-spacing: 1px; }
+    nav a { margin-left: 2rem; color: var(--text); font-weight: 500; transition: color 0.3s; font-size: 0.9rem; text-transform: uppercase; }
+    nav a:hover { color: var(--primary); }
+
+    /* Hero */
+    .hero { min-height: 85vh; display: flex; align-items: center; padding: 0 5%; gap: 4rem; flex-wrap: wrap; }
+    .hero-content { flex: 1; min-width: 280px; }
+    .hero-content h3 { color: var(--text-muted); margin-bottom: 0; font-weight: 400; }
+    .hero-content h1 { font-size: clamp(3rem, 8vw, 5rem); margin: 0; line-height: 1.1; }
+    .hero-content p { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 1.5rem 0 2.5rem 0; }
+
+    /* Profile Picture */
+    .hero-photo-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .hero-photo-blob {
+      position: relative;
+      width: 280px;
+      height: 280px;
+    }
+    .hero-photo-blob svg.blob-border {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      animation: rotateBlobBorder 8s linear infinite;
+    }
+    @keyframes rotateBlobBorder {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+    .hero-photo-blob .blob-clip-wrap {
+      position: absolute;
+      inset: 14px;
+      border-radius: 50%;
+      overflow: hidden;
+      animation: morphBlob 8s ease-in-out infinite;
+      box-shadow: 0 0 40px rgba(243,156,18,0.35), 0 0 80px rgba(231,76,60,0.18);
+    }
+    @keyframes morphBlob {
+      0%   { border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; }
+      20%  { border-radius: 45% 55% 40% 60% / 55% 45% 60% 40%; }
+      40%  { border-radius: 50% 50% 60% 40% / 40% 60% 45% 55%; }
+      60%  { border-radius: 40% 60% 45% 55% / 60% 40% 55% 45%; }
+      80%  { border-radius: 55% 45% 50% 50% / 45% 55% 50% 50%; }
+      100% { border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; }
+    }
+    .hero-photo-blob .blob-clip-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .hero-photo-blob .blob-clip-wrap .photo-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      text-align: center;
+      padding: 1rem;
+    }
+    .hero-photo-blob .blob-clip-wrap .photo-placeholder svg {
+      width: 48px; height: 48px;
+      fill: var(--primary);
+      opacity: 0.5;
+    }
+
+    /* Buttons */
+    .btn { display: inline-block; padding: 12px 30px; background: linear-gradient(45deg, var(--primary), var(--secondary)); color: #fff; border-radius: 30px; font-weight: bold; transition: transform 0.3s, box-shadow 0.3s; }
+    .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(243, 156, 18, 0.3); }
+
+    /* Section */
+    .section-title { text-align: center; margin-bottom: 3rem; }
+    .section-title h2 { font-size: 2.5rem; margin: 0 0 0.4rem 0; }
+    .section-title p { color: var(--text-muted); font-size: 1rem; margin: 0; }
+    .services, .skills { padding: 6rem 5%; }
+
+    /* Portfolio wrapper — three separate sections */
+    .portfolio-section {
+      padding: 5rem 5%;
+    }
+    .portfolio-section:nth-child(odd) {
+      background: rgba(30,30,30,0.3);
+    }
+    .portfolio-section:nth-child(even) {
+      background: var(--bg);
+    }
+
+    /* Section category label */
+    .section-eyebrow {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Services Cards */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+    .card { background: var(--card-bg); padding: 2.5rem 2rem; border-radius: 15px; transition: transform 0.3s, border-color 0.3s; border-bottom: 3px solid transparent; }
+    .card:hover { transform: translateY(-10px); border-bottom: 3px solid var(--primary); }
+    .card h3 { margin-top: 0; font-size: 1.3rem; border-left: 3px solid var(--primary); padding-left: 10px; }
+    .card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0; }
+
+    /* Portfolio Tabs */
+    .portfolio-tabs {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      padding: 10px 22px;
+      border-radius: 30px;
+      border: 2px solid #333;
+      background: transparent;
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: all 0.3s;
+      white-space: nowrap;
+    }
+    .tab-btn:hover, .tab-btn.active {
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      color: #fff;
+      border-color: transparent;
+    }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* Portfolio Grid & Cards */
+    .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+    .portfolio-card {
+      background: var(--card-bg);
+      border-radius: 15px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
+      border-bottom: 3px solid transparent;
+    }
+    .portfolio-card:hover { transform: translateY(-10px); border-bottom: 3px solid var(--primary); box-shadow: 0 15px 40px rgba(0,0,0,0.4); }
+    .portfolio-thumb {
+      width: 100%;
+      height: 200px;
+      position: relative;
+      overflow: hidden;
+    }
+    .portfolio-thumb::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.25);
+    }
+    .portfolio-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .portfolio-badge {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      z-index: 2;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      color: #fff;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .thumb-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s;
+      z-index: 3;
+    }
+    .portfolio-card:hover .thumb-overlay { background: rgba(0,0,0,0.55); }
+    .thumb-overlay-icon {
+      opacity: 0;
+      transform: scale(0.7);
+      transition: opacity 0.3s, transform 0.3s;
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .portfolio-card:hover .thumb-overlay-icon { opacity: 1; transform: scale(1); }
+    .thumb-overlay-icon svg { width: 24px; height: 24px; fill: #fff; }
+    .portfolio-info { padding: 1.5rem; }
+    .portfolio-info h4 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      border-left: 3px solid var(--primary);
+      padding-left: 10px;
+    }
+    .portfolio-info p { color: var(--text-muted); font-size: 0.88rem; margin: 0; line-height: 1.5; }
+
+    /* Video Editing Section — special styling */
+    .video-section {
+      padding: 5rem 5%;
+      background: #0d0d0d;
+    }
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    .video-card {
+      background: var(--card-bg);
+      border-radius: 15px;
+      overflow: hidden;
+      border-bottom: 3px solid transparent;
+      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+      cursor: pointer;
+    }
+    .video-card:hover { transform: translateY(-10px); border-bottom: 3px solid var(--secondary); box-shadow: 0 15px 40px rgba(0,0,0,0.5); }
+
+    /* Thumbnail wrapper */
+    .video-thumb-wrap {
+      width: 100%;
+      aspect-ratio: 16/9;
+      position: relative;
+      overflow: hidden;
+      background: #161616;
+    }
+    .video-thumb-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .video-card:hover .video-thumb-wrap img { transform: scale(1.06); }
+
+    /* Fallback when no thumbnail image */
+    .video-fallback-thumb {
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #1a1a1a, #242424);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      color: var(--text-muted);
+    }
+    .video-fallback-thumb svg { width: 40px; height: 40px; fill: var(--primary); opacity: 0.4; }
+    .video-fallback-thumb span { font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; opacity: 0.55; }
+
+    /* Play button overlay on thumbnail */
+    .video-play-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s;
+      z-index: 3;
+    }
+    .video-card:hover .video-play-overlay { background: rgba(0,0,0,0.52); }
+    .vid-play-btn {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0;
+      transform: scale(0.7);
+      transition: opacity 0.3s, transform 0.3s;
+      box-shadow: 0 8px 30px rgba(243,156,18,0.5);
+    }
+    .video-card:hover .vid-play-btn { opacity: 1; transform: scale(1); }
+    .vid-play-btn svg { width: 28px; height: 28px; fill: #fff; margin-left: 4px; }
+    .portfolio-badge {
+      position: absolute;
+      top: 12px; right: 12px;
+      z-index: 4;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 4px 11px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .video-info { padding: 1.4rem 1.5rem; }
+    .video-info h4 {
+      margin: 0 0 0.4rem 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      border-left: 3px solid var(--secondary);
+      padding-left: 10px;
+    }
+    .video-info p { color: var(--text-muted); font-size: 0.88rem; margin: 0 0 0.75rem 0; }
+    .video-badge-inline {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: var(--secondary);
+      border: 1px solid var(--secondary);
+      padding: 3px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+    }
+
+    /* ── VIDEO MODAL ── */
+    #video-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 99995;
+      background: rgba(0,0,0,0.92);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(6px);
+      animation: modalFadeIn 0.25s ease;
+    }
+    #video-modal.open { display: flex; }
+    @keyframes modalFadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    #video-modal-inner {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      background: #111;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 0 0 1px #333;
+      animation: modalSlideUp 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    @keyframes modalSlideUp {
+      from { transform: translateY(40px) scale(0.95); opacity: 0; }
+      to   { transform: translateY(0) scale(1);       opacity: 1; }
+    }
+    #video-modal-close {
+      position: absolute;
+      top: 14px; right: 18px;
+      z-index: 10;
+      background: rgba(0,0,0,0.6);
+      border: none;
+      color: #fff;
+      font-size: 1.4rem;
+      line-height: 1;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s, transform 0.2s;
+    }
+    #video-modal-close:hover { background: var(--secondary); transform: rotate(90deg); }
+    #video-modal-title {
+      padding: 1.1rem 1.5rem 0.6rem;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.5px;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    #video-modal-player {
+      width: 100%;
+      aspect-ratio: 16/9;
+      display: block;
+      background: #000;
+      outline: none;
+    }
+
+    /* Divider between portfolio sections */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 0 5%;
+      margin: 0;
+    }
+    .section-divider::before,
+    .section-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #333, transparent);
+    }
+
+    /* Lightbox */
+    #lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      background: rgba(0,0,0,0.94);
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow: auto;
+    }
+    #lightbox.open { display: flex; }
+    #lightbox-inner {
+      position: relative;
+      max-width: 95vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    #lightbox-img {
+      width: auto;
+      height: auto;
+      max-width: 90vw;
+      max-height: 80vh;
+      object-fit: contain;
+      border-radius: 10px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.8);
+      display: block;
+      cursor: zoom-in;
+      transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    #lightbox-img.zoomed { transform: scale(1.5); cursor: zoom-out; }
+    #lightbox-caption {
+      margin-top: 20px;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      opacity: 0.85;
+      text-align: center;
+      transition: opacity 0.3s;
+    }
+    #lightbox-img.zoomed ~ #lightbox-caption { opacity: 0; }
+    #lightbox-close {
+      position: fixed;
+      top: 20px;
+      right: 28px;
+      font-size: 2.2rem;
+      color: #fff;
+      cursor: pointer;
+      line-height: 1;
+      opacity: 0.7;
+      transition: opacity 0.2s, transform 0.2s;
+      background: none;
+      border: none;
+      z-index: 10000;
+    }
+    #lightbox-close:hover { opacity: 1; transform: rotate(90deg); }
+
+    /* Skills */
+    .skills { background: rgba(30,30,30,0.3); }
+
+    /* Footer */
+    footer { text-align: center; padding: 4rem 5%; background: #0a0a0a; border-top: 1px solid #222; }
+
+    /* Floating WhatsApp Button */
+    .whatsapp-float {
+      position: fixed;
+      right: 24px;
+      bottom: 32px;
+      z-index: 99998;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+    .whatsapp-tooltip {
+      background: #fff;
+      color: #111;
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: 20px;
+      white-space: nowrap;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+      opacity: 0;
+      transform: translateX(10px);
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+    }
+    .whatsapp-float:hover .whatsapp-tooltip {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .whatsapp-btn {
+      width: 60px;
+      height: 60px;
+      background: #25d366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 28px rgba(37,211,102,0.5), 0 2px 8px rgba(0,0,0,0.3);
+      text-decoration: none;
+      animation: waPulse 2.2s ease-in-out infinite;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .whatsapp-btn:hover {
+      transform: scale(1.12);
+      box-shadow: 0 10px 36px rgba(37,211,102,0.65), 0 4px 12px rgba(0,0,0,0.3);
+      animation: none;
+    }
+    .whatsapp-btn svg { width: 32px; height: 32px; fill: #fff; }
+    @keyframes waPulse {
+      0%   { box-shadow: 0 6px 28px rgba(37,211,102,0.5), 0 0 0 0 rgba(37,211,102,0.45); }
+      60%  { box-shadow: 0 6px 28px rgba(37,211,102,0.5), 0 0 0 16px rgba(37,211,102,0); }
+      100% { box-shadow: 0 6px 28px rgba(37,211,102,0.5), 0 0 0 0 rgba(37,211,102,0); }
+    }
+    footer h2 { margin-bottom: 0.5rem; }
+    .social-links { margin-top: 2rem; display: flex; justify-content: center; flex-wrap: wrap; gap: 0.5rem 0; }
+    .social-links a { display: inline-block; margin: 0 15px; font-weight: bold; border-bottom: 1px solid transparent; padding-bottom: 2px; transition: border-color 0.3s; }
+    .social-links a:hover { border-color: var(--primary); }
+  </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">Talha <span>Humayun</span></div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#services">Services</a>
+    <a href="#ecommerce-portfolio">Portfolio</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-content">
+    <h3>Hello, I'm</h3>
+    <h1>Talha <span>Humayun</span></h1>
+    <p>A passionate Creative Designer specializing in brand identity, engaging social media visuals, and high-converting E-commerce graphics. I bring stories to life through thoughtful design.</p>
+    <a href="https://www.linkedin.com/in/humayuncreative/" class="btn" target="_blank">View My LinkedIn</a>
+  </div>
+  <div class="hero-photo-wrap">
+    <div class="hero-photo-blob">
+      <!-- Animated gradient border ring -->
+      <svg class="blob-border" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="blobGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#f39c12"/>
+            <stop offset="50%" stop-color="#e74c3c"/>
+            <stop offset="100%" stop-color="#f39c12"/>
+          </linearGradient>
+        </defs>
+        <circle cx="140" cy="140" r="134" fill="none" stroke="url(#blobGrad)" stroke-width="4" stroke-dasharray="30 12" stroke-linecap="round"/>
+      </svg>
+      <div class="blob-clip-wrap">
+        <!-- Replace src with your actual photo path, e.g. src="profile.jpg" -->
+        <div class="photo-placeholder">
+          <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+          <span>Add your photo<br>src="your-photo.jpg"</span>
+        </div>
+        <!-- Uncomment and set your photo: <img src="profile.jpg" alt="Talha Humayun" /> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-title">
+    <h2>My <span>Services</span></h2>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <h3>Amazon A+ Content</h3>
+      <p>Designing high-converting Amazon listing images and EBC (Enhanced Brand Content) that establish trust and highlight product features.</p>
+    </div>
+    <div class="card">
+      <h3>Social Media Design</h3>
+      <p>Creating scroll-stopping posts, banners, and digital assets that boost engagement and strengthen your brand presence.</p>
+    </div>
+    <div class="card">
+      <h3>Brand Identity</h3>
+      <p>Building strong, memorable brand identities, from typography to comprehensive style guidelines that stand out in the market.</p>
+    </div>
+    <div class="card">
+      <h3>Web Banners & UI</h3>
+      <p>Crafting intuitive digital interfaces and striking website banners tailored for modern, seamless web experiences.</p>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     PORTFOLIO SECTION 1 — E-COMMERCE & AMAZON
+═══════════════════════════════════════════════════ -->
+<section class="portfolio-section" id="ecommerce-portfolio">
+  <div class="section-title">
+    <span class="section-eyebrow">E-Commerce & Amazon</span>
+    <h2>Amazon <span>Portfolio</span></h2>
+    <p>Listing images, A+ content, brand stories, and full storefronts</p>
+  </div>
+
+  <!-- TAB BUTTONS — E-Commerce -->
+  <div class="portfolio-tabs">
+    <button class="tab-btn active" onclick="showTab('listing', this, 'ecom')">Amazon Listing</button>
+    <button class="tab-btn"       onclick="showTab('aplus', this, 'ecom')">Amazon A+ &amp; Premium A+</button>
+    <button class="tab-btn"       onclick="showTab('mainimages', this, 'ecom')">Main Images</button>
+    <button class="tab-btn"       onclick="showTab('storefront', this, 'ecom')">StoreFront</button>
+    <button class="tab-btn"       onclick="showTab('brandstory', this, 'ecom')">Brand Story</button>
+  </div>
+
+  <!-- ===== AMAZON LISTING ===== -->
+  <div id="listing" class="tab-content ecom-tab active">
+    <div class="portfolio-grid">
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon Listing/Listing_1.jpg', 'Listing_Name_1')">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT1.jpg" alt="Listing 1" />
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Listing_Name_1</h4><p>Listing_Description_1</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon Listing/Listing_2.jpg', 'Listing_Name_2')">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT2.jpg" alt="Listing 2" />
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Listing_Name_2</h4><p>Listing_Description_2</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon Listing/Listing_3.jpg', 'Listing_Name_3')">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT3.jpg" alt="Listing 3" />
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Listing_Name_3</h4><p>Listing_Description_3</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon Listing/Listing_4.jpg', 'Listing_Name_4')">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT4.jpg" alt="Listing 4" />
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Listing_Name_4</h4><p>Listing_Description_4</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon Listing/Listing_5.jpg', 'Listing_Name_5')">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT5.jpg" alt="Listing 5" />
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Listing_Name_5</h4><p>Listing_Description_5</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon Listing/Listing_6.jpg', 'Listing_Name_6')">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT6.jpg" alt="Listing 6" />
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Listing_Name_6</h4><p>Listing_Description_6</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon Listing/Listing_7.jpg', 'Listing_Name_7')">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT7.jpg" alt="Listing 7" />
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Listing_Name_7</h4><p>Listing_Description_7</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon Listing/Listing_8.jpg', 'Listing_Name_8')">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT8.jpg" alt="Listing 8" />
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Listing_Name_8</h4><p>Listing_Description_8</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon Listing/Listing_9.jpg', 'Listing_Name_9')">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT9.jpg" alt="Listing 9" />
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Listing_Name_9</h4><p>Listing_Description_9</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon Listing/Listing_10.jpg', 'Listing_Name_10')">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT10.jpg" alt="Listing 10" />
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Listing_Name_10</h4><p>Listing_Description_10</p></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== AMAZON A+ & PREMIUM A+ ===== -->
+  <div id="aplus" class="tab-content ecom-tab">
+    <div class="portfolio-grid">
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon A+/AP_1.jpg', 'AP_Name_1')">
+        <div class="portfolio-thumb">
+          <img src="Amazon A+/APT1.jpg" alt="A+ Content 1" />
+          <span class="portfolio-badge">A+ Content</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>AP_Name_1</h4><p>AP_Description_1</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon A+/AP_2.jpg', 'AP_Name_2')">
+        <div class="portfolio-thumb">
+          <img src="Amazon A+/APT2.jpg" alt="A+ Content 2" />
+          <span class="portfolio-badge">A+ Content</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>AP_Name_2</h4><p>AP_Description_2</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon A+/AP_3.jpg', 'AP_Name_3')">
+        <div class="portfolio-thumb">
+          <img src="Amazon A+/APT3.jpg" alt="A+ Content 3" />
+          <span class="portfolio-badge">A+ Content</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>AP_Name_3</h4><p>AP_Description_3</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon A+/AP_4.jpg', 'AP_Name_4')">
+        <div class="portfolio-thumb">
+          <img src="Amazon A+/APT4.jpg" alt="A+ Content 4" />
+          <span class="portfolio-badge">A+ Content</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>AP_Name_4</h4><p>AP_Description_4</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Amazon A+/AP_5.jpg', 'AP_Name_5')">
+        <div class="portfolio-thumb">
+          <img src="Amazon A+/APT5.jpg" alt="A+ Content 5" />
+          <span class="portfolio-badge">A+ Content</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>AP_Name_5</h4><p>AP_Description_5</p></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== MAIN IMAGES ===== -->
+  <div id="mainimages" class="tab-content ecom-tab">
+    <div class="portfolio-grid">
+      <!-- Add your Main Images cards here using the same card structure -->
+      <!-- Example placeholder cards: -->
+      <div class="portfolio-card" onclick="openLightbox('Main Images/MI_1.jpg', 'MI_Name_1')">
+        <div class="portfolio-thumb">
+          <img src="Main Images/MIT1.jpg" alt="Main Image 1" />
+          <span class="portfolio-badge">Main Image</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>MI_Name_1</h4><p>MI_Description_1</p></div>
+      </div>
+      <div class="portfolio-card" onclick="openLightbox('Main Images/MI_2.jpg', 'MI_Name_2')">
+        <div class="portfolio-thumb">
+          <img src="Main Images/MIT2.jpg" alt="Main Image 2" />
+          <span class="portfolio-badge">Main Image</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>MI_Name_2</h4><p>MI_Description_2</p></div>
+      </div>
+      <div class="portfolio-card" onclick="openLightbox('Main Images/MI_3.jpg', 'MI_Name_3')">
+        <div class="portfolio-thumb">
+          <img src="Main Images/MIT3.jpg" alt="Main Image 3" />
+          <span class="portfolio-badge">Main Image</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>MI_Name_3</h4><p>MI_Description_3</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== STOREFRONT ===== -->
+  <div id="storefront" class="tab-content ecom-tab">
+    <div class="portfolio-grid">
+
+      <div class="portfolio-card" onclick="openLightbox('Store Front/Storefront_1.jpg', 'The DustPick Project')">
+        <div class="portfolio-thumb">
+          <img src="Store Front/T1.jpg" alt="Storefront 1" />
+          <span class="portfolio-badge">Storefront</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>The DustPick Project</h4><p>A modern e-commerce layout designed to highlight the features and benefits of the DustPick cleaning tool.</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Store Front/Storefront_2.jpg', 'The Sukkah Store')">
+        <div class="portfolio-thumb">
+          <img src="Store Front/T2.jpg" alt="Storefront 2" />
+          <span class="portfolio-badge">Storefront</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>The Sukkah Store Project</h4><p>An elegant, long-form e-commerce layout for hand-painted Sukkah tapestries.</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Store Front/Storefront_3.jpg', 'Kaffa Energy')">
+        <div class="portfolio-thumb">
+          <img src="Store Front/T3.jpg" alt="Storefront 3" />
+          <span class="portfolio-badge">Storefront</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Kaffa Energy Project</h4><p>Dynamic product compositing and lifestyle photography for zero-nicotine energy pouches.</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Store Front/Storefront_4.jpg', 'Name_4')">
+        <div class="portfolio-thumb">
+          <img src="Store Front/T4.jpg" alt="Storefront 4" />
+          <span class="portfolio-badge">Storefront</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Name_4</h4><p>Description_4</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Store Front/Storefront_5.jpg', 'Name_5')">
+        <div class="portfolio-thumb">
+          <img src="Store Front/T5.jpg" alt="Storefront 5" />
+          <span class="portfolio-badge">Storefront</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Name_5</h4><p>Description_5</p></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== BRAND STORY ===== -->
+  <div id="brandstory" class="tab-content ecom-tab">
+    <div class="portfolio-grid">
+
+      <div class="portfolio-card" onclick="openLightbox('Brand Story/BS_1.jpg', 'BS_Name_1')">
+        <div class="portfolio-thumb">
+          <img src="Brand Story/BST1.jpg" alt="Brand Story 1" />
+          <span class="portfolio-badge">Brand Story</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>BS_Name_1</h4><p>BS_Description_1</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Brand Story/BS_2.jpg', 'BS_Name_2')">
+        <div class="portfolio-thumb">
+          <img src="Brand Story/BST2.jpg" alt="Brand Story 2" />
+          <span class="portfolio-badge">Brand Story</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>BS_Name_2</h4><p>BS_Description_2</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Brand Story/BS_3.jpg', 'BS_Name_3')">
+        <div class="portfolio-thumb">
+          <img src="Brand Story/BST3.jpg" alt="Brand Story 3" />
+          <span class="portfolio-badge">Brand Story</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>BS_Name_3</h4><p>BS_Description_3</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Brand Story/BS_4.jpg', 'BS_Name_4')">
+        <div class="portfolio-thumb">
+          <img src="Brand Story/BST4.jpg" alt="Brand Story 4" />
+          <span class="portfolio-badge">Brand Story</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>BS_Name_4</h4><p>BS_Description_4</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Brand Story/BS_5.jpg', 'BS_Name_5')">
+        <div class="portfolio-thumb">
+          <img src="Brand Story/BST5.jpg" alt="Brand Story 5" />
+          <span class="portfolio-badge">Brand Story</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>BS_Name_5</h4><p>BS_Description_5</p></div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     PORTFOLIO SECTION 2 — SOCIAL MEDIA & CONTENT
+═══════════════════════════════════════════════════ -->
+<section class="portfolio-section" id="social-portfolio">
+  <div class="section-title">
+    <span class="section-eyebrow">Social Media & Content</span>
+    <h2>Social <span>Portfolio</span></h2>
+    <p>Scroll-stopping posts, carousels, and digital content</p>
+  </div>
+
+  <!-- TAB BUTTONS — Social -->
+  <div class="portfolio-tabs">
+    <button class="tab-btn active" onclick="showTab('socialmedia', this, 'social')">Social Media</button>
+    <button class="tab-btn"       onclick="showTab('carousel', this, 'social')">Carousel</button>
+  </div>
+
+  <!-- ===== SOCIAL MEDIA ===== -->
+  <div id="socialmedia" class="tab-content social-tab active">
+    <div class="portfolio-grid">
+
+      <div class="portfolio-card" onclick="openLightbox('Social Media/SM_1.jpg', 'SM_Name_1')">
+        <div class="portfolio-thumb">
+          <img src="Social Media/SMT1.jpg" alt="Social Media 1" />
+          <span class="portfolio-badge">Social Media</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>SM_Name_1</h4><p>SM_Description_1</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Social Media/SM_2.jpg', 'SM_Name_2')">
+        <div class="portfolio-thumb">
+          <img src="Social Media/SMT2.jpg" alt="Social Media 2" />
+          <span class="portfolio-badge">Social Media</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>SM_Name_2</h4><p>SM_Description_2</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Social Media/SM_3.jpg', 'SM_Name_3')">
+        <div class="portfolio-thumb">
+          <img src="Social Media/SMT3.jpg" alt="Social Media 3" />
+          <span class="portfolio-badge">Social Media</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>SM_Name_3</h4><p>SM_Description_3</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Social Media/SM_4.jpg', 'SM_Name_4')">
+        <div class="portfolio-thumb">
+          <img src="Social Media/SMT4.jpg" alt="Social Media 4" />
+          <span class="portfolio-badge">Social Media</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>SM_Name_4</h4><p>SM_Description_4</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Social Media/SM_5.jpg', 'SM_Name_5')">
+        <div class="portfolio-thumb">
+          <img src="Social Media/SMT5.jpg" alt="Social Media 5" />
+          <span class="portfolio-badge">Social Media</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>SM_Name_5</h4><p>SM_Description_5</p></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== CAROUSEL ===== -->
+  <div id="carousel" class="tab-content social-tab">
+    <div class="portfolio-grid">
+
+      <div class="portfolio-card" onclick="openLightbox('Carousel/CR_1.jpg', 'CR_Name_1')">
+        <div class="portfolio-thumb">
+          <img src="Carousel/CRT1.jpg" alt="Carousel 1" />
+          <span class="portfolio-badge">Carousel</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>CR_Name_1</h4><p>CR_Description_1</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Carousel/CR_2.jpg', 'CR_Name_2')">
+        <div class="portfolio-thumb">
+          <img src="Carousel/CRT2.jpg" alt="Carousel 2" />
+          <span class="portfolio-badge">Carousel</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>CR_Name_2</h4><p>CR_Description_2</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Carousel/CR_3.jpg', 'CR_Name_3')">
+        <div class="portfolio-thumb">
+          <img src="Carousel/CRT3.jpg" alt="Carousel 3" />
+          <span class="portfolio-badge">Carousel</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>CR_Name_3</h4><p>CR_Description_3</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Carousel/CR_4.jpg', 'CR_Name_4')">
+        <div class="portfolio-thumb">
+          <img src="Carousel/CRT4.jpg" alt="Carousel 4" />
+          <span class="portfolio-badge">Carousel</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>CR_Name_4</h4><p>CR_Description_4</p></div>
+      </div>
+
+      <div class="portfolio-card" onclick="openLightbox('Carousel/CR_5.jpg', 'CR_Name_5')">
+        <div class="portfolio-thumb">
+          <img src="Carousel/CRT5.jpg" alt="Carousel 5" />
+          <span class="portfolio-badge">Carousel</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>CR_Name_5</h4><p>CR_Description_5</p></div>
+      </div>
+
+    </div>
+  </div>
+
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════
+     PORTFOLIO SECTION 3 — VIDEO EDITING
+═══════════════════════════════════════════════════ -->
+<section class="video-section" id="video-portfolio">
+  <div class="section-title">
+    <span class="section-eyebrow">Motion & Video</span>
+    <h2>Video <span>Editing</span></h2>
+    <p>Click any thumbnail to watch — product videos, brand reels, and social motion content</p>
+  </div>
+
+  <div class="video-grid">
+
+    <!-- ─── Video Card 1 ───
+         thumbnail:  Videos/Thumbnails/VT1.jpg   (your custom thumbnail image)
+         video file: Videos/Video_1.mp4
+         Change both paths and the title/description below. -->
+    <div class="video-card" onclick="openVideoModal('Videos/Video_1.mp4', 'Video_Name_1')">
+      <div class="video-thumb-wrap">
+        <img src="Videos/Thumbnails/VT1.jpg" alt="Video 1 thumbnail"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="video-fallback-thumb" style="display:none;">
+          <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+          <span>Video_Name_1</span>
+        </div>
+        <div class="video-play-overlay">
+          <div class="vid-play-btn">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <span class="portfolio-badge">Product Video</span>
+      </div>
+      <div class="video-info">
+        <h4>Video_Name_1</h4>
+        <p>Video_Description_1</p>
+        <span class="video-badge-inline">▶ Click to Play</span>
+      </div>
+    </div>
+
+    <!-- ─── Video Card 2 ─── -->
+    <div class="video-card" onclick="openVideoModal('Videos/Video_2.mp4', 'Video_Name_2')">
+      <div class="video-thumb-wrap">
+        <img src="Videos/Thumbnails/VT2.jpg" alt="Video 2 thumbnail"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="video-fallback-thumb" style="display:none;">
+          <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+          <span>Video_Name_2</span>
+        </div>
+        <div class="video-play-overlay">
+          <div class="vid-play-btn">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <span class="portfolio-badge">Brand Reel</span>
+      </div>
+      <div class="video-info">
+        <h4>Video_Name_2</h4>
+        <p>Video_Description_2</p>
+        <span class="video-badge-inline">▶ Click to Play</span>
+      </div>
+    </div>
+
+    <!-- ─── Video Card 3 ─── -->
+    <div class="video-card" onclick="openVideoModal('Videos/Video_3.mp4', 'Video_Name_3')">
+      <div class="video-thumb-wrap">
+        <img src="Videos/Thumbnails/VT3.jpg" alt="Video 3 thumbnail"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="video-fallback-thumb" style="display:none;">
+          <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+          <span>Video_Name_3</span>
+        </div>
+        <div class="video-play-overlay">
+          <div class="vid-play-btn">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <span class="portfolio-badge">Social Reel</span>
+      </div>
+      <div class="video-info">
+        <h4>Video_Name_3</h4>
+        <p>Video_Description_3</p>
+        <span class="video-badge-inline">▶ Click to Play</span>
+      </div>
+    </div>
+
+    <!-- ─── Video Card 4 ─── -->
+    <div class="video-card" onclick="openVideoModal('Videos/Video_4.mp4', 'Video_Name_4')">
+      <div class="video-thumb-wrap">
+        <img src="Videos/Thumbnails/VT4.jpg" alt="Video 4 thumbnail"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="video-fallback-thumb" style="display:none;">
+          <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+          <span>Video_Name_4</span>
+        </div>
+        <div class="video-play-overlay">
+          <div class="vid-play-btn">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <span class="portfolio-badge">Product Video</span>
+      </div>
+      <div class="video-info">
+        <h4>Video_Name_4</h4>
+        <p>Video_Description_4</p>
+        <span class="video-badge-inline">▶ Click to Play</span>
+      </div>
+    </div>
+
+    <!-- ─── Video Card 5 ─── -->
+    <div class="video-card" onclick="openVideoModal('Videos/Video_5.mp4', 'Video_Name_5')">
+      <div class="video-thumb-wrap">
+        <img src="Videos/Thumbnails/VT5.jpg" alt="Video 5 thumbnail"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="video-fallback-thumb" style="display:none;">
+          <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+          <span>Video_Name_5</span>
+        </div>
+        <div class="video-play-overlay">
+          <div class="vid-play-btn">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <span class="portfolio-badge">Brand Reel</span>
+      </div>
+      <div class="video-info">
+        <h4>Video_Name_5</h4>
+        <p>Video_Description_5</p>
+        <span class="video-badge-inline">▶ Click to Play</span>
+      </div>
+    </div>
+
+    <!-- ─── Video Card 6 ─── -->
+    <div class="video-card" onclick="openVideoModal('Videos/Video_6.mp4', 'Video_Name_6')">
+      <div class="video-thumb-wrap">
+        <img src="Videos/Thumbnails/VT6.jpg" alt="Video 6 thumbnail"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+        <div class="video-fallback-thumb" style="display:none;">
+          <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+          <span>Video_Name_6</span>
+        </div>
+        <div class="video-play-overlay">
+          <div class="vid-play-btn">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+        </div>
+        <span class="portfolio-badge">Social Reel</span>
+      </div>
+      <div class="video-info">
+        <h4>Video_Name_6</h4>
+        <p>Video_Description_6</p>
+        <span class="video-badge-inline">▶ Click to Play</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- VIDEO MODAL POPUP -->
+<div id="video-modal" onclick="closeVideoModal()">
+  <div id="video-modal-inner" onclick="event.stopPropagation()">
+    <button id="video-modal-close" onclick="closeVideoModal()">&#x2715;</button>
+    <div id="video-modal-title"></div>
+    <video id="video-modal-player" controls playsinline>
+      Your browser does not support HTML5 video.
+    </video>
+  </div>
+</div>
+
+
+<!-- SKILLS -->
+<section class="skills" id="skills">
+  <div class="section-title">
+    <h2>Software <span>Expertise</span></h2>
+  </div>
+  <div class="grid">
+    <div class="card">
+      <h3>Adobe Photoshop</h3>
+      <p>Expert photo manipulation, complex masking, retouching, and stunning visual compositions.</p>
+    </div>
+    <div class="card">
+      <h3>Adobe Illustrator</h3>
+      <p>Precision vector graphics, clean logo design, typography, and scalable brand illustrations.</p>
+    </div>
+    <div class="card">
+      <h3>Adobe Premiere Pro</h3>
+      <p>Professional video editing, color grading, multi-track timelines, and polished export for all platforms.</p>
+    </div>
+    <div class="card">
+      <h3>Adobe After Effects</h3>
+      <p>Motion graphics, visual effects, kinetic typography, and stunning animations that elevate any brand video.</p>
+    </div>
+    <div class="card">
+      <h3>Canva & CapCut</h3>
+      <p>Fast, professional content generation and dynamic video editing for social media deliverables.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER / CONTACT -->
+<footer id="contact">
+  <h2>Ready to start your next project?</h2>
+  <p style="color: var(--text-muted); margin-bottom: 2rem;">Let's collaborate and create something extraordinary.</p>
+  <a href="mailto:your.email@example.com" class="btn">Get In Touch</a>
+  <div class="social-links">
+    <a href="https://www.linkedin.com/in/humayuncreative/" target="_blank">LinkedIn</a>
+    <a href="https://www.behance.net/your-profile" target="_blank">Behance</a>
+    <a href="https://www.instagram.com/your-profile" target="_blank">Instagram</a>
+    <a href="https://dribbble.com/your-profile" target="_blank">Dribbble</a>
+    <a href="https://wa.me/923000000000" target="_blank" style="color:#25d366;">WhatsApp</a>
+    <a href="mailto:your.email@example.com" style="color:var(--primary);">Email</a>
+  </div>
+  <p style="margin-top: 3rem; color: var(--text-muted); font-size: 0.85rem;">&copy; 2024 Talha Humayun. All rights reserved.</p>
+  <p style="margin-top: 0.75rem; color: var(--text-muted); font-size: 0.82rem; font-style: italic;">
+    ✦ This entire website was designed &amp; built by me — Talha Humayun — from scratch.
+  </p>
+</footer>
+
+<!-- FLOATING WHATSAPP BUTTON -->
+<div class="whatsapp-float">
+  <div class="whatsapp-tooltip">Chat on WhatsApp 💬</div>
+  <a class="whatsapp-btn" href="https://wa.me/923000000000" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+      <path d="M16 2C8.268 2 2 8.268 2 16c0 2.494.655 4.835 1.8 6.86L2 30l7.34-1.775A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.6a11.57 11.57 0 0 1-5.93-1.628l-.424-.253-4.358 1.054 1.085-4.24-.277-.437A11.57 11.57 0 0 1 4.4 16C4.4 9.592 9.592 4.4 16 4.4S27.6 9.592 27.6 16 22.408 27.6 16 27.6zm6.38-8.68c-.35-.175-2.07-1.02-2.39-1.136-.32-.116-.553-.175-.786.175s-.9 1.136-1.103 1.37c-.203.233-.407.262-.757.087-.35-.175-1.478-.545-2.814-1.737-1.04-.928-1.742-2.074-1.946-2.424-.203-.35-.022-.539.153-.713.157-.157.35-.408.525-.612.175-.203.233-.35.35-.583.116-.233.058-.437-.029-.612-.087-.175-.786-1.895-1.077-2.595-.283-.681-.57-.588-.786-.6-.203-.01-.437-.013-.67-.013s-.612.087-.932.437c-.32.35-1.224 1.196-1.224 2.916 0 1.72 1.253 3.382 1.428 3.615.175.233 2.467 3.766 5.98 5.282.836.36 1.488.575 1.996.736.838.267 1.602.229 2.205.139.673-.1 2.07-.847 2.362-1.664.29-.816.29-1.516.203-1.664-.087-.146-.32-.233-.67-.408z"/>
+    </svg>
+  </a>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" onclick="closeLightbox()">
+  <button id="lightbox-close" onclick="closeLightbox()">&#x2715;</button>
+  <div id="lightbox-inner" onclick="event.stopPropagation()">
+    <img id="lightbox-img" src="" alt="" onclick="toggleZoom(event)" />
+    <div id="lightbox-caption"></div>
+  </div>
+</div>
+
+<script>
+  /* ══════════════════════════════════════════
+     PHOTOSHOP-STYLE ORANGE CURSOR
+  ══════════════════════════════════════════ */
+  const cursorCanvas = document.createElement('canvas');
+  cursorCanvas.width = 32; cursorCanvas.height = 32;
+  Object.assign(cursorCanvas.style, {
+    position: 'fixed', top: '0', left: '0', pointerEvents: 'none',
+    zIndex: '999999', willChange: 'transform'
+  });
+  document.body.appendChild(cursorCanvas);
+  const cc = cursorCanvas.getContext('2d');
+
+  function drawPSCursor(pressing) {
+    cc.clearRect(0, 0, 32, 32);
+    const s = pressing ? 0.88 : 1;
+    cc.save();
+    cc.translate(1, 1);
+    cc.scale(s, s);
+    cc.shadowColor = 'rgba(0,0,0,0.7)';
+    cc.shadowBlur  = 3;
+    cc.shadowOffsetX = 1; cc.shadowOffsetY = 1;
+    cc.beginPath();
+    cc.moveTo(0, 0);
+    cc.lineTo(0, 20);
+    cc.lineTo(4, 16);
+    cc.lineTo(7, 22);
+    cc.lineTo(9.5, 21);
+    cc.lineTo(6.5, 15);
+    cc.lineTo(11, 15);
+    cc.closePath();
+    const grad = cc.createLinearGradient(0, 0, 11, 22);
+    grad.addColorStop(0,   '#ffb347');
+    grad.addColorStop(0.4, '#f39c12');
+    grad.addColorStop(1,   '#d35400');
+    cc.fillStyle = grad;
+    cc.fill();
+    cc.shadowColor = 'transparent';
+    cc.strokeStyle = '#ffffff';
+    cc.lineWidth   = 1.2;
+    cc.stroke();
+    cc.restore();
+  }
+
+  drawPSCursor(false);
+  document.body.style.cursor = 'none';
+  const styleTag = document.createElement('style');
+  styleTag.textContent = '*, *:hover { cursor: none !important; }';
+  document.head.appendChild(styleTag);
+
+  /* ══════════════════════════════════════════
+     STORM LIGHTNING TRAIL
+  ══════════════════════════════════════════ */
+  const lightning = document.createElement('canvas');
+  lightning.id = 'lightning-canvas';
+  Object.assign(lightning.style, {
+    position: 'fixed', inset: '0', pointerEvents: 'none',
+    zIndex: '999997', width: '100%', height: '100%'
+  });
+  document.body.appendChild(lightning);
+
+  function resizeLightning() {
+    lightning.width  = window.innerWidth;
+    lightning.height = window.innerHeight;
+  }
+  resizeLightning();
+  window.addEventListener('resize', resizeLightning);
+
+  const lc = lightning.getContext('2d');
+  const TRAIL_LEN = 28;
+  const trail = [];
+  let mouseX = -999, mouseY = -999;
+  let clicking = false;
+
+  document.addEventListener('mousemove', e => {
+    mouseX = e.clientX; mouseY = e.clientY;
+    cursorCanvas.style.transform = `translate(${mouseX}px,${mouseY}px)`;
+    /* trail tracking removed — only click animation enabled */
+  });
+  document.addEventListener('mousedown', e => { clicking = true;  drawPSCursor(true);  spawnClickBurst(e.clientX, e.clientY); });
+  document.addEventListener('mouseup',   ()  => { clicking = false; drawPSCursor(false); });
+
+  function jaggedPath(x1, y1, x2, y2, roughness, depth) {
+    if (depth === 0) return [[x1, y1], [x2, y2]];
+    const mx = (x1 + x2) / 2 + (Math.random() - 0.5) * roughness;
+    const my = (y1 + y2) / 2 + (Math.random() - 0.5) * roughness;
+    return [
+      ...jaggedPath(x1, y1, mx, my, roughness * 0.55, depth - 1),
+      ...jaggedPath(mx, my, x2, y2, roughness * 0.55, depth - 1).slice(1)
+    ];
+  }
+
+  const stormBolts = [];
+
+  function spawnTrailBolt() {
+    if (trail.length < 6) return;
+    const now = Date.now();
+    const base  = Math.max(0, trail.length - 14);
+    const idx   = base + Math.floor(Math.random() * (trail.length - base - 1));
+    if (idx >= trail.length - 1) return;
+    const p1 = trail[idx];
+    const p2 = trail[idx + 1];
+    const dx = p2.x - p1.x, dy = p2.y - p1.y;
+    const len = Math.sqrt(dx * dx + dy * dy) || 1;
+    const px = -dy / len, py = dx / len;
+    const branchLen = 18 + Math.random() * 40;
+    const branchDir = Math.random() < 0.5 ? 1 : -1;
+    const ex = p1.x + px * branchLen * branchDir + (Math.random() - 0.5) * 20;
+    const ey = p1.y + py * branchLen * branchDir + (Math.random() - 0.5) * 20;
+    const rough = 14 + Math.random() * 20;
+    const pts   = jaggedPath(p1.x, p1.y, ex, ey, rough, 3);
+    stormBolts.push({ pts, born: now, life: 80 + Math.random() * 120, width: 0.8 + Math.random() * 1.4, branch: Math.random() < 0.4 });
+    if (Math.random() < 0.25 && trail.length > 10) {
+      const i0 = Math.max(0, trail.length - 10);
+      const tStart = trail[i0];
+      const tEnd   = trail[trail.length - 1];
+      const pts2   = jaggedPath(tStart.x, tStart.y, tEnd.x, tEnd.y, 22, 4);
+      stormBolts.push({ pts: pts2, born: now, life: 160 + Math.random() * 80, width: 1.5, branch: false });
+    }
+  }
+
+  function spawnClickBurst(cx, cy) {
+    for (let i = 0; i < 8; i++) {
+      const angle = (i / 8) * Math.PI * 2;
+      const r     = 30 + Math.random() * 60;
+      const ex    = cx + Math.cos(angle) * r;
+      const ey    = cy + Math.sin(angle) * r;
+      const pts   = jaggedPath(cx, cy, ex, ey, 18, 4);
+      stormBolts.push({ pts, born: Date.now(), life: 200 + Math.random() * 150, width: 1.8, branch: true });
+    }
+  }
+
+  let lastBoltSpawn = 0;
+
+  function render() {
+    lc.clearRect(0, 0, lightning.width, lightning.height);
+    const now = Date.now();
+    /* Trail bolts on mouse move removed — only click burst animates */
+    for (let i = stormBolts.length - 1; i >= 0; i--) {
+      const b = stormBolts[i];
+      const age = now - b.born;
+      if (age >= b.life) { stormBolts.splice(i, 1); continue; }
+      const t       = age / b.life;
+      const alpha   = Math.pow(1 - t, 1.6);
+      lc.beginPath();
+      lc.moveTo(b.pts[0][0], b.pts[0][1]);
+      for (let j = 1; j < b.pts.length; j++) lc.lineTo(b.pts[j][0], b.pts[j][1]);
+      lc.shadowColor   = '#f39c12';
+      lc.shadowBlur    = 18;
+      lc.strokeStyle   = `rgba(243,156,18,${alpha * 0.35})`;
+      lc.lineWidth     = b.width * 4;
+      lc.lineCap       = 'round';
+      lc.lineJoin      = 'round';
+      lc.stroke();
+      lc.shadowBlur    = 8;
+      lc.strokeStyle   = `rgba(255,180,50,${alpha * 0.6})`;
+      lc.lineWidth     = b.width * 2;
+      lc.stroke();
+      lc.shadowBlur    = 3;
+      lc.strokeStyle   = `rgba(255,230,120,${alpha})`;
+      lc.lineWidth     = b.width * 0.6;
+      lc.stroke();
+      if (b.branch && b.pts.length > 3 && age < b.life * 0.5) {
+        const mid = b.pts[Math.floor(b.pts.length / 2)];
+        const bex = mid[0] + (Math.random() - 0.5) * 30;
+        const bey = mid[1] + (Math.random() - 0.5) * 30;
+        const bpts = jaggedPath(mid[0], mid[1], bex, bey, 10, 2);
+        lc.beginPath();
+        lc.moveTo(bpts[0][0], bpts[0][1]);
+        for (let j = 1; j < bpts.length; j++) lc.lineTo(bpts[j][0], bpts[j][1]);
+        lc.strokeStyle = `rgba(255,200,80,${alpha * 0.5})`;
+        lc.lineWidth   = b.width * 0.4;
+        lc.shadowBlur  = 5;
+        lc.stroke();
+      }
+    }
+    requestAnimationFrame(render);
+  }
+  render();
+
+  /* ══════════════════════════════════════════
+     TABS — scoped by group class
+  ══════════════════════════════════════════ */
+  function showTab(id, btn, group) {
+    // Hide all tabs in the same section group
+    const groupClass = group + '-tab';
+    document.querySelectorAll('.' + groupClass).forEach(el => el.classList.remove('active'));
+
+    // Deactivate only sibling tab buttons (same parent .portfolio-tabs)
+    const tabsParent = btn.closest('.portfolio-tabs');
+    tabsParent.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+  }
+
+  /* ══════════════════════════════════════════
+     LIGHTBOX
+  ══════════════════════════════════════════ */
+  function openLightbox(imgSrc, caption) {
+    const lb  = document.getElementById('lightbox');
+    const img = document.getElementById('lightbox-img');
+    const cap = document.getElementById('lightbox-caption');
+    img.classList.remove('zoomed');
+    img.src = imgSrc;
+    cap.textContent = caption;
+    lb.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.getElementById('lightbox-img').classList.remove('zoomed');
+    document.getElementById('lightbox-img').src = '';
+    document.body.style.overflow = '';
+  }
+
+  function toggleZoom(event) {
+    event.stopPropagation();
+    document.getElementById('lightbox-img').classList.toggle('zoomed');
+  }
+
+  /* ══════════════════════════════════════════
+     VIDEO MODAL
+  ══════════════════════════════════════════ */
+  function openVideoModal(src, title) {
+    const modal  = document.getElementById('video-modal');
+    const player = document.getElementById('video-modal-player');
+    const ttl    = document.getElementById('video-modal-title');
+    ttl.textContent = title;
+    player.src = src;
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+    player.play().catch(() => {}); // autoplay when possible
+  }
+
+  function closeVideoModal() {
+    const modal  = document.getElementById('video-modal');
+    const player = document.getElementById('video-modal-player');
+    player.pause();
+    player.src = '';
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') { closeLightbox(); closeVideoModal(); }
+  });
+</script>
+
+</body>
+</html>
