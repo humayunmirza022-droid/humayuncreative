@@ -111,6 +111,60 @@
     .section-title p { color: var(--text-muted); font-size: 1rem; margin: 0; }
     .services, .skills { padding: 6rem 5%; }
 
+    /* Experience & Education */
+    .timeline-section { padding: 6rem 5%; }
+    .timeline-columns {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 3.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .timeline-col h3 {
+      font-size: 1.3rem;
+      margin: 0 0 2rem 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .timeline-col h3 svg { width: 22px; height: 22px; fill: var(--primary); flex-shrink: 0; }
+    .timeline { position: relative; padding-left: 30px; }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--primary), var(--secondary));
+      opacity: 0.35;
+    }
+    .timeline-item { position: relative; padding-bottom: 2.2rem; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -30px;
+      top: 4px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      box-shadow: 0 0 0 4px rgba(243,156,18,0.15);
+    }
+    .timeline-item .tl-date {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 0.3rem;
+    }
+    .timeline-item h4 { margin: 0 0 0.2rem 0; font-size: 1.05rem; }
+    .timeline-item .tl-place { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem; display: block; }
+    .timeline-item p { margin: 0; color: var(--text-muted); font-size: 0.9rem; }
+
     /* Portfolio wrapper — three separate sections */
     .portfolio-section {
       padding: 5rem 5%;
@@ -185,7 +239,7 @@
     .portfolio-card:hover { transform: translateY(-10px); border-bottom: 3px solid var(--primary); box-shadow: 0 15px 40px rgba(0,0,0,0.4); }
     .portfolio-thumb {
       width: 100%;
-      height: 200px;
+      aspect-ratio: 4 / 3;
       position: relative;
       overflow: hidden;
     }
@@ -246,6 +300,91 @@
     }
     .portfolio-info p { color: var(--text-muted); font-size: 0.88rem; margin: 0; line-height: 1.5; }
 
+    /* ══════════════════════════════════════════
+       PREMIUM SHOWCASE CAROUSEL
+       (auto-converts .portfolio-grid / .video-grid)
+    ══════════════════════════════════════════ */
+    .pcarousel {
+      position: relative;
+      padding: 0 56px;
+    }
+    .pcarousel-viewport {
+      overflow: hidden;
+      --visible: 3;
+      -webkit-mask-image: linear-gradient(to right, transparent 0, #000 3%, #000 97%, transparent 100%);
+      mask-image: linear-gradient(to right, transparent 0, #000 3%, #000 97%, transparent 100%);
+    }
+    .pcarousel-track {
+      display: flex;
+      width: calc(var(--n, 3) / var(--visible) * 100%);
+      transform: translateX(calc(var(--idx, 0) * -1 * (100% / var(--n, 3))));
+      transition: transform 0.7s cubic-bezier(0.65, 0, 0.35, 1);
+      will-change: transform;
+    }
+    .pcarousel-track.no-transition { transition: none !important; }
+    .pcarousel-track > * {
+      width: calc(100% / var(--n, 3));
+      flex: 0 0 auto;
+      box-sizing: border-box;
+      padding: 0 12px;
+      opacity: 1;
+      transition: opacity 0.5s ease;
+    }
+    .pcarousel-track > .pcarousel-clone { pointer-events: none; }
+    .pcarousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      border: 2px solid #333;
+      background: rgba(18,18,18,0.85);
+      color: var(--text);
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 5;
+      transition: all 0.3s;
+    }
+    .pcarousel-arrow:hover {
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      border-color: transparent;
+      transform: translateY(-50%) scale(1.08);
+    }
+    .pcarousel-prev { left: 0; }
+    .pcarousel-next { right: 0; }
+    .pcarousel-viewport.dragging { cursor: grabbing; }
+
+    .portfolio-view-all { text-align: center; margin-top: 3.5rem; }
+    .portfolio-view-all .btn {
+      display: inline-block;
+      padding: 12px 32px;
+      border-radius: 30px;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .portfolio-view-all .btn:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(243,156,18,0.35);
+    }
+
+    @media (max-width: 1024px) {
+      .pcarousel-viewport { --visible: 2; }
+    }
+    @media (max-width: 640px) {
+      .pcarousel-viewport { --visible: 1; }
+      .pcarousel { padding: 0 44px; }
+      .pcarousel-arrow { width: 38px; height: 38px; font-size: 0.85rem; }
+    }
+
     /* Video Editing Section — special styling */
     .video-section {
       padding: 5rem 5%;
@@ -269,7 +408,7 @@
     /* Thumbnail wrapper */
     .video-thumb-wrap {
       width: 100%;
-      aspect-ratio: 16/9;
+      aspect-ratio: 4 / 3;
       position: relative;
       overflow: hidden;
       background: #161616;
@@ -567,6 +706,7 @@
   <div class="logo">Talha <span>Humayun</span></div>
   <nav>
     <a href="#home">Home</a>
+    <a href="#experience">Experience</a>
     <a href="#services">Services</a>
     <a href="#ecommerce-portfolio">Portfolio</a>
     <a href="#contact">Contact</a>
@@ -605,6 +745,69 @@
     </div>
   </div>
 </section>
+
+<!-- EXPERIENCE & EDUCATION -->
+<section class="timeline-section" id="experience">
+  <div class="section-title">
+    <h2>Experience <span>&amp; Education</span></h2>
+  </div>
+  <div class="timeline-columns">
+
+    <!-- Career Ladder / Job Experience -->
+    <div class="timeline-col">
+      <h3>
+        <svg viewBox="0 0 24 24"><path d="M20 7h-4V5c0-1.1-.9-2-2-2h-4c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v9c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V9c0-1.1-.9-2-2-2zM10 5h4v2h-4V5z"/></svg>
+        Career Ladder
+      </h3>
+      <div class="timeline">
+        <!-- Newest role first — duplicate this block for each job -->
+        <div class="timeline-item">
+          <span class="tl-date">2023 — Present</span>
+          <h4>Job Title</h4>
+          <span class="tl-place">Company Name · Location</span>
+          <p>Short description of your role, responsibilities, and key achievements in this position.</p>
+        </div>
+        <div class="timeline-item">
+          <span class="tl-date">2021 — 2023</span>
+          <h4>Job Title</h4>
+          <span class="tl-place">Company Name · Location</span>
+          <p>Short description of your role, responsibilities, and key achievements in this position.</p>
+        </div>
+        <div class="timeline-item">
+          <span class="tl-date">2019 — 2021</span>
+          <h4>Job Title</h4>
+          <span class="tl-place">Company Name · Location</span>
+          <p>Short description of your role, responsibilities, and key achievements in this position.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Education -->
+    <div class="timeline-col">
+      <h3>
+        <svg viewBox="0 0 24 24"><path d="M12 3L1 9l11 6 9-4.91V17h2V9L12 3zm0 12.5L4.5 11.3V9.09L12 13l7.5-3.91v2.21L12 15.5zM5 13.18v4.18L12 21l7-3.64v-4.18L12 17l-7-3.82z"/></svg>
+        Education
+      </h3>
+      <div class="timeline">
+        <!-- Most recent first — duplicate this block for each degree/certificate -->
+        <div class="timeline-item">
+          <span class="tl-date">2019 — 2023</span>
+          <h4>Degree / Program Name</h4>
+          <span class="tl-place">Institution Name · Location</span>
+          <p>Brief note on focus area, achievements, or relevant coursework.</p>
+        </div>
+        <div class="timeline-item">
+          <span class="tl-date">2017 — 2019</span>
+          <h4>Certification / Diploma</h4>
+          <span class="tl-place">Institution Name · Location</span>
+          <p>Brief note on focus area, achievements, or relevant coursework.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 
 <!-- SERVICES -->
 <section class="services" id="services">
@@ -936,6 +1139,10 @@
     </div>
   </div>
 
+  <div class="portfolio-view-all">
+    <a href="amazon-portfolio.html" class="btn">View All Amazon Work</a>
+  </div>
+
 </section>
 
 
@@ -1057,6 +1264,10 @@
       </div>
 
     </div>
+  </div>
+
+  <div class="portfolio-view-all">
+    <a href="social-portfolio.html" class="btn">View All Social Media Work</a>
   </div>
 
 </section>
@@ -1216,6 +1427,11 @@
     </div>
 
   </div>
+
+  <div class="portfolio-view-all">
+    <a href="video-portfolio.html" class="btn">View All Video Work</a>
+  </div>
+
 </section>
 
 <!-- VIDEO MODAL POPUP -->
@@ -1299,183 +1515,110 @@
 
 <script>
   /* ══════════════════════════════════════════
-     PHOTOSHOP-STYLE ORANGE CURSOR
+     NEON ORANGE TRAIL CURSOR
   ══════════════════════════════════════════ */
-  const cursorCanvas = document.createElement('canvas');
-  cursorCanvas.width = 32; cursorCanvas.height = 32;
-  Object.assign(cursorCanvas.style, {
+  const canvas = document.createElement('canvas');
+  Object.assign(canvas.style, {
     position: 'fixed', top: '0', left: '0', pointerEvents: 'none',
-    zIndex: '999999', willChange: 'transform'
+    zIndex: '999999', width: '100%', height: '100%'
   });
-  document.body.appendChild(cursorCanvas);
-  const cc = cursorCanvas.getContext('2d');
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
 
-  function drawPSCursor(pressing) {
-    cc.clearRect(0, 0, 32, 32);
-    const s = pressing ? 0.88 : 1;
-    cc.save();
-    cc.translate(1, 1);
-    cc.scale(s, s);
-    cc.shadowColor = 'rgba(0,0,0,0.7)';
-    cc.shadowBlur  = 3;
-    cc.shadowOffsetX = 1; cc.shadowOffsetY = 1;
-    cc.beginPath();
-    cc.moveTo(0, 0);
-    cc.lineTo(0, 20);
-    cc.lineTo(4, 16);
-    cc.lineTo(7, 22);
-    cc.lineTo(9.5, 21);
-    cc.lineTo(6.5, 15);
-    cc.lineTo(11, 15);
-    cc.closePath();
-    const grad = cc.createLinearGradient(0, 0, 11, 22);
-    grad.addColorStop(0,   '#ffb347');
-    grad.addColorStop(0.4, '#f39c12');
-    grad.addColorStop(1,   '#d35400');
-    cc.fillStyle = grad;
-    cc.fill();
-    cc.shadowColor = 'transparent';
-    cc.strokeStyle = '#ffffff';
-    cc.lineWidth   = 1.2;
-    cc.stroke();
-    cc.restore();
+  function resizeCursorCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resizeCursorCanvas();
+  window.addEventListener('resize', resizeCursorCanvas);
+
+  const trailLength = 16;
+  const trailColor = "243,156,18"; /* theme --primary orange */
+  const trail = [];
+
+  function draw() {
+    /* fully clear each frame (transparent) so the page underneath stays visible */
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    if (trail.length > 1) {
+      /* draw one smooth continuous line through the trail points,
+         fading and thinning toward the tail — like a light streak */
+      for (let i = 1; i < trail.length; i++) {
+        const t = i / (trail.length - 1); // 0 = oldest, 1 = newest
+        const alpha = t * 0.9;
+        const width = 1 + t * 2.5;
+
+        ctx.beginPath();
+        ctx.moveTo(trail[i - 1].x, trail[i - 1].y);
+        ctx.lineTo(trail[i].x, trail[i].y);
+        ctx.lineCap  = 'round';
+        ctx.lineJoin = 'round';
+        ctx.shadowColor = `rgba(${trailColor},1)`;
+        ctx.shadowBlur  = 12;
+        ctx.strokeStyle = `rgba(${trailColor},${alpha})`;
+        ctx.lineWidth   = width;
+        ctx.stroke();
+      }
+
+      /* bright core dot at the current tip */
+      const head = trail[trail.length - 1];
+      ctx.beginPath();
+      ctx.arc(head.x, head.y, 2, 0, Math.PI * 2);
+      ctx.shadowColor = `rgba(${trailColor},1)`;
+      ctx.shadowBlur  = 14;
+      ctx.fillStyle   = '#fff5e6';
+      ctx.fill();
+    }
+
+    window.requestAnimationFrame(draw);
   }
 
-  drawPSCursor(false);
+  function addTrailPoint(x, y) {
+    trail.push({ x, y });
+    if (trail.length > trailLength) {
+      trail.shift();
+    }
+  }
+
+  /* When the mouse stops moving, shrink the trail from the tail
+     until it's gone — instead of it hanging frozen on screen */
+  let idleShrinkTimer = null;
+  function startIdleShrink() {
+    clearInterval(idleShrinkTimer);
+    idleShrinkTimer = setInterval(() => {
+      if (trail.length > 0) {
+        trail.shift();
+      } else {
+        clearInterval(idleShrinkTimer);
+      }
+    }, 20);
+  }
+
+  let mouseX = 0, mouseY = 0;
+  let idleTimeout = null;
+  const startDrawing = (e) => {
+    const newX = e.clientX;
+    const newY = e.clientY;
+    addTrailPoint(newX, newY);
+    mouseX = newX;
+    mouseY = newY;
+
+    clearInterval(idleShrinkTimer);
+    clearTimeout(idleTimeout);
+    idleTimeout = setTimeout(startIdleShrink, 60);
+  };
+
+  document.addEventListener('mousemove', startDrawing);
   document.body.style.cursor = 'none';
   const styleTag = document.createElement('style');
   styleTag.textContent = '*, *:hover { cursor: none !important; }';
   document.head.appendChild(styleTag);
 
-  /* ══════════════════════════════════════════
-     STORM LIGHTNING TRAIL
-  ══════════════════════════════════════════ */
-  const lightning = document.createElement('canvas');
-  lightning.id = 'lightning-canvas';
-  Object.assign(lightning.style, {
-    position: 'fixed', inset: '0', pointerEvents: 'none',
-    zIndex: '999997', width: '100%', height: '100%'
-  });
-  document.body.appendChild(lightning);
+  /* Hide the trail whenever the pointer leaves the page/window */
+  document.addEventListener('mouseleave', () => { canvas.style.display = 'none'; trail.length = 0; });
+  document.addEventListener('mouseenter', () => { canvas.style.display = 'block'; });
 
-  function resizeLightning() {
-    lightning.width  = window.innerWidth;
-    lightning.height = window.innerHeight;
-  }
-  resizeLightning();
-  window.addEventListener('resize', resizeLightning);
-
-  const lc = lightning.getContext('2d');
-  const TRAIL_LEN = 28;
-  const trail = [];
-  let mouseX = -999, mouseY = -999;
-  let clicking = false;
-
-  document.addEventListener('mousemove', e => {
-    mouseX = e.clientX; mouseY = e.clientY;
-    cursorCanvas.style.transform = `translate(${mouseX}px,${mouseY}px)`;
-    /* trail tracking removed — only click animation enabled */
-  });
-  document.addEventListener('mousedown', e => { clicking = true;  drawPSCursor(true);  spawnClickBurst(e.clientX, e.clientY); });
-  document.addEventListener('mouseup',   ()  => { clicking = false; drawPSCursor(false); });
-
-  function jaggedPath(x1, y1, x2, y2, roughness, depth) {
-    if (depth === 0) return [[x1, y1], [x2, y2]];
-    const mx = (x1 + x2) / 2 + (Math.random() - 0.5) * roughness;
-    const my = (y1 + y2) / 2 + (Math.random() - 0.5) * roughness;
-    return [
-      ...jaggedPath(x1, y1, mx, my, roughness * 0.55, depth - 1),
-      ...jaggedPath(mx, my, x2, y2, roughness * 0.55, depth - 1).slice(1)
-    ];
-  }
-
-  const stormBolts = [];
-
-  function spawnTrailBolt() {
-    if (trail.length < 6) return;
-    const now = Date.now();
-    const base  = Math.max(0, trail.length - 14);
-    const idx   = base + Math.floor(Math.random() * (trail.length - base - 1));
-    if (idx >= trail.length - 1) return;
-    const p1 = trail[idx];
-    const p2 = trail[idx + 1];
-    const dx = p2.x - p1.x, dy = p2.y - p1.y;
-    const len = Math.sqrt(dx * dx + dy * dy) || 1;
-    const px = -dy / len, py = dx / len;
-    const branchLen = 18 + Math.random() * 40;
-    const branchDir = Math.random() < 0.5 ? 1 : -1;
-    const ex = p1.x + px * branchLen * branchDir + (Math.random() - 0.5) * 20;
-    const ey = p1.y + py * branchLen * branchDir + (Math.random() - 0.5) * 20;
-    const rough = 14 + Math.random() * 20;
-    const pts   = jaggedPath(p1.x, p1.y, ex, ey, rough, 3);
-    stormBolts.push({ pts, born: now, life: 80 + Math.random() * 120, width: 0.8 + Math.random() * 1.4, branch: Math.random() < 0.4 });
-    if (Math.random() < 0.25 && trail.length > 10) {
-      const i0 = Math.max(0, trail.length - 10);
-      const tStart = trail[i0];
-      const tEnd   = trail[trail.length - 1];
-      const pts2   = jaggedPath(tStart.x, tStart.y, tEnd.x, tEnd.y, 22, 4);
-      stormBolts.push({ pts: pts2, born: now, life: 160 + Math.random() * 80, width: 1.5, branch: false });
-    }
-  }
-
-  function spawnClickBurst(cx, cy) {
-    for (let i = 0; i < 8; i++) {
-      const angle = (i / 8) * Math.PI * 2;
-      const r     = 30 + Math.random() * 60;
-      const ex    = cx + Math.cos(angle) * r;
-      const ey    = cy + Math.sin(angle) * r;
-      const pts   = jaggedPath(cx, cy, ex, ey, 18, 4);
-      stormBolts.push({ pts, born: Date.now(), life: 200 + Math.random() * 150, width: 1.8, branch: true });
-    }
-  }
-
-  let lastBoltSpawn = 0;
-
-  function render() {
-    lc.clearRect(0, 0, lightning.width, lightning.height);
-    const now = Date.now();
-    /* Trail bolts on mouse move removed — only click burst animates */
-    for (let i = stormBolts.length - 1; i >= 0; i--) {
-      const b = stormBolts[i];
-      const age = now - b.born;
-      if (age >= b.life) { stormBolts.splice(i, 1); continue; }
-      const t       = age / b.life;
-      const alpha   = Math.pow(1 - t, 1.6);
-      lc.beginPath();
-      lc.moveTo(b.pts[0][0], b.pts[0][1]);
-      for (let j = 1; j < b.pts.length; j++) lc.lineTo(b.pts[j][0], b.pts[j][1]);
-      lc.shadowColor   = '#f39c12';
-      lc.shadowBlur    = 18;
-      lc.strokeStyle   = `rgba(243,156,18,${alpha * 0.35})`;
-      lc.lineWidth     = b.width * 4;
-      lc.lineCap       = 'round';
-      lc.lineJoin      = 'round';
-      lc.stroke();
-      lc.shadowBlur    = 8;
-      lc.strokeStyle   = `rgba(255,180,50,${alpha * 0.6})`;
-      lc.lineWidth     = b.width * 2;
-      lc.stroke();
-      lc.shadowBlur    = 3;
-      lc.strokeStyle   = `rgba(255,230,120,${alpha})`;
-      lc.lineWidth     = b.width * 0.6;
-      lc.stroke();
-      if (b.branch && b.pts.length > 3 && age < b.life * 0.5) {
-        const mid = b.pts[Math.floor(b.pts.length / 2)];
-        const bex = mid[0] + (Math.random() - 0.5) * 30;
-        const bey = mid[1] + (Math.random() - 0.5) * 30;
-        const bpts = jaggedPath(mid[0], mid[1], bex, bey, 10, 2);
-        lc.beginPath();
-        lc.moveTo(bpts[0][0], bpts[0][1]);
-        for (let j = 1; j < bpts.length; j++) lc.lineTo(bpts[j][0], bpts[j][1]);
-        lc.strokeStyle = `rgba(255,200,80,${alpha * 0.5})`;
-        lc.lineWidth   = b.width * 0.4;
-        lc.shadowBlur  = 5;
-        lc.stroke();
-      }
-    }
-    requestAnimationFrame(render);
-  }
-  render();
+  window.requestAnimationFrame(draw);
 
   /* ══════════════════════════════════════════
      TABS — scoped by group class
@@ -1545,6 +1688,141 @@
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') { closeLightbox(); closeVideoModal(); }
   });
+
+  /* ══════════════════════════════════════════
+     PREMIUM SHOWCASE CAROUSEL
+     Converts any .portfolio-grid / .video-grid
+     into a 3-at-a-time auto-sliding, infinite,
+     touch-swipeable carousel — without touching
+     the cards, images, lightbox or video modal.
+  ══════════════════════════════════════════ */
+  function initShowcaseCarousel(grid) {
+    const cards = Array.from(grid.children);
+    const n = cards.length;
+    const MAX_VISIBLE = 3;
+    if (n <= MAX_VISIBLE) return; // not enough items to loop — leave as a static row
+
+    const k = MAX_VISIBLE; // clone count on each side
+
+    const wrapper = document.createElement('div');
+    wrapper.className = 'pcarousel';
+
+    const viewport = document.createElement('div');
+    viewport.className = 'pcarousel-viewport';
+
+    const track = document.createElement('div');
+    track.className = 'pcarousel-track';
+
+    const cloneEnd = cards.slice(-k).map(c => { const cl = c.cloneNode(true); cl.classList.add('pcarousel-clone'); return cl; });
+    const cloneStart = cards.slice(0, k).map(c => { const cl = c.cloneNode(true); cl.classList.add('pcarousel-clone'); return cl; });
+
+    cloneEnd.forEach(c => track.appendChild(c));
+    cards.forEach(c => track.appendChild(c)); // moves originals out of .grid into the track
+    cloneStart.forEach(c => track.appendChild(c));
+
+    const total = track.children.length; // n + 2k
+    track.style.setProperty('--n', total);
+
+    let idx = k; // first real slide
+    track.style.setProperty('--idx', idx);
+
+    viewport.appendChild(track);
+    wrapper.appendChild(viewport);
+
+    const prevBtn = document.createElement('button');
+    prevBtn.className = 'pcarousel-arrow pcarousel-prev';
+    prevBtn.setAttribute('aria-label', 'Previous project');
+    prevBtn.innerHTML = '&#10094;';
+
+    const nextBtn = document.createElement('button');
+    nextBtn.className = 'pcarousel-arrow pcarousel-next';
+    nextBtn.setAttribute('aria-label', 'Next project');
+    nextBtn.innerHTML = '&#10095;';
+
+    wrapper.appendChild(prevBtn);
+    wrapper.appendChild(nextBtn);
+
+    grid.replaceWith(wrapper);
+
+    function goTo(newIdx, animate) {
+      if (!animate) track.classList.add('no-transition');
+      idx = newIdx;
+      track.style.setProperty('--idx', idx);
+      if (!animate) {
+        void track.offsetWidth; // force reflow so the jump is instant
+        track.classList.remove('no-transition');
+      }
+    }
+    function next() { goTo(idx + 1, true); }
+    function prev() { goTo(idx - 1, true); }
+
+    track.addEventListener('transitionend', (e) => {
+      if (e.propertyName && e.propertyName !== 'transform') return;
+      if (idx >= n + k) goTo(idx - n, false);
+      else if (idx < k) goTo(idx + n, false);
+    });
+
+    let dragging = false;
+    let timer = null;
+    function startAutoplay() {
+      clearInterval(timer);
+      timer = setInterval(() => {
+        if (!dragging && wrapper.offsetParent !== null) next();
+      }, 1000);
+    }
+    function pauseAutoplay() { clearInterval(timer); }
+
+    prevBtn.addEventListener('click', () => { prev(); startAutoplay(); });
+    nextBtn.addEventListener('click', () => { next(); startAutoplay(); });
+    wrapper.addEventListener('mouseenter', pauseAutoplay);
+    wrapper.addEventListener('mouseleave', startAutoplay);
+
+    /* touch / drag swipe support */
+    let startX = 0, deltaX = 0, slideWidthPx = 0;
+    function getVisible() {
+      return parseInt(getComputedStyle(viewport).getPropertyValue('--visible')) || 3;
+    }
+    function onDown(e) {
+      dragging = true;
+      startX = (e.touches ? e.touches[0].clientX : e.clientX);
+      const vw = viewport.getBoundingClientRect().width;
+      slideWidthPx = vw / getVisible();
+      track.classList.add('no-transition');
+      viewport.classList.add('dragging');
+    }
+    function onMove(e) {
+      if (!dragging) return;
+      const x = (e.touches ? e.touches[0].clientX : e.clientX);
+      deltaX = x - startX;
+      const basePercent = idx * (100 / total);
+      const dragPercent = (deltaX / slideWidthPx) * (100 / total);
+      track.style.transform = 'translateX(calc(-1 * ' + basePercent + '% + ' + dragPercent + '%))';
+    }
+    function onUp() {
+      if (!dragging) return;
+      dragging = false;
+      viewport.classList.remove('dragging');
+      track.classList.remove('no-transition');
+      track.style.transform = '';
+      if (Math.abs(deltaX) > slideWidthPx * 0.2) {
+        if (deltaX < 0) next(); else prev();
+      } else {
+        goTo(idx, true);
+      }
+      deltaX = 0;
+      startAutoplay();
+    }
+    viewport.addEventListener('touchstart', onDown, { passive: true });
+    viewport.addEventListener('touchmove', onMove, { passive: true });
+    viewport.addEventListener('touchend', onUp);
+    viewport.addEventListener('mousedown', onDown);
+    window.addEventListener('mousemove', onMove);
+    window.addEventListener('mouseup', onUp);
+
+    startAutoplay();
+  }
+
+  document.querySelectorAll('.portfolio-grid, .video-grid').forEach(initShowcaseCarousel);
 </script>
 
 </body>
