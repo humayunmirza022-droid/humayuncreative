@@ -1,1066 +1,766 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Video Portfolio | Talha Humayun</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portfolio Coming Soon</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <style>
-    :root {
-      --primary: #f39c12;
-      --secondary: #e74c3c;
-      --bg: #121212;
-      --text: #ffffff;
-      --text-muted: #a0a0a0;
-      --card-bg: #1e1e1e;
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 0; line-height: 1.6; }
-    a { color: var(--primary); text-decoration: none; }
-    h1 span, h2 span, .logo span {
-      background: linear-gradient(45deg, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
 
-    /* Header */
-    header { display: flex; justify-content: space-between; align-items: center; padding: 1.5rem 5%; background: rgba(18,18,18,0.95); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #333; }
-    .logo { font-size: 1.5rem; font-weight: bold; letter-spacing: 1px; }
-    nav a { margin-left: 2rem; color: var(--text); font-weight: 500; transition: color 0.3s; font-size: 0.9rem; text-transform: uppercase; }
-    nav a:hover { color: var(--primary); }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
 
-    /* Hero */
-    .hero { min-height: 85vh; display: flex; align-items: center; padding: 0 5%; gap: 4rem; flex-wrap: wrap; }
-    .hero-content { flex: 1; min-width: 280px; }
-    .hero-content h3 { color: var(--text-muted); margin-bottom: 0; font-weight: 400; }
-    .hero-content h1 { font-size: clamp(3rem, 8vw, 5rem); margin: 0; line-height: 1.1; }
-    .hero-content p { font-size: 1.2rem; color: var(--text-muted); max-width: 600px; margin: 1.5rem 0 2.5rem 0; }
+html{
+scroll-behavior:smooth;
+}
 
-    /* Profile Picture */
-    .hero-photo-wrap {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .hero-photo-blob {
-      position: relative;
-      width: 280px;
-      height: 280px;
-    }
-    .hero-photo-blob svg.blob-border {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      animation: rotateBlobBorder 8s linear infinite;
-    }
-    @keyframes rotateBlobBorder {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
-    }
-    .hero-photo-blob .blob-clip-wrap {
-      position: absolute;
-      inset: 14px;
-      border-radius: 50%;
-      overflow: hidden;
-      animation: morphBlob 8s ease-in-out infinite;
-      box-shadow: 0 0 40px rgba(243,156,18,0.35), 0 0 80px rgba(231,76,60,0.18);
-    }
-    @keyframes morphBlob {
-      0%   { border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; }
-      20%  { border-radius: 45% 55% 40% 60% / 55% 45% 60% 40%; }
-      40%  { border-radius: 50% 50% 60% 40% / 40% 60% 45% 55%; }
-      60%  { border-radius: 40% 60% 45% 55% / 60% 40% 55% 45%; }
-      80%  { border-radius: 55% 45% 50% 50% / 45% 55% 50% 50%; }
-      100% { border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; }
-    }
-    .hero-photo-blob .blob-clip-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .hero-photo-blob .blob-clip-wrap .photo-placeholder {
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      color: var(--text-muted);
-      font-size: 0.8rem;
-      text-align: center;
-      padding: 1rem;
-    }
-    .hero-photo-blob .blob-clip-wrap .photo-placeholder svg {
-      width: 48px; height: 48px;
-      fill: var(--primary);
-      opacity: 0.5;
-    }
+body{
+background:#080b14;
+color:#fff;
+overflow-x:hidden;
+min-height:100vh;
+position:relative;
+}
 
-    /* Buttons */
-    .btn { display: inline-block; padding: 12px 30px; background: linear-gradient(45deg, var(--primary), var(--secondary)); color: #fff; border-radius: 30px; font-weight: bold; transition: transform 0.3s, box-shadow 0.3s; }
-    .btn:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(243, 156, 18, 0.3); }
+body::before{
+content:'';
+position:fixed;
+width:700px;
+height:700px;
+background:#2563eb;
+filter:blur(220px);
+opacity:.18;
+left:-250px;
+top:-250px;
+pointer-events:none;
+}
 
-    /* Section */
-    .section-title { text-align: center; margin-bottom: 3rem; }
-    .section-title h2 { font-size: 2.5rem; margin: 0 0 0.4rem 0; }
-    .section-title p { color: var(--text-muted); font-size: 1rem; margin: 0; }
-    .services, .skills { padding: 6rem 5%; }
+body::after{
+content:'';
+position:fixed;
+width:600px;
+height:600px;
+background:#7c3aed;
+filter:blur(220px);
+opacity:.15;
+right:-200px;
+bottom:-200px;
+pointer-events:none;
+}
 
-    /* Experience & Education */
-    .timeline-section { padding: 6rem 5%; }
-    .timeline-columns {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 3.5rem;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .timeline-col h3 {
-      font-size: 1.3rem;
-      margin: 0 0 2rem 0;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .timeline-col h3 svg { width: 22px; height: 22px; fill: var(--primary); flex-shrink: 0; }
-    .timeline { position: relative; padding-left: 30px; }
-    .timeline::before {
-      content: '';
-      position: absolute;
-      left: 6px;
-      top: 6px;
-      bottom: 6px;
-      width: 2px;
-      background: linear-gradient(180deg, var(--primary), var(--secondary));
-      opacity: 0.35;
-    }
-    .timeline-item { position: relative; padding-bottom: 2.2rem; }
-    .timeline-item:last-child { padding-bottom: 0; }
-    .timeline-item::before {
-      content: '';
-      position: absolute;
-      left: -30px;
-      top: 4px;
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: linear-gradient(45deg, var(--primary), var(--secondary));
-      box-shadow: 0 0 0 4px rgba(243,156,18,0.15);
-    }
-    .timeline-item .tl-date {
-      display: inline-block;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--primary);
-      margin-bottom: 0.3rem;
-    }
-    .timeline-item h4 { margin: 0 0 0.2rem 0; font-size: 1.05rem; }
-    .timeline-item .tl-place { color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.5rem; display: block; }
-    .timeline-item p { margin: 0; color: var(--text-muted); font-size: 0.9rem; }
+.cursor{
+position:fixed;
+width:180px;
+height:180px;
+border-radius:50%;
+background:radial-gradient(circle,rgba(59,130,246,.22),transparent 70%);
+pointer-events:none;
+transform:translate(-50%,-50%);
+z-index:0;
+transition:transform .08s linear;
+filter:blur(8px);
+}
 
-    /* Portfolio wrapper — three separate sections */
-    .portfolio-section {
-      padding: 5rem 5%;
-    }
-    .portfolio-section:nth-child(odd) {
-      background: rgba(30,30,30,0.3);
-    }
-    .portfolio-section:nth-child(even) {
-      background: var(--bg);
-    }
+.container{
+position:relative;
+z-index:2;
+max-width:1050px;
+margin:auto;
+padding:60px 20px;
+}
 
-    /* Section category label */
-    .section-eyebrow {
-      display: inline-block;
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      background: linear-gradient(45deg, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 0.5rem;
-    }
+.hero{
+text-align:center;
+margin-bottom:55px;
+}
 
-    /* Services Cards */
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
-    .card { background: var(--card-bg); padding: 2.5rem 2rem; border-radius: 15px; transition: transform 0.3s, border-color 0.3s; border-bottom: 3px solid transparent; }
-    .card:hover { transform: translateY(-10px); border-bottom: 3px solid var(--primary); }
-    .card h3 { margin-top: 0; font-size: 1.3rem; border-left: 3px solid var(--primary); padding-left: 10px; }
-    .card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0; }
+.hero h1{
+font-size:2.3rem;
+font-weight:700;
+margin-bottom:12px;
+}
 
-    /* Portfolio Tabs */
-    .portfolio-tabs {
-      display: flex;
-      justify-content: center;
-      gap: 0.75rem;
-      margin-bottom: 3rem;
-      flex-wrap: wrap;
-    }
-    .tab-btn {
-      padding: 10px 22px;
-      border-radius: 30px;
-      border: 2px solid #333;
-      background: transparent;
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      transition: all 0.3s;
-      white-space: nowrap;
-    }
-    .tab-btn:hover, .tab-btn.active {
-      background: linear-gradient(45deg, var(--primary), var(--secondary));
-      color: #fff;
-      border-color: transparent;
-    }
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
+.hero p{
+max-width:650px;
+margin:auto;
+color:#bfc6d3;
+font-size:.95rem;
+line-height:1.8;
+}
 
-    /* Portfolio Grid & Cards */
-    .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+.badge{
+display:inline-block;
+padding:8px 18px;
+border-radius:40px;
+background:rgba(255,255,255,.07);
+border:1px solid rgba(255,255,255,.08);
+font-size:.78rem;
+margin-bottom:22px;
+color:#ddd;
+}
 
-    /* ── Presentation Slider (Amazon / Social / Video single-project view) ── */
-    .slider-wrap { max-width: 620px; margin: 0 auto; }
-    .slider-row { display: flex; align-items: center; gap: 1rem; }
-    .slider-viewport { flex: 1; overflow: hidden; border-radius: 16px; }
-    .slider-track { display: flex; transition: transform 0.65s cubic-bezier(0.65,0,0.35,1); }
-    .slider-slide {
-      flex: 0 0 100%;
-      min-width: 0;
-      transition: opacity 0.5s ease, transform 0.5s ease;
-      opacity: 0.4;
-      transform: scale(0.94);
-    }
-    .slider-slide.active { opacity: 1; transform: scale(1); }
-    .slider-slide .portfolio-card,
-    .slider-slide .video-card { width: 100%; }
-    .slider-arrow {
-      flex-shrink: 0;
-      width: 44px; height: 44px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.04);
-      border: 2px solid #333;
-      color: var(--text);
-      font-size: 1.1rem;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer;
-      transition: background 0.3s, border-color 0.3s, transform 0.3s;
-    }
-    .slider-arrow:hover { background: linear-gradient(45deg, var(--primary), var(--secondary)); border-color: transparent; transform: scale(1.08); }
-    .slider-dots { display: flex; justify-content: center; gap: 8px; margin-top: 1.75rem; }
-    .slider-dot { width: 8px; height: 8px; border-radius: 50%; background: #3a3a3a; cursor: pointer; transition: background 0.3s, transform 0.3s; }
-    .slider-dot.active { background: linear-gradient(45deg, var(--primary), var(--secondary)); transform: scale(1.35); }
+.glass{
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(14px);
+border:1px solid rgba(255,255,255,.08);
+border-radius:22px;
+}
 
-    /* View All button */
-    .view-all-wrap { text-align: center; margin-top: 3rem; }
-    .view-all-btn {
-      display: inline-block;
-      padding: 12px 36px;
-      border-radius: 30px;
-      border: 2px solid var(--primary);
-      background: transparent;
-      color: var(--text);
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-    .view-all-btn:hover {
-      background: linear-gradient(45deg, var(--primary), var(--secondary));
-      border-color: transparent;
-      transform: translateY(-4px);
-      box-shadow: 0 12px 30px rgba(243,156,18,0.35);
-    }
+.game{
+padding:30px;
+text-align:center;
+margin-bottom:45px;
+}
 
-    @media (max-width: 640px) {
-      .slider-arrow { width: 36px; height: 36px; font-size: 0.95rem; }
-      .slider-wrap { max-width: 100%; }
-    }
-    .portfolio-card {
-      background: var(--card-bg);
-      border-radius: 15px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.3s, box-shadow 0.3s;
-      border-bottom: 3px solid transparent;
-    }
-    .portfolio-card:hover { transform: translateY(-10px); border-bottom: 3px solid var(--primary); box-shadow: 0 15px 40px rgba(0,0,0,0.4); }
-    .portfolio-thumb {
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      position: relative;
-      overflow: hidden;
-    }
-    .portfolio-thumb::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.25);
-    }
-    .portfolio-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .portfolio-badge {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      z-index: 2;
-      background: linear-gradient(45deg, var(--primary), var(--secondary));
-      color: #fff;
-      font-size: 0.7rem;
-      font-weight: 700;
-      padding: 4px 12px;
-      border-radius: 20px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .thumb-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.3s;
-      z-index: 3;
-    }
-    .portfolio-card:hover .thumb-overlay { background: rgba(0,0,0,0.55); }
-    .thumb-overlay-icon {
-      opacity: 0;
-      transform: scale(0.7);
-      transition: opacity 0.3s, transform 0.3s;
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: linear-gradient(45deg, var(--primary), var(--secondary));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .portfolio-card:hover .thumb-overlay-icon { opacity: 1; transform: scale(1); }
-    .thumb-overlay-icon svg { width: 24px; height: 24px; fill: #fff; }
-    .portfolio-info { padding: 1.5rem; }
-    .portfolio-info h4 {
-      margin: 0 0 0.5rem 0;
-      font-size: 1.1rem;
-      font-weight: 700;
-      color: var(--text);
-      border-left: 3px solid var(--primary);
-      padding-left: 10px;
-    }
-    .portfolio-info p { color: var(--text-muted); font-size: 0.88rem; margin: 0; line-height: 1.5; }
+.game h2{
+font-size:1.2rem;
+margin-bottom:6px;
+}
 
-    /* Video Editing Section — special styling */
-    .video-section {
-      padding: 5rem 5%;
-      background: #0d0d0d;
-    }
-    .video-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-    }
-    .video-card {
-      background: var(--card-bg);
-      border-radius: 15px;
-      overflow: hidden;
-      border-bottom: 3px solid transparent;
-      transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
-      cursor: pointer;
-    }
-    .video-card:hover { transform: translateY(-10px); border-bottom: 3px solid var(--secondary); box-shadow: 0 15px 40px rgba(0,0,0,0.5); }
+.game p{
+font-size:.82rem;
+color:#b9c1cf;
+margin-bottom:20px;
+}
 
-    /* Thumbnail wrapper */
-    .video-thumb-wrap {
-      width: 100%;
-      aspect-ratio: 4 / 3;
-      position: relative;
-      overflow: hidden;
-      background: #161616;
-    }
-    .video-thumb-wrap img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.4s ease;
-    }
-    .video-card:hover .video-thumb-wrap img { transform: scale(1.06); }
+.stats{
+display:flex;
+justify-content:center;
+gap:18px;
+flex-wrap:wrap;
+margin-bottom:18px;
+}
 
-    /* Fallback when no thumbnail image */
-    .video-fallback-thumb {
-      width: 100%; height: 100%;
-      background: linear-gradient(135deg, #1a1a1a, #242424);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.75rem;
-      color: var(--text-muted);
-    }
-    .video-fallback-thumb svg { width: 40px; height: 40px; fill: var(--primary); opacity: 0.4; }
-    .video-fallback-thumb span { font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; opacity: 0.55; }
+.stat{
+background:rgba(255,255,255,.05);
+padding:10px 18px;
+border-radius:10px;
+font-size:.8rem;
+min-width:70px;
+}
 
-    /* Play button overlay on thumbnail */
-    .video-play-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 0.3s;
-      z-index: 3;
-    }
-    .video-card:hover .video-play-overlay { background: rgba(0,0,0,0.52); }
-    .vid-play-btn {
-      width: 64px; height: 64px;
-      border-radius: 50%;
-      background: linear-gradient(45deg, var(--primary), var(--secondary));
-      display: flex; align-items: center; justify-content: center;
-      opacity: 0;
-      transform: scale(0.7);
-      transition: opacity 0.3s, transform 0.3s;
-      box-shadow: 0 8px 30px rgba(243,156,18,0.5);
-    }
-    .video-card:hover .vid-play-btn { opacity: 1; transform: scale(1); }
-    .vid-play-btn svg { width: 28px; height: 28px; fill: #fff; margin-left: 4px; }
-    .portfolio-badge {
-      position: absolute;
-      top: 12px; right: 12px;
-      z-index: 4;
-      background: linear-gradient(45deg, var(--primary), var(--secondary));
-      color: #fff;
-      font-size: 0.68rem;
-      font-weight: 700;
-      padding: 4px 11px;
-      border-radius: 20px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-    .video-info { padding: 1.4rem 1.5rem; }
-    .video-info h4 {
-      margin: 0 0 0.4rem 0;
-      font-size: 1.05rem;
-      font-weight: 700;
-      border-left: 3px solid var(--secondary);
-      padding-left: 10px;
-    }
-    .video-info p { color: var(--text-muted); font-size: 0.88rem; margin: 0 0 0.75rem 0; }
-    .video-badge-inline {
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      color: var(--secondary);
-      border: 1px solid var(--secondary);
-      padding: 3px 10px;
-      border-radius: 20px;
-      text-transform: uppercase;
-    }
+#gameArea{
+position:relative;
+margin:auto;
+width:100%;
+max-width:750px;
+height:430px;
+border-radius:18px;
+overflow:hidden;
+background:#0f172a;
+border:1px solid rgba(255,255,255,.08);
+}
 
-    /* ── VIDEO MODAL ── */
-    #video-modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 99995;
-      background: rgba(0,0,0,0.92);
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      backdrop-filter: blur(6px);
-      animation: modalFadeIn 0.25s ease;
-    }
-    #video-modal.open { display: flex; }
-    @keyframes modalFadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
-    #video-modal-inner {
-      position: relative;
-      width: 100%;
-      max-width: 900px;
-      background: #111;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 40px 100px rgba(0,0,0,0.8), 0 0 0 1px #333;
-      animation: modalSlideUp 0.3s cubic-bezier(0.34,1.56,0.64,1);
-    }
-    @keyframes modalSlideUp {
-      from { transform: translateY(40px) scale(0.95); opacity: 0; }
-      to   { transform: translateY(0) scale(1);       opacity: 1; }
-    }
-    #video-modal-close {
-      position: absolute;
-      top: 14px; right: 18px;
-      z-index: 10;
-      background: rgba(0,0,0,0.6);
-      border: none;
-      color: #fff;
-      font-size: 1.4rem;
-      line-height: 1;
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      transition: background 0.2s, transform 0.2s;
-    }
-    #video-modal-close:hover { background: var(--secondary); transform: rotate(90deg); }
-    #video-modal-title {
-      padding: 1.1rem 1.5rem 0.6rem;
-      font-size: 1rem;
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: 0.5px;
-      background: linear-gradient(45deg, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-    #video-modal-player {
-      width: 100%;
-      aspect-ratio: 16/9;
-      display: block;
-      background: #000;
-      outline: none;
-    }
+#snakeCanvas{
+display:block;
+width:100%;
+height:100%;
+touch-action:none;
+}
 
-    /* Divider between portfolio sections */
-    .section-divider {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      padding: 0 5%;
-      margin: 0;
-    }
-    .section-divider::before,
-    .section-divider::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, #333, transparent);
-    }
+.hint{
+margin-top:14px;
+font-size:.75rem;
+color:#8b93a4;
+}
 
-    /* Lightbox */
-    #lightbox {
-      display: none;
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      background: rgba(0,0,0,0.94);
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      overflow: auto;
-    }
-    #lightbox.open { display: flex; }
-    #lightbox-inner {
-      position: relative;
-      max-width: 95vw;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    #lightbox-img {
-      width: auto;
-      height: auto;
-      max-width: 90vw;
-      max-height: 80vh;
-      object-fit: contain;
-      border-radius: 10px;
-      box-shadow: 0 30px 80px rgba(0,0,0,0.8);
-      display: block;
-      cursor: zoom-in;
-      transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    #lightbox-img.zoomed { transform: scale(1.5); cursor: zoom-out; }
-    #lightbox-caption {
-      margin-top: 20px;
-      color: #fff;
-      font-size: 1rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-      opacity: 0.85;
-      text-align: center;
-      transition: opacity 0.3s;
-    }
-    #lightbox-img.zoomed ~ #lightbox-caption { opacity: 0; }
-    #lightbox-close {
-      position: fixed;
-      top: 20px;
-      right: 28px;
-      font-size: 2.2rem;
-      color: #fff;
-      cursor: pointer;
-      line-height: 1;
-      opacity: 0.7;
-      transition: opacity 0.2s, transform 0.2s;
-      background: none;
-      border: none;
-      z-index: 10000;
-    }
-    #lightbox-close:hover { opacity: 1; transform: rotate(90deg); }
+.dpad{
+display:none;
+margin-top:16px;
+grid-template-columns:repeat(3,52px);
+grid-template-rows:repeat(3,52px);
+gap:6px;
+justify-content:center;
+}
 
-    /* Skills */
-    .skills { background: rgba(30,30,30,0.3); }
+.dpad button{
+padding:0;
+border-radius:12px;
+font-size:1.1rem;
+background:rgba(255,255,255,.08);
+}
 
-    /* Footer */
-    footer { text-align: center; padding: 4rem 5%; background: #0a0a0a; border-top: 1px solid #222; }
+.dpad .up{ grid-column:2; grid-row:1; }
+.dpad .left{ grid-column:1; grid-row:2; }
+.dpad .right{ grid-column:3; grid-row:2; }
+.dpad .down{ grid-column:2; grid-row:3; }
 
-    /* Floating WhatsApp Button */
-    .whatsapp-float {
-      position: fixed;
-      right: 24px;
-      bottom: 32px;
-      z-index: 99998;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      gap: 10px;
-    }
-    .whatsapp-tooltip {
-      background: #fff;
-      color: #111;
-      font-size: 0.82rem;
-      font-weight: 600;
-      padding: 7px 14px;
-      border-radius: 20px;
-      white-space: nowrap;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
-      opacity: 0;
-      transform: translateX(10px);
-      transition: opacity 0.3s, transform 0.3s;
-      pointer-events: none;
-    }
-    .whatsapp-float:hover .whatsapp-tooltip {
-      opacity: 1;
-      transform: translateX(0);
-    }
-    .whatsapp-btn {
-      width: 60px;
-      height: 60px;
-      background: #25d366;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 6px 28px rgba(37,211,102,0.5), 0 2px 8px rgba(0,0,0,0.3);
-      text-decoration: none;
-      animation: waPulse 2.2s ease-in-out infinite;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .whatsapp-btn:hover {
-      transform: scale(1.12);
-      box-shadow: 0 10px 36px rgba(37,211,102,0.65), 0 4px 12px rgba(0,0,0,0.3);
-      animation: none;
-    }
-    .whatsapp-btn svg { width: 32px; height: 32px; fill: #fff; }
-    @keyframes waPulse {
-      0%   { box-shadow: 0 6px 28px rgba(37,211,102,0.5), 0 0 0 0 rgba(37,211,102,0.45); }
-      60%  { box-shadow: 0 6px 28px rgba(37,211,102,0.5), 0 0 0 16px rgba(37,211,102,0); }
-      100% { box-shadow: 0 6px 28px rgba(37,211,102,0.5), 0 0 0 0 rgba(37,211,102,0); }
-    }
-    footer h2 { margin-bottom: 0.5rem; }
-    .social-links { margin-top: 2rem; display: flex; justify-content: center; flex-wrap: wrap; gap: 0.5rem 0; }
-    .social-links a { display: inline-block; margin: 0 15px; font-weight: bold; border-bottom: 1px solid transparent; padding-bottom: 2px; transition: border-color 0.3s; }
-    .social-links a:hover { border-color: var(--primary); }
-  </style>
+.controls{
+margin-top:22px;
+display:flex;
+justify-content:center;
+gap:12px;
+flex-wrap:wrap;
+}
+
+button,a.btn{
+padding:12px 24px;
+border:none;
+border-radius:999px;
+background:#2563eb;
+color:white;
+cursor:pointer;
+font-size:.85rem;
+text-decoration:none;
+transition:.3s;
+}
+
+button:hover,a.btn:hover{
+transform:translateY(-3px);
+background:#1d4ed8;
+}
+
+.secondary{
+background:rgba(255,255,255,.08)!important;
+}
+
+.cta{
+padding:35px;
+text-align:center;
+}
+
+.cta h2{
+font-size:1.4rem;
+margin-bottom:10px;
+}
+
+.cta p{
+font-size:.9rem;
+line-height:1.8;
+color:#bcc3cf;
+max-width:700px;
+margin:auto;
+}
+
+.buttons{
+margin-top:25px;
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.footer{
+text-align:center;
+margin-top:40px;
+font-size:.8rem;
+color:#777;
+}
+
+.popup{
+position:fixed;
+inset:0;
+display:flex;
+justify-content:center;
+align-items:center;
+background:rgba(0,0,0,.6);
+visibility:hidden;
+opacity:0;
+transition:.3s;
+z-index:50;
+}
+
+.popup.active{
+visibility:visible;
+opacity:1;
+}
+
+.popup-box{
+padding:35px;
+width:90%;
+max-width:420px;
+text-align:center;
+}
+
+.popup-box h2{
+margin-bottom:10px;
+}
+
+.popup-box p{
+font-size:.9rem;
+color:#bbb;
+line-height:1.7;
+margin-bottom:22px;
+}
+
+@media(max-width:700px){
+
+.hero h1{
+font-size:1.7rem;
+}
+
+#gameArea{
+height:320px;
+}
+
+.cursor{
+display:none;
+}
+
+.dpad{
+display:grid;
+}
+
+}
+
+</style>
+
 </head>
 <body>
 
-<header>
-  <div class="logo">Talha <span>Humayun</span></div>
-  <nav>
-    <a href="portfolio.html">Home</a>
-    <a href="portfolio.html#experience">Experience</a>
-    <a href="portfolio.html#services">Services</a>
-    <a href="portfolio.html#ecommerce-portfolio">Portfolio</a>
-    <a href="portfolio.html#contact">Contact</a>
-  </nav>
-</header>
+<div class="cursor"></div>
 
-<section class="portfolio-section" id="view-all-hero" style="padding-top:4rem;">
-  <div class="section-title">
-    <span class="section-eyebrow">Motion & Video</span>
-    <h2>Video <span>Editing</span></h2>
-    <p>The complete collection — product videos, brand reels, and social motion content</p>
-  </div>
-</section>
+<div class="container">
 
-<section class="video-section" id="video-portfolio">
-  <div class="section-title">
-    <span class="section-eyebrow">Motion & Video</span>
-    <h2>Video <span>Editing</span></h2>
-    <p>Click any thumbnail to watch — product videos, brand reels, and social motion content</p>
-  </div>
+<div class="hero">
 
-  <div class="video-grid">
-
-    <!-- ─── Video Card 1 ───
-         thumbnail:  Videos/Thumbnails/VT1.jpg   (your custom thumbnail image)
-         video file: Videos/Video_1.mp4
-         Change both paths and the title/description below. -->
-    <div class="video-card" onclick="openVideoModal('Videos/Video_1.mp4', 'Video_Name_1')">
-      <div class="video-thumb-wrap">
-        <img src="Videos/Thumbnails/VT1.jpg" alt="Video 1 thumbnail"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-        <div class="video-fallback-thumb" style="display:none;">
-          <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
-          <span>Video_Name_1</span>
-        </div>
-        <div class="video-play-overlay">
-          <div class="vid-play-btn">
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </div>
-        </div>
-        <span class="portfolio-badge">Product Video</span>
-      </div>
-      <div class="video-info">
-        <h4>Video_Name_1</h4>
-        <p>Video_Description_1</p>
-        <span class="video-badge-inline">▶ Click to Play</span>
-      </div>
-    </div>
-
-    <!-- ─── Video Card 2 ─── -->
-    <div class="video-card" onclick="openVideoModal('Videos/Video_2.mp4', 'Video_Name_2')">
-      <div class="video-thumb-wrap">
-        <img src="Videos/Thumbnails/VT2.jpg" alt="Video 2 thumbnail"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-        <div class="video-fallback-thumb" style="display:none;">
-          <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
-          <span>Video_Name_2</span>
-        </div>
-        <div class="video-play-overlay">
-          <div class="vid-play-btn">
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </div>
-        </div>
-        <span class="portfolio-badge">Brand Reel</span>
-      </div>
-      <div class="video-info">
-        <h4>Video_Name_2</h4>
-        <p>Video_Description_2</p>
-        <span class="video-badge-inline">▶ Click to Play</span>
-      </div>
-    </div>
-
-    <!-- ─── Video Card 3 ─── -->
-    <div class="video-card" onclick="openVideoModal('Videos/Video_3.mp4', 'Video_Name_3')">
-      <div class="video-thumb-wrap">
-        <img src="Videos/Thumbnails/VT3.jpg" alt="Video 3 thumbnail"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-        <div class="video-fallback-thumb" style="display:none;">
-          <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
-          <span>Video_Name_3</span>
-        </div>
-        <div class="video-play-overlay">
-          <div class="vid-play-btn">
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </div>
-        </div>
-        <span class="portfolio-badge">Social Reel</span>
-      </div>
-      <div class="video-info">
-        <h4>Video_Name_3</h4>
-        <p>Video_Description_3</p>
-        <span class="video-badge-inline">▶ Click to Play</span>
-      </div>
-    </div>
-
-    <!-- ─── Video Card 4 ─── -->
-    <div class="video-card" onclick="openVideoModal('Videos/Video_4.mp4', 'Video_Name_4')">
-      <div class="video-thumb-wrap">
-        <img src="Videos/Thumbnails/VT4.jpg" alt="Video 4 thumbnail"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-        <div class="video-fallback-thumb" style="display:none;">
-          <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
-          <span>Video_Name_4</span>
-        </div>
-        <div class="video-play-overlay">
-          <div class="vid-play-btn">
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </div>
-        </div>
-        <span class="portfolio-badge">Product Video</span>
-      </div>
-      <div class="video-info">
-        <h4>Video_Name_4</h4>
-        <p>Video_Description_4</p>
-        <span class="video-badge-inline">▶ Click to Play</span>
-      </div>
-    </div>
-
-    <!-- ─── Video Card 5 ─── -->
-    <div class="video-card" onclick="openVideoModal('Videos/Video_5.mp4', 'Video_Name_5')">
-      <div class="video-thumb-wrap">
-        <img src="Videos/Thumbnails/VT5.jpg" alt="Video 5 thumbnail"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-        <div class="video-fallback-thumb" style="display:none;">
-          <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
-          <span>Video_Name_5</span>
-        </div>
-        <div class="video-play-overlay">
-          <div class="vid-play-btn">
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </div>
-        </div>
-        <span class="portfolio-badge">Brand Reel</span>
-      </div>
-      <div class="video-info">
-        <h4>Video_Name_5</h4>
-        <p>Video_Description_5</p>
-        <span class="video-badge-inline">▶ Click to Play</span>
-      </div>
-    </div>
-
-    <!-- ─── Video Card 6 ─── -->
-    <div class="video-card" onclick="openVideoModal('Videos/Video_6.mp4', 'Video_Name_6')">
-      <div class="video-thumb-wrap">
-        <img src="Videos/Thumbnails/VT6.jpg" alt="Video 6 thumbnail"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
-        <div class="video-fallback-thumb" style="display:none;">
-          <svg viewBox="0 0 24 24"><path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
-          <span>Video_Name_6</span>
-        </div>
-        <div class="video-play-overlay">
-          <div class="vid-play-btn">
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-          </div>
-        </div>
-        <span class="portfolio-badge">Social Reel</span>
-      </div>
-      <div class="video-info">
-        <h4>Video_Name_6</h4>
-        <p>Video_Description_6</p>
-        <span class="video-badge-inline">▶ Click to Play</span>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="view-all-wrap">
-    <a class="view-all-btn" href="portfolio.html#video-portfolio">&larr; Back to Portfolio</a>
-  </div>
-
-</section>
-
-
-<!-- VIDEO MODAL POPUP -->
-<div id="video-modal" onclick="closeVideoModal()">
-  <div id="video-modal-inner" onclick="event.stopPropagation()">
-    <button id="video-modal-close" onclick="closeVideoModal()">&#x2715;</button>
-    <div id="video-modal-title"></div>
-    <video id="video-modal-player" controls playsinline>
-      Your browser does not support HTML5 video.
-    </video>
-  </div>
+<div class="badge">
+🚧 Portfolio In Progress
 </div>
 
-<!-- LIGHTBOX -->
-<div id="lightbox" onclick="closeLightbox()">
-  <button id="lightbox-close" onclick="closeLightbox()">&#x2715;</button>
-  <div id="lightbox-inner" onclick="event.stopPropagation()">
-    <img id="lightbox-img" src="" alt="" onclick="toggleZoom(event)" />
-    <div id="lightbox-caption"></div>
-  </div>
+<h1>Thanks for coming this far.</h1>
+
+<p>
+Just be patient a little longer — this page will be live soon.
+Till then, if you're a bit tired, take a breather and play a game.
+</p>
+
 </div>
 
+<div class="glass game">
+
+<h2>🐍 Snake</h2>
+
+<p>Eat, grow, don't hit yourself. Buttery smooth, runs at your screen's full refresh rate.</p>
+
+<div class="stats">
+
+<div class="stat">
+Score
+<br>
+<strong id="score">0</strong>
+</div>
+
+<div class="stat">
+Speed
+<br>
+<strong id="speedLabel">1.0x</strong>
+</div>
+
+<div class="stat">
+Best
+<br>
+<strong id="best">0</strong>
+</div>
+
+</div>
+
+<div id="gameArea">
+<canvas id="snakeCanvas"></canvas>
+</div>
+
+<div class="hint">Arrow keys / WASD to steer &middot; Space to pause</div>
+
+<div class="dpad">
+<button class="up" onclick="setDir(0,-1)">▲</button>
+<button class="left" onclick="setDir(-1,0)">◀</button>
+<button class="right" onclick="setDir(1,0)">▶</button>
+<button class="down" onclick="setDir(0,1)">▼</button>
+</div>
+
+<div class="controls">
+
+<button onclick="startGame()">
+Start Game
+</button>
+
+<button class="secondary" onclick="resetGame()">
+Reset
+</button>
+
+</div>
+
+</div>
+
+<div class="glass cta">
+
+<h2>💻 Need a Website Like This?</h2>
+
+<p>
+I design modern, fully responsive websites, landing pages, portfolios and interactive web experiences with clean UI, smooth animations and fast performance.
+If you'd like something similar for your business or personal brand, I'd love to work with you.
+</p>
+
+<div class="buttons">
+
+<a class="btn" href="https://wa.me/3391524400">
+Hire Me
+</a>
+
+<a class="btn secondary" href="portfolio.html">
+Visit Portfolio
+</a>
+
+</div>
+
+</div>
+
+<div class="footer">
+Made with ☕ and lots of late nights.
+</div>
+
+</div>
+
+<div class="popup" id="popup">
+
+<div class="glass popup-box">
+
+<h2 id="popupTitle">🎉 Game Over</h2>
+
+<p>
+Your Score:
+<strong id="finalScore">0</strong>
+<br><br>
+If you enjoyed this little experience,
+I'd be happy to build a custom website like this for you.
+</p>
+
+<div class="buttons">
+
+<a class="btn" href="https://wa.me/3391524400">
+Hire Me
+</a>
+
+<button onclick="closePopup()">
+Play Again
+</button>
+
+</div>
+
+</div>
+
+</div>
 
 <script>
-  /* ══════════════════════════════════════════
-     NEON ORANGE TRAIL CURSOR
-  ══════════════════════════════════════════ */
-  const canvas = document.createElement('canvas');
-  Object.assign(canvas.style, {
-    position: 'fixed', top: '0', left: '0', pointerEvents: 'none',
-    zIndex: '999999', width: '100%', height: '100%'
-  });
-  document.body.appendChild(canvas);
-  const ctx = canvas.getContext('2d');
 
-  function resizeCursorCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  resizeCursorCanvas();
-  window.addEventListener('resize', resizeCursorCanvas);
+/* ambient glow cursor */
+const cursor=document.querySelector('.cursor');
+document.addEventListener('mousemove',(e)=>{
+cursor.style.left=e.clientX+'px';
+cursor.style.top=e.clientY+'px';
+});
 
-  const trailLength = 16;
-  const trailColor = "243,156,18"; /* theme --primary orange */
-  const trail = [];
+/* ---------------- SNAKE GAME ---------------- */
+/* Rendering runs on requestAnimationFrame so it's tied to the display's
+   actual refresh rate (60hz, 120hz, 144hz...). Game logic runs on its own
+   fixed timestep (independent of frame rate) and the snake's position is
+   interpolated between logic steps every frame, so movement looks fluid
+   no matter how fast the display refreshes. */
 
-  function draw() {
-    /* fully clear each frame (transparent) so the page underneath stays visible */
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+const canvas=document.getElementById("snakeCanvas");
+const ctx=canvas.getContext("2d");
+const gameArea=document.getElementById("gameArea");
 
-    if (trail.length > 1) {
-      /* draw one smooth continuous line through the trail points,
-         fading and thinning toward the tail — like a light streak */
-      for (let i = 1; i < trail.length; i++) {
-        const t = i / (trail.length - 1); // 0 = oldest, 1 = newest
-        const alpha = t * 0.9;
-        const width = 1 + t * 2.5;
+const scoreEl=document.getElementById("score");
+const bestEl=document.getElementById("best");
+const speedLabelEl=document.getElementById("speedLabel");
+const popup=document.getElementById("popup");
+const popupTitle=document.getElementById("popupTitle");
+const finalScore=document.getElementById("finalScore");
 
-        ctx.beginPath();
-        ctx.moveTo(trail[i - 1].x, trail[i - 1].y);
-        ctx.lineTo(trail[i].x, trail[i].y);
-        ctx.lineCap  = 'round';
-        ctx.lineJoin = 'round';
-        ctx.shadowColor = `rgba(${trailColor},1)`;
-        ctx.shadowBlur  = 12;
-        ctx.strokeStyle = `rgba(${trailColor},${alpha})`;
-        ctx.lineWidth   = width;
-        ctx.stroke();
-      }
+const COLS=25, ROWS=14;
+let cell=30;
 
-      /* bright core dot at the current tip */
-      const head = trail[trail.length - 1];
-      ctx.beginPath();
-      ctx.arc(head.x, head.y, 2, 0, Math.PI * 2);
-      ctx.shadowColor = `rgba(${trailColor},1)`;
-      ctx.shadowBlur  = 14;
-      ctx.fillStyle   = '#fff5e6';
-      ctx.fill();
-    }
+// Offscreen grid cache: the grid never changes, so it's rasterized once
+// per resize instead of being redrawn stroke-by-stroke every frame. This
+// is the single biggest win for low-power CPUs/GPUs.
+const gridCanvas=document.createElement("canvas");
+const gridCtx=gridCanvas.getContext("2d");
 
-    window.requestAnimationFrame(draw);
-  }
+function fitCanvas(){
+const rect=gameArea.getBoundingClientRect();
+// Cap pixel ratio: a high-res screen paired with a weak CPU is exactly
+// the case that needs protecting, so never go above 1.5x even if the
+// device reports more (e.g. 2x, 3x retina/phone screens).
+const dpr=Math.min(window.devicePixelRatio||1, 1.5);
+cell=Math.floor(Math.min(rect.width/COLS, rect.height/ROWS));
 
-  function addTrailPoint(x, y) {
-    trail.push({ x, y });
-    if (trail.length > trailLength) {
-      trail.shift();
-    }
-  }
+const w=cell*COLS, h=cell*ROWS;
 
-  /* When the mouse stops moving, shrink the trail from the tail
-     until it's gone — instead of it hanging frozen on screen */
-  let idleShrinkTimer = null;
-  function startIdleShrink() {
-    clearInterval(idleShrinkTimer);
-    idleShrinkTimer = setInterval(() => {
-      if (trail.length > 0) {
-        trail.shift();
-      } else {
-        clearInterval(idleShrinkTimer);
-      }
-    }, 20);
-  }
+canvas.width=w*dpr;
+canvas.height=h*dpr;
+canvas.style.width=w+"px";
+canvas.style.height=h+"px";
+ctx.setTransform(dpr,0,0,dpr,0,0);
 
-  let mouseX = 0, mouseY = 0;
-  let idleTimeout = null;
-  const startDrawing = (e) => {
-    const newX = e.clientX;
-    const newY = e.clientY;
-    addTrailPoint(newX, newY);
-    mouseX = newX;
-    mouseY = newY;
+gridCanvas.width=w*dpr;
+gridCanvas.height=h*dpr;
+gridCtx.setTransform(dpr,0,0,dpr,0,0);
+gridCtx.clearRect(0,0,w,h);
+gridCtx.strokeStyle="rgba(255,255,255,0.035)";
+gridCtx.lineWidth=1;
+for(let x=0;x<=COLS;x++){
+gridCtx.beginPath();
+gridCtx.moveTo(x*cell,0);
+gridCtx.lineTo(x*cell,h);
+gridCtx.stroke();
+}
+for(let y=0;y<=ROWS;y++){
+gridCtx.beginPath();
+gridCtx.moveTo(0,y*cell);
+gridCtx.lineTo(w,y*cell);
+gridCtx.stroke();
+}
+}
 
-    clearInterval(idleShrinkTimer);
-    clearTimeout(idleTimeout);
-    idleTimeout = setTimeout(startIdleShrink, 60);
-  };
+let resizeTimer=null;
+window.addEventListener("resize",()=>{
+clearTimeout(resizeTimer);
+resizeTimer=setTimeout(fitCanvas,120);
+});
 
-  document.addEventListener('mousemove', startDrawing);
-  document.body.style.cursor = 'none';
-  const styleTag = document.createElement('style');
-  styleTag.textContent = '*, *:hover { cursor: none !important; }';
-  document.head.appendChild(styleTag);
+let snake, dir, nextDir, food, score, playing, paused, gameOver;
+let stepInterval=130; // ms per logic tick, decreases as score rises
+let accumulator=0;
+let lastTime=0;
+let rafId=null;
 
-  /* Hide the trail whenever the pointer leaves the page/window */
-  document.addEventListener('mouseleave', () => { canvas.style.display = 'none'; trail.length = 0; });
-  document.addEventListener('mouseenter', () => { canvas.style.display = 'block'; });
+bestEl.innerText=localStorage.getItem("snakeBest")||0;
 
-  window.requestAnimationFrame(draw);
+function initState(){
+snake=[
+{x:6,y:7},{x:5,y:7},{x:4,y:7}
+];
+dir={x:1,y:0};
+nextDir={x:1,y:0};
+score=0;
+stepInterval=130;
+accumulator=0;
+gameOver=false;
+paused=false;
+scoreEl.innerText=0;
+speedLabelEl.innerText="1.0x";
+placeFood();
+}
 
-  function showTab(id, btn, group) {
-    // Hide all tabs in the same section group
-    const groupClass = group + '-tab';
-    document.querySelectorAll('.' + groupClass).forEach(el => el.classList.remove('active'));
+function placeFood(){
+let valid=false;
+while(!valid){
+food={x:Math.floor(Math.random()*COLS),y:Math.floor(Math.random()*ROWS)};
+valid=!snake.some(s=>s.x===food.x&&s.y===food.y);
+}
+}
 
-    // Deactivate only sibling tab buttons (same parent .portfolio-tabs)
-    const tabsParent = btn.closest('.portfolio-tabs');
-    tabsParent.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+function setDir(x,y){
+if(!playing||paused) return;
+// prevent reversing directly into itself
+if(dir.x===-x && dir.y===-y) return;
+nextDir={x,y};
+}
 
-    document.getElementById(id).classList.add('active');
-    btn.classList.add('active');
-  }
+window.addEventListener("keydown",(e)=>{
+switch(e.key){
+case "ArrowUp": case "w": case "W": setDir(0,-1); e.preventDefault(); break;
+case "ArrowDown": case "s": case "S": setDir(0,1); e.preventDefault(); break;
+case "ArrowLeft": case "a": case "A": setDir(-1,0); e.preventDefault(); break;
+case "ArrowRight": case "d": case "D": setDir(1,0); e.preventDefault(); break;
+case " ": if(playing){ paused=!paused; } e.preventDefault(); break;
+}
+});
 
-  function openLightbox(imgSrc, caption) {
-    const lb  = document.getElementById('lightbox');
-    const img = document.getElementById('lightbox-img');
-    const cap = document.getElementById('lightbox-caption');
-    img.classList.remove('zoomed');
-    img.src = imgSrc;
-    cap.textContent = caption;
-    lb.classList.add('open');
-    document.body.style.overflow = 'hidden';
-  }
+/* swipe support for mobile */
+let touchStartX=0, touchStartY=0;
+canvas.addEventListener("touchstart",(e)=>{
+const t=e.touches[0];
+touchStartX=t.clientX;
+touchStartY=t.clientY;
+},{passive:true});
 
-  function closeLightbox() {
-    document.getElementById('lightbox').classList.remove('open');
-    document.getElementById('lightbox-img').classList.remove('zoomed');
-    document.getElementById('lightbox-img').src = '';
-    document.body.style.overflow = '';
-  }
+canvas.addEventListener("touchend",(e)=>{
+const t=e.changedTouches[0];
+const dx=t.clientX-touchStartX;
+const dy=t.clientY-touchStartY;
+if(Math.abs(dx)>Math.abs(dy)){
+setDir(dx>0?1:-1,0);
+}else{
+setDir(0,dy>0?1:-1);
+}
+},{passive:true});
 
-  function toggleZoom(event) {
-    event.stopPropagation();
-    document.getElementById('lightbox-img').classList.toggle('zoomed');
-  }
+function logicStep(){
 
-  function openVideoModal(src, title) {
-    const modal  = document.getElementById('video-modal');
-    const player = document.getElementById('video-modal-player');
-    const ttl    = document.getElementById('video-modal-title');
-    ttl.textContent = title;
-    player.src = src;
-    modal.classList.add('open');
-    document.body.style.overflow = 'hidden';
-    player.play().catch(() => {}); // autoplay when possible
-  }
+dir=nextDir;
 
-  function closeVideoModal() {
-    const modal  = document.getElementById('video-modal');
-    const player = document.getElementById('video-modal-player');
-    player.pause();
-    player.src = '';
-    modal.classList.remove('open');
-    document.body.style.overflow = '';
-  }
+const head={x:snake[0].x+dir.x, y:snake[0].y+dir.y};
 
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') { closeLightbox(); closeVideoModal(); }
-  });
+// wrap around edges
+if(head.x<0) head.x=COLS-1;
+if(head.x>=COLS) head.x=0;
+if(head.y<0) head.y=ROWS-1;
+if(head.y>=ROWS) head.y=0;
+
+// self collision
+if(snake.some(s=>s.x===head.x&&s.y===head.y)){
+endGame();
+return;
+}
+
+snake.unshift(head);
+
+if(head.x===food.x && head.y===food.y){
+score++;
+scoreEl.innerText=score;
+placeFood();
+// ramp up speed smoothly, cap it so it stays playable
+stepInterval=Math.max(65, 130-score*4);
+speedLabelEl.innerText=(130/stepInterval).toFixed(1)+"x";
+}else{
+snake.pop();
+}
+
+}
+
+function endGame(){
+playing=false;
+gameOver=true;
+
+let best=parseInt(localStorage.getItem("snakeBest")||"0",10);
+if(score>best){
+best=score;
+localStorage.setItem("snakeBest",best);
+}
+bestEl.innerText=best;
+
+finalScore.innerText=score;
+popupTitle.innerText="🐍 Game Over";
+popup.classList.add("active");
+}
+
+function draw(interpT){
+
+const w=cell*COLS, h=cell*ROWS;
+
+// flat background instead of clearRect + redrawn gradient/blur every frame
+ctx.fillStyle="#0f172a";
+ctx.fillRect(0,0,w,h);
+
+// blit the pre-rendered grid instead of stroking ~40 lines per frame
+ctx.drawImage(gridCanvas,0,0,w,h);
+
+// food — flat fill, no shadowBlur (shadowBlur is the most expensive
+// canvas operation and tanks frame rate on weak GPUs)
+ctx.fillStyle="#7c3aed";
+const fx=food.x*cell+cell/2, fy=food.y*cell+cell/2;
+ctx.beginPath();
+ctx.arc(fx,fy,cell*0.32,0,Math.PI*2);
+ctx.fill();
+// cheap flat "glow" ring instead of shadowBlur
+ctx.strokeStyle="rgba(124,58,237,0.35)";
+ctx.lineWidth=3;
+ctx.beginPath();
+ctx.arc(fx,fy,cell*0.42,0,Math.PI*2);
+ctx.stroke();
+
+// snake, with head interpolated toward its next cell for smoothness
+const pad=2;
+for(let i=snake.length-1;i>=0;i--){
+const seg=snake[i];
+let dx=0, dy=0;
+
+if(i===0 && playing && !paused){
+dx=dir.x*interpT;
+dy=dir.y*interpT;
+}
+
+const px=(seg.x+dx)*cell;
+const py=(seg.y+dy)*cell;
+
+ctx.fillStyle = i===0 ? "#60a5fa" : "#2563eb";
+roundRect(px+pad,py+pad,cell-pad*2,cell-pad*2, cell*0.28);
+ctx.fill();
+}
+
+}
+
+function roundRect(x,y,w,h,r){
+ctx.beginPath();
+ctx.moveTo(x+r,y);
+ctx.arcTo(x+w,y,x+w,y+h,r);
+ctx.arcTo(x+w,y+h,x,y+h,r);
+ctx.arcTo(x,y+h,x,y,r);
+ctx.arcTo(x,y,x+w,y,r);
+ctx.closePath();
+}
+
+function loop(timestamp){
+
+if(!lastTime) lastTime=timestamp;
+// Clamp delta: if the tab was backgrounded or a frame stalled for a long
+// time, a huge delta would otherwise force many logic steps at once
+// ("spiral of death"), which is exactly what chokes low-end machines.
+const delta=Math.min(timestamp-lastTime, 250);
+lastTime=timestamp;
+
+if(playing && !paused){
+accumulator+=delta;
+let steps=0;
+while(accumulator>=stepInterval && steps<5){
+logicStep();
+accumulator-=stepInterval;
+steps++;
+if(gameOver) break;
+}
+}
+
+const interpT = playing && !paused ? Math.min(1, accumulator/stepInterval) : 0;
+draw(interpT);
+
+rafId=requestAnimationFrame(loop);
+
+}
+
+function startGame(){
+if(playing) return;
+popup.classList.remove("active");
+initState();
+playing=true;
+paused=false;
+lastTime=0;
+if(!rafId){
+fitCanvas();
+rafId=requestAnimationFrame(loop);
+}
+}
+
+function resetGame(){
+playing=false;
+paused=false;
+popup.classList.remove("active");
+initState();
+if(!rafId){
+fitCanvas();
+lastTime=0;
+rafId=requestAnimationFrame(loop);
+}
+}
+
+function closePopup(){
+popup.classList.remove("active");
+resetGame();
+}
+
+fitCanvas();
+initState();
+draw(0);
+rafId=requestAnimationFrame(loop);
 
 </script>
-
-<footer id="contact">
-  <h2>Ready to start your next project?</h2>
-  <p style="color: var(--text-muted); margin-bottom: 2rem;">Let's collaborate and create something extraordinary.</p>
-  <a href="mailto:your.email@example.com" class="btn">Get In Touch</a>
-  <div class="social-links">
-    <a href="https://www.linkedin.com/in/humayuncreative/" target="_blank">LinkedIn</a>
-    <a href="https://www.behance.net/your-profile" target="_blank">Behance</a>
-    <a href="https://www.instagram.com/your-profile" target="_blank">Instagram</a>
-    <a href="https://dribbble.com/your-profile" target="_blank">Dribbble</a>
-    <a href="https://wa.me/923000000000" target="_blank" style="color:#25d366;">WhatsApp</a>
-    <a href="mailto:your.email@example.com" style="color:var(--primary);">Email</a>
-  </div>
-  <p style="margin-top: 3rem; color: var(--text-muted); font-size: 0.85rem;">&copy; 2024 Talha Humayun. All rights reserved.</p>
-  <p style="margin-top: 0.75rem; color: var(--text-muted); font-size: 0.82rem; font-style: italic;">
-    ✦ This entire website was designed &amp; built by me — Talha Humayun — from scratch.
-  </p>
-</footer>
 
 </body>
 </html>
