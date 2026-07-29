@@ -529,6 +529,13 @@
     }
     .video-fallback-thumb svg { width: 40px; height: 40px; fill: var(--primary); opacity: 0.4; }
     .video-fallback-thumb span { font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; opacity: 0.55; }
+    .portfolio-fallback-thumb {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem;
+      background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
+    }
+    .portfolio-fallback-thumb svg { width: 40px; height: 40px; fill: var(--primary); opacity: 0.4; }
+    .portfolio-fallback-thumb span { font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; opacity: 0.55; text-align: center; padding: 0 1rem; }
 
     /* Play button overlay on thumbnail */
     .video-play-overlay {
@@ -1111,22 +1118,32 @@
         <div class="portfolio-info"><h4>Premium Edible Flowers Product</h4><p>Designed a premium Amazon Basic A+ Content experience for a freeze-dried edible flowers brand, focusing on a clean, elegant, and conversion-oriented presentation. The goal was to highlight the product's natural beauty while clearly communicating its features, applications, and benefits through a modern visual hierarchy.</p></div>
       </div>
 
-      <div class="portfolio-card" onclick="openLightbox('Amazon A+/AP_2.jpg', 'AP_Name_2')">
+      <div class="portfolio-card" onclick="openLightbox('Amazon A+/AP_2.jpg', 'BeanVivo | Amazon EBC / A+ Content Design')">
         <div class="portfolio-thumb">
-          <img src="Amazon A+/APT2.jpg" alt="A+ Content 2" />
+          <img src="Amazon A+/APT2.jpg" alt="A+ Content 2"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="portfolio-fallback-thumb" style="display:none;">
+            <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg>
+            <span>BeanVivo A+ Content</span>
+          </div>
           <span class="portfolio-badge">A+ Content</span>
           <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
         </div>
-        <div class="portfolio-info"><h4>AP_Name_2</h4><p>AP_Description_2</p></div>
+        <div class="portfolio-info"><h4>BeanVivo | Amazon EBC / A+ Content Design</h4><p>A modern Amazon A+ Content design created for BeanVivo's plant-based snack mix. This project emphasizes product storytelling through premium layouts, high-quality lifestyle imagery, nutritional highlights, ingredient showcases, comparison sections, and branded visual elements to help customers quickly understand the product's value.</p></div>
       </div>
 
-      <div class="portfolio-card" onclick="openLightbox('Amazon A+/AP_3.jpg', 'AP_Name_3')">
+      <div class="portfolio-card" onclick="openLightbox('Amazon A+/AP_3.jpg', 'Sticky Notes Holder | Mia DayKor')">
         <div class="portfolio-thumb">
-          <img src="Amazon A+/APT3.jpg" alt="A+ Content 3" />
+          <img src="Amazon A+/APT3.jpg" alt="A+ Content 3"
+               onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+          <div class="portfolio-fallback-thumb" style="display:none;">
+            <svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg>
+            <span>Sticky Notes Holder</span>
+          </div>
           <span class="portfolio-badge">A+ Content</span>
           <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
         </div>
-        <div class="portfolio-info"><h4>AP_Name_3</h4><p>AP_Description_3</p></div>
+        <div class="portfolio-info"><h4>Sticky Notes Holder | Mia DayKor</h4><p>A playful yet premium Amazon A+ Content design crafted for a desktop sticky notes holder. The layout combines soft pastel colors, lifestyle photography, and feature-focused sections to create an engaging and conversion-driven product presentation.</p></div>
       </div>
 
       <div class="portfolio-card" onclick="openLightbox('Amazon A+/AP_4.jpg', 'AP_Name_4')">
@@ -1924,6 +1941,7 @@
     function prev() { goTo(idx - 1, true); }
 
     track.addEventListener('transitionend', (e) => {
+      if (e.target !== track) return; // ignore bubbled transitions from card hover effects etc.
       if (e.propertyName && e.propertyName !== 'transform') return;
       if (idx >= n + k) goTo(idx - n, false);
       else if (idx < k) goTo(idx + n, false);
@@ -1987,6 +2005,24 @@
     window.addEventListener('mouseup', onUp);
 
     startAutoplay();
+
+    /* Safety net: if the browser restores this page from cache after the
+       user navigated away and hit back/forward, the track can be left
+       mid-transition (translated out of view). Snap it back to a valid
+       resting position instantly, with no animation, so content never
+       stays "disappeared". */
+    window.addEventListener('pageshow', (e) => {
+      if (e.persisted) {
+        pauseAutoplay();
+        goTo(idx, false);
+        startAutoplay();
+      }
+    });
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        goTo(idx, false);
+      }
+    });
   }
 
   document.querySelectorAll('.portfolio-grid, .video-grid').forEach(initShowcaseCarousel);
