@@ -875,15 +875,40 @@
         <circle cx="140" cy="140" r="134" fill="none" stroke="url(#blobGrad)" stroke-width="4" stroke-dasharray="30 12" stroke-linecap="round"/>
       </svg>
       <div class="blob-clip-wrap">
-        <!-- Just drop a file named your-photo.jpg next to this HTML file.
-             It will load automatically here and the placeholder below will disappear. -->
-        <img src="your-photo.jpg" alt="Talha Humayun"
-             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-        <div class="photo-placeholder" style="display:none;">
+        <!-- Just drop a photo file next to this HTML file named "profile"
+             or "your-photo" — any of .jpg/.jpeg/.png/.gif will be found
+             automatically and the placeholder below will disappear. -->
+        <img id="profile-photo" alt="Talha Humayun" style="display:none;" />
+        <div class="photo-placeholder" id="profile-photo-placeholder">
           <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
           <span>Add your photo<br>src="your-photo.jpg"</span>
         </div>
       </div>
+      <script>
+        (function () {
+          var names = ['profile', 'your-photo'];
+          var exts  = ['jpg', 'jpeg', 'png', 'gif'];
+          var candidates = [];
+          names.forEach(function (n) { exts.forEach(function (e) { candidates.push(n + '.' + e); }); });
+
+          var img = document.getElementById('profile-photo');
+          var placeholder = document.getElementById('profile-photo-placeholder');
+          var i = 0;
+
+          function tryNext() {
+            if (i >= candidates.length) { return; } // none found, placeholder stays
+            img.src = candidates[i++];
+          }
+
+          img.addEventListener('error', tryNext);
+          img.addEventListener('load', function () {
+            img.style.display = 'block';
+            placeholder.style.display = 'none';
+          });
+
+          tryNext();
+        })();
+      </script>
     </div>
   </div>
 
