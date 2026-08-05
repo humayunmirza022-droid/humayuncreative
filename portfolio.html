@@ -134,6 +134,7 @@
     /* Profile Picture */
     .hero-photo-wrap {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
@@ -194,6 +195,120 @@
       width: 48px; height: 48px;
       fill: var(--primary);
       opacity: 0.5;
+    }
+
+    /* Hero Stats — compact counters, sits under the hero photo (still part of the Hero) */
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: clamp(1.5rem, 5vw, 3rem);
+      margin-top: 1.8rem;
+      width: 100%;
+    }
+    .stat {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .stat h2 {
+      margin: 0;
+      font-size: clamp(2.2rem, 5vw, 3.75rem); /* ~56–64px on desktop */
+      font-weight: 800;
+      line-height: 1;
+      white-space: nowrap;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 2px;
+      font-variant-numeric: tabular-nums;
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .stat h2 span { display: inline; }
+    .stat p {
+      margin: 12px 0 0 0;
+      font-size: clamp(0.95rem, 2vw, 1.125rem); /* ~18–20px on desktop */
+      line-height: 1.4;
+      color: var(--text-muted);
+      text-align: center;
+    }
+    @media (max-width: 600px) {
+      .hero-stats { gap: 1.4rem; }
+    }
+
+    /* Trusted By — infinite logo marquee, blended into the Hero (not a standalone section) */
+    .trusted-by { width: 100%; padding: 0.5rem 5% 0; }
+    .trusted-by-label {
+      text-align: center;
+      font-size: 0.72rem;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 1.3rem;
+      opacity: 0.85;
+    }
+    .marquee {
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    }
+    .marquee-track {
+      display: flex;
+      align-items: center;
+      gap: 3.2rem;
+      width: max-content;
+      animation: marqueeScroll 30s linear infinite;
+      will-change: transform;
+    }
+    .marquee:hover .marquee-track { animation-play-state: paused; }
+    @keyframes marqueeScroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .marquee-logo {
+      flex-shrink: 0;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: transparent;
+      filter: grayscale(100%) brightness(1.6) contrast(0.85);
+      opacity: 0.5;
+      transition: filter 0.35s ease, opacity 0.35s ease, transform 0.35s ease;
+    }
+    .marquee-logo:hover {
+      filter: grayscale(0%) brightness(1) contrast(1);
+      opacity: 1;
+      transform: scale(1.1);
+    }
+    .marquee-logo img { height: 100%; width: auto; object-fit: contain; display: block; }
+    .marquee-logo .logo-fallback {
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 1.1rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+      color: var(--text-muted);
+      border: 1px solid #333;
+      border-radius: 8px;
+      background: var(--card-bg);
+      white-space: nowrap;
+    }
+    @media (max-width: 600px) {
+      .marquee-track { gap: 2rem; }
+      .marquee-logo, .marquee-logo .logo-fallback { height: 30px; }
+      .marquee-logo .logo-fallback { font-size: 0.7rem; padding: 0 0.75rem; }
     }
 
     /* Buttons */
@@ -1006,6 +1121,64 @@
         })();
       </script>
     </div>
+
+    <!-- Compact stat counters, part of the Hero — animate once on scroll into view -->
+    <div class="hero-stats" id="heroStats">
+      <div class="stat">
+        <h2><span class="counter" data-target="100">100</span>+</h2>
+        <p>Projects Completed</p>
+      </div>
+      <div class="stat">
+        <h2><span class="counter" data-target="1000">1000</span>+</h2>
+        <p>Posters Designed</p>
+      </div>
+      <div class="stat">
+        <h2><span class="counter" data-target="50">50</span>+</h2>
+        <p>Satisfied Clients</p>
+      </div>
+    </div>
+    <script>
+      (function () {
+        var statsEl = document.getElementById('heroStats');
+        if (!statsEl) return;
+        var nums = statsEl.querySelectorAll('.counter');
+        nums.forEach(function (el) { el.textContent = '0'; }); // start at 0, animate up once in view
+        var duration = 2000;
+        var animated = false;
+
+        function animateCounters() {
+          if (animated) return;
+          animated = true;
+          var start = null;
+
+          function step(ts) {
+            if (!start) start = ts;
+            var progress = Math.min((ts - start) / duration, 1);
+            var eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic — all counters share this curve so they finish together
+            nums.forEach(function (el) {
+              var target = parseInt(el.getAttribute('data-target'), 10);
+              el.textContent = progress === 1 ? target : Math.floor(eased * target);
+            });
+            if (progress < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        }
+
+        if ('IntersectionObserver' in window) {
+          var observer = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              if (entry.isIntersecting) {
+                animateCounters();
+                observer.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.3 });
+          observer.observe(statsEl);
+        } else {
+          animateCounters();
+        }
+      })();
+    </script>
   </div>
 
   <!-- Decorative scroll cue — not interactive, purely visual navigation hint -->
@@ -1017,6 +1190,67 @@
     </div>
   </div>
 </section>
+
+<!-- TRUSTED BY — infinite logo marquee, visually part of the Hero (not a standalone section) -->
+<div class="trusted-by">
+  <div class="trusted-by-label">Trusted By</div>
+  <div class="marquee">
+    <div class="marquee-track" id="marqueeTrack"></div>
+  </div>
+</div>
+<script>
+  (function () {
+    // 15 client brands. Drop matching image files into a "logos" folder
+    // (logo1.png ... logo15.png — jpg/jpeg/svg also work) and they'll be
+    // used automatically in place of the text badge below, same as the
+    // profile photo auto-detection above.
+    var brands = [
+      'Guardian', 'TYGA', 'Wakefield', 'BeanVivo', 'Visi',
+      'TeamKeto', 'Amor Vines', 'Sukkah Co.', 'Kaffa Energy', 'DustPick',
+      'Calla Lily', 'Subset', 'Nimbus', 'Lumen', 'Verve'
+    ];
+    var track = document.getElementById('marqueeTrack');
+    if (!track) return;
+
+    function buildLogo(name, index) {
+      var wrap = document.createElement('div');
+      wrap.className = 'marquee-logo';
+
+      var img = document.createElement('img');
+      img.alt = name;
+      img.style.display = 'none';
+
+      var fallback = document.createElement('div');
+      fallback.className = 'logo-fallback';
+      fallback.textContent = name;
+
+      wrap.appendChild(img);
+      wrap.appendChild(fallback);
+
+      var exts = ['png', 'jpg', 'jpeg', 'svg'];
+      var slug = 'logo' + (index + 1);
+      var i = 0;
+
+      function tryNext() {
+        if (i >= exts.length) return; // none found, text badge stays
+        img.src = 'logos/' + slug + '.' + exts[i++];
+      }
+      img.addEventListener('error', tryNext);
+      img.addEventListener('load', function () {
+        img.style.display = 'block';
+        fallback.style.display = 'none';
+      });
+      tryNext();
+
+      return wrap;
+    }
+
+    // Build the brand list twice back-to-back so translateX(-50%) loops seamlessly
+    for (var pass = 0; pass < 2; pass++) {
+      brands.forEach(function (name, idx) { track.appendChild(buildLogo(name, idx)); });
+    }
+  })();
+</script>
 
 <!-- EXPERIENCE & EDUCATION -->
 <section class="timeline-section" id="experience">
