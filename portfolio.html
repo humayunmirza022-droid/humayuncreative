@@ -947,6 +947,89 @@
       #lightbox-zoom-slider { width: 110px; }
     }
 
+    /* Slideshow — nav arrows */
+    .lightbox-nav-btn {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(30,30,30,0.65);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: #fff;
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      cursor: pointer;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0.85;
+      transition: background 0.2s, opacity 0.2s;
+    }
+    .lightbox-nav-btn:hover { background: rgba(30,30,30,0.9); opacity: 1; }
+    .lightbox-nav-btn.hide { display: none; }
+    .lightbox-prev { left: 20px; }
+    .lightbox-next { right: 20px; }
+
+    /* Slideshow — play/pause + dots + counter */
+    #lightbox-slidebar {
+      position: fixed;
+      bottom: 84px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 8px 16px;
+      border-radius: 30px;
+      background: rgba(30,30,30,0.75);
+      border: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(8px);
+      z-index: 10000;
+    }
+    #lightbox-slidebar.hide { display: none; }
+    #lightbox-playpause {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      cursor: pointer;
+      opacity: 0.9;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+    }
+    #lightbox-playpause:hover { opacity: 1; }
+    #lightbox-dots { display: flex; gap: 7px; }
+    .lightbox-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.35);
+      cursor: pointer;
+      border: none;
+      padding: 0;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .lightbox-dot.active { background: #fff; transform: scale(1.3); }
+    #lightbox-counter {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #fff;
+      min-width: 40px;
+      text-align: center;
+      user-select: none;
+    }
+    @media (max-width: 600px) {
+      .lightbox-nav-btn { width: 38px; height: 38px; font-size: 0.95rem; }
+      .lightbox-prev { left: 8px; }
+      .lightbox-next { right: 8px; }
+      #lightbox-slidebar { bottom: 68px; gap: 10px; padding: 6px 12px; }
+    }
+
 
     /* Skills */
     .skills { background: rgba(30,30,30,0.3); }
@@ -1693,7 +1776,7 @@
   <div id="socialmedia" class="tab-content social-tab active">
     <div class="portfolio-grid">
 
-      <div class="portfolio-card" onclick="openLightbox('Social Media/SM_1.jpg', 'SM_Name_1')">
+      <div class="portfolio-card" onclick="openLightbox(['Social Media/SM1_image1.jpg','Social Media/SM1_image2.jpg','Social Media/SM1_image3.jpg','Social Media/SM1_image4.jpg','Social Media/SM1_image5.jpg'], 'SM_Name_1')">
         <div class="portfolio-thumb">
           <img src="Social Media/SMT1.jpg" alt="Social Media 1" />
           <span class="portfolio-badge">Social Media</span>
@@ -1702,7 +1785,7 @@
         <div class="portfolio-info"><h4>SM_Name_1</h4><p>SM_Description_1</p></div>
       </div>
 
-      <div class="portfolio-card" onclick="openLightbox('Social Media/SM_2.jpg', 'SM_Name_2')">
+      <div class="portfolio-card" onclick="openLightbox(['Social Media/SM2_image1.jpg','Social Media/SM2_image2.jpg','Social Media/SM2_image3.jpg','Social Media/SM2_image4.jpg','Social Media/SM2_image5.jpg'], 'SM_Name_2')">
         <div class="portfolio-thumb">
           <img src="Social Media/SMT2.jpg" alt="Social Media 2" />
           <span class="portfolio-badge">Social Media</span>
@@ -1711,7 +1794,7 @@
         <div class="portfolio-info"><h4>SM_Name_2</h4><p>SM_Description_2</p></div>
       </div>
 
-      <div class="portfolio-card" onclick="openLightbox('Social Media/SM_3.jpg', 'SM_Name_3')">
+      <div class="portfolio-card" onclick="openLightbox(['Social Media/SM3_image1.jpg','Social Media/SM3_image2.jpg','Social Media/SM3_image3.jpg','Social Media/SM3_image4.jpg','Social Media/SM3_image5.jpg'], 'SM_Name_3')">
         <div class="portfolio-thumb">
           <img src="Social Media/SMT3.jpg" alt="Social Media 3" />
           <span class="portfolio-badge">Social Media</span>
@@ -1720,7 +1803,7 @@
         <div class="portfolio-info"><h4>SM_Name_3</h4><p>SM_Description_3</p></div>
       </div>
 
-      <div class="portfolio-card" onclick="openLightbox('Social Media/SM_4.jpg', 'SM_Name_4')">
+      <div class="portfolio-card" onclick="openLightbox(['Social Media/SM4_image1.jpg','Social Media/SM4_image2.jpg','Social Media/SM4_image3.jpg','Social Media/SM4_image4.jpg','Social Media/SM4_image5.jpg'], 'SM_Name_4')">
         <div class="portfolio-thumb">
           <img src="Social Media/SMT4.jpg" alt="Social Media 4" />
           <span class="portfolio-badge">Social Media</span>
@@ -1729,7 +1812,7 @@
         <div class="portfolio-info"><h4>SM_Name_4</h4><p>SM_Description_4</p></div>
       </div>
 
-      <div class="portfolio-card" onclick="openLightbox('Social Media/SM_5.jpg', 'SM_Name_5')">
+      <div class="portfolio-card" onclick="openLightbox(['Social Media/SM5_image1.jpg','Social Media/SM5_image2.jpg','Social Media/SM5_image3.jpg','Social Media/SM5_image4.jpg','Social Media/SM5_image5.jpg'], 'SM_Name_5')">
         <div class="portfolio-thumb">
           <img src="Social Media/SMT5.jpg" alt="Social Media 5" />
           <span class="portfolio-badge">Social Media</span>
@@ -1745,7 +1828,7 @@
   <div id="carousel" class="tab-content social-tab">
     <div class="portfolio-grid">
 
-      <div class="portfolio-card" onclick="openLightbox('Carousel/CR_1.jpg', 'CR_Name_1')">
+      <div class="portfolio-card" onclick="openLightbox(['Carousel/CR1_image1.jpg','Carousel/CR1_image2.jpg','Carousel/CR1_image3.jpg','Carousel/CR1_image4.jpg','Carousel/CR1_image5.jpg'], 'CR_Name_1')">
         <div class="portfolio-thumb">
           <img src="Carousel/CRT1.jpg" alt="Carousel 1" />
           <span class="portfolio-badge">Carousel</span>
@@ -1754,7 +1837,7 @@
         <div class="portfolio-info"><h4>CR_Name_1</h4><p>CR_Description_1</p></div>
       </div>
 
-      <div class="portfolio-card" onclick="openLightbox('Carousel/CR_2.jpg', 'CR_Name_2')">
+      <div class="portfolio-card" onclick="openLightbox(['Carousel/CR2_image1.jpg','Carousel/CR2_image2.jpg','Carousel/CR2_image3.jpg','Carousel/CR2_image4.jpg','Carousel/CR2_image5.jpg'], 'CR_Name_2')">
         <div class="portfolio-thumb">
           <img src="Carousel/CRT2.jpg" alt="Carousel 2" />
           <span class="portfolio-badge">Carousel</span>
@@ -1763,7 +1846,7 @@
         <div class="portfolio-info"><h4>CR_Name_2</h4><p>CR_Description_2</p></div>
       </div>
 
-      <div class="portfolio-card" onclick="openLightbox('Carousel/CR_3.jpg', 'CR_Name_3')">
+      <div class="portfolio-card" onclick="openLightbox(['Carousel/CR3_image1.jpg','Carousel/CR3_image2.jpg','Carousel/CR3_image3.jpg','Carousel/CR3_image4.jpg','Carousel/CR3_image5.jpg'], 'CR_Name_3')">
         <div class="portfolio-thumb">
           <img src="Carousel/CRT3.jpg" alt="Carousel 3" />
           <span class="portfolio-badge">Carousel</span>
@@ -1772,7 +1855,7 @@
         <div class="portfolio-info"><h4>CR_Name_3</h4><p>CR_Description_3</p></div>
       </div>
 
-      <div class="portfolio-card" onclick="openLightbox('Carousel/CR_4.jpg', 'CR_Name_4')">
+      <div class="portfolio-card" onclick="openLightbox(['Carousel/CR4_image1.jpg','Carousel/CR4_image2.jpg','Carousel/CR4_image3.jpg','Carousel/CR4_image4.jpg','Carousel/CR4_image5.jpg'], 'CR_Name_4')">
         <div class="portfolio-thumb">
           <img src="Carousel/CRT4.jpg" alt="Carousel 4" />
           <span class="portfolio-badge">Carousel</span>
@@ -1781,7 +1864,7 @@
         <div class="portfolio-info"><h4>CR_Name_4</h4><p>CR_Description_4</p></div>
       </div>
 
-      <div class="portfolio-card" onclick="openLightbox('Carousel/CR_5.jpg', 'CR_Name_5')">
+      <div class="portfolio-card" onclick="openLightbox(['Carousel/CR5_image1.jpg','Carousel/CR5_image2.jpg','Carousel/CR5_image3.jpg','Carousel/CR5_image4.jpg','Carousel/CR5_image5.jpg'], 'CR_Name_5')">
         <div class="portfolio-thumb">
           <img src="Carousel/CRT5.jpg" alt="Carousel 5" />
           <span class="portfolio-badge">Carousel</span>
@@ -2035,11 +2118,20 @@
 <div id="lightbox" onclick="closeLightbox()">
   <button id="lightbox-close" onclick="closeLightbox()" title="Close (Esc)">&#x2715;</button>
 
+  <button id="lightbox-prev" class="lightbox-nav-btn lightbox-prev hide" onclick="event.stopPropagation(); prevSlide()" title="Previous">&#10094;</button>
+  <button id="lightbox-next" class="lightbox-nav-btn lightbox-next hide" onclick="event.stopPropagation(); nextSlide()" title="Next">&#10095;</button>
+
   <div id="lightbox-zoombar" onclick="event.stopPropagation()">
     <span class="lb-zoom-label">Fit</span>
     <input type="range" id="lightbox-zoom-slider" min="0" max="100" value="0" step="1" aria-label="Zoom level" />
     <span class="lb-zoom-label">Fill</span>
     <span id="lightbox-zoom-pct">0%</span>
+  </div>
+
+  <div id="lightbox-slidebar" class="hide" onclick="event.stopPropagation()">
+    <button id="lightbox-playpause" title="Pause">&#10073;&#10073;</button>
+    <div id="lightbox-dots"></div>
+    <span id="lightbox-counter">1 / 1</span>
   </div>
 
   <div id="lightbox-inner" onclick="event.stopPropagation()">
@@ -2198,15 +2290,30 @@
      (Behance / Figma / Google-Photos style)
   ══════════════════════════════════════════ */
   (function () {
-    const lb       = document.getElementById('lightbox');
-    const viewport = document.getElementById('lightbox-viewport');
-    const img      = document.getElementById('lightbox-img');
-    const cap      = document.getElementById('lightbox-caption');
-    const slider   = document.getElementById('lightbox-zoom-slider');
-    const pctLabel = document.getElementById('lightbox-zoom-pct');
+    const lb        = document.getElementById('lightbox');
+    const viewport  = document.getElementById('lightbox-viewport');
+    const img       = document.getElementById('lightbox-img');
+    const cap       = document.getElementById('lightbox-caption');
+    const slider    = document.getElementById('lightbox-zoom-slider');
+    const pctLabel  = document.getElementById('lightbox-zoom-pct');
+    const prevBtn   = document.getElementById('lightbox-prev');
+    const nextBtn   = document.getElementById('lightbox-next');
+    const slidebar  = document.getElementById('lightbox-slidebar');
+    const playBtn   = document.getElementById('lightbox-playpause');
+    const dotsWrap  = document.getElementById('lightbox-dots');
+    const counterEl = document.getElementById('lightbox-counter');
+
+    const AUTO_MS = 2000; // auto-slide every 2 sec
 
     let natW = 0, natH = 0;
     let t = 0; // 0 = Fit to screen, 100 = Fill (fit viewport width)
+
+    /* ---- slideshow state ---- */
+    let slides = [];        // array of image paths for current lightbox
+    let slideIdx = 0;
+    let baseCaption = '';
+    let autoTimer = null;
+    let isPlaying = true;
 
     function sizeAt(tVal) {
       const cw = viewport.clientWidth, ch = viewport.clientHeight;
@@ -2236,18 +2343,14 @@
       if (!animate) requestAnimationFrame(() => img.classList.remove('no-transition'));
     }
 
-    window.openLightbox = function (imgSrc, caption) {
+    function loadImage(src, keepZoomAnim) {
       natW = 0; natH = 0; t = 0;
-      img.classList.add('no-transition');
+      if (!keepZoomAnim) img.classList.add('no-transition');
       img.classList.remove('zoomed');
       slider.value = 0;
       pctLabel.textContent = '0%';
       viewport.scrollTop = 0;
-      img.src = imgSrc;
-      cap.textContent = caption;
-      cap.classList.remove('hide');
-      lb.classList.add('open');
-      document.body.style.overflow = 'hidden';
+      img.src = src;
 
       const ready = () => {
         natW = img.naturalWidth;
@@ -2257,14 +2360,95 @@
       };
       if (img.complete && img.naturalWidth) ready();
       else img.onload = ready;
+    }
+
+    function renderDots() {
+      dotsWrap.innerHTML = '';
+      slides.forEach((_, i) => {
+        const dot = document.createElement('button');
+        dot.className = 'lightbox-dot' + (i === slideIdx ? ' active' : '');
+        dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+        dot.onclick = function (e) { e.stopPropagation(); goToSlide(i, true); };
+        dotsWrap.appendChild(dot);
+      });
+    }
+
+    function updateSlideUI() {
+      const multi = slides.length > 1;
+      prevBtn.classList.toggle('hide', !multi);
+      nextBtn.classList.toggle('hide', !multi);
+      slidebar.classList.toggle('hide', !multi);
+      if (multi) {
+        counterEl.textContent = (slideIdx + 1) + ' / ' + slides.length;
+        renderDots();
+        playBtn.innerHTML = isPlaying ? '&#10073;&#10073;' : '&#9654;';
+        playBtn.title = isPlaying ? 'Pause' : 'Play';
+      }
+      cap.textContent = baseCaption;
+      cap.classList.remove('hide');
+    }
+
+    function goToSlide(i, userInitiated) {
+      slideIdx = (i + slides.length) % slides.length;
+      loadImage(slides[slideIdx]);
+      updateSlideUI();
+      if (userInitiated) pauseAutoplay(); // manual navigation pauses auto-slide
+    }
+
+    window.nextSlide = function () { goToSlide(slideIdx + 1, true); };
+    window.prevSlide = function () { goToSlide(slideIdx - 1, true); };
+
+    function startAutoplay() {
+      stopAutoplay();
+      if (slides.length <= 1) return;
+      autoTimer = setInterval(() => {
+        slideIdx = (slideIdx + 1) % slides.length;
+        loadImage(slides[slideIdx]);
+        updateSlideUI();
+      }, AUTO_MS);
+    }
+    function stopAutoplay() {
+      if (autoTimer) { clearInterval(autoTimer); autoTimer = null; }
+    }
+    function pauseAutoplay() {
+      isPlaying = false;
+      stopAutoplay();
+      updateSlideUI();
+    }
+    function resumeAutoplay() {
+      isPlaying = true;
+      startAutoplay();
+      updateSlideUI();
+    }
+
+    playBtn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (isPlaying) pauseAutoplay(); else resumeAutoplay();
+    });
+
+    /* accepts a single image path (string) OR an array of paths for a slideshow */
+    window.openLightbox = function (imgSrcOrArr, caption) {
+      slides = Array.isArray(imgSrcOrArr) ? imgSrcOrArr : [imgSrcOrArr];
+      slideIdx = 0;
+      baseCaption = caption || '';
+      isPlaying = true;
+
+      loadImage(slides[0]);
+      updateSlideUI();
+      lb.classList.add('open');
+      document.body.style.overflow = 'hidden';
+
+      if (slides.length > 1) startAutoplay();
     };
 
     window.closeLightbox = function () {
+      stopAutoplay();
       lb.classList.remove('open');
       img.classList.add('no-transition');
       img.classList.remove('zoomed');
       t = 0;
       img.src = '';
+      slides = [];
       document.body.style.overflow = '';
     };
 
@@ -2316,6 +2500,10 @@
 
   document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') { closeLightbox(); closeVideoModal(); }
+    if (document.getElementById('lightbox').classList.contains('open')) {
+      if (e.key === 'ArrowRight' && typeof nextSlide === 'function') nextSlide();
+      if (e.key === 'ArrowLeft'  && typeof prevSlide === 'function') prevSlide();
+    }
   });
 
   /* ══════════════════════════════════════════
