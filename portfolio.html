@@ -242,7 +242,7 @@
     }
 
     /* Trusted By — infinite logo marquee, blended into the Hero (not a standalone section) */
-    .trusted-by { width: 100%; padding: 0.5rem 5% 0; }
+    .trusted-by { width: 100%; padding: 0.5rem 3% 0; }
     .trusted-by-label {
       text-align: center;
       font-size: 0.72rem;
@@ -264,7 +264,7 @@
     .marquee-track {
       display: flex;
       align-items: center;
-      gap: 3.2rem;
+      gap: 4rem;
       width: max-content;
       animation: marqueeScroll 30s linear infinite;
       will-change: transform;
@@ -276,7 +276,7 @@
     }
     .marquee-logo {
       flex-shrink: 0;
-      height: 36px;
+      height: 80px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -290,26 +290,32 @@
       opacity: 1;
       transform: scale(1.1);
     }
-    .marquee-logo img { height: 100%; width: auto; object-fit: contain; display: block; }
+    .marquee-logo img { height: 100%; width: auto; max-width: 180px; object-fit: contain; display: block; }
     .marquee-logo .logo-fallback {
-      height: 36px;
+      height: 70px;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 0 1.1rem;
-      font-size: 0.8rem;
+      padding: 0 2rem;
+      font-size: 1.1rem;
       font-weight: 700;
-      letter-spacing: 0.4px;
+      letter-spacing: 0.5px;
       color: var(--text-muted);
       border: 1px solid #333;
-      border-radius: 8px;
+      border-radius: 12px;
       background: var(--card-bg);
       white-space: nowrap;
     }
+    @media (max-width: 1024px) {
+      .marquee-track { gap: 3rem; }
+      .marquee-logo { height: 64px; }
+      .marquee-logo .logo-fallback { height: 56px; font-size: 0.95rem; padding: 0 1.5rem; }
+    }
     @media (max-width: 600px) {
-      .marquee-track { gap: 2rem; }
-      .marquee-logo, .marquee-logo .logo-fallback { height: 30px; }
-      .marquee-logo .logo-fallback { font-size: 0.7rem; padding: 0 0.75rem; }
+      .marquee-track { gap: 2.2rem; }
+      .marquee-logo { height: 52px; }
+      .marquee-logo img { max-width: 130px; }
+      .marquee-logo .logo-fallback { height: 46px; font-size: 0.8rem; padding: 0 1rem; }
     }
 
     /* Buttons */
