@@ -56,7 +56,20 @@
     .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
     /* Hero */
-    .hero { position: relative; min-height: 90vh; display: flex; align-items: center; padding: 0 5% 4.5rem; gap: 4rem; flex-wrap: wrap; }
+    /* Hero: full-screen background image (put hero-bg.jpg next to this file).
+       The sticky header overlaps the top of the hero, so the image fills the whole first screen. */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      min-height: 100svh;
+      margin-top: calc(var(--header-h, 87px) * -1);
+      padding: var(--header-h, 87px) 5% 4.5rem;
+      display: flex; align-items: center; gap: 4rem; flex-wrap: wrap;
+      background:
+        linear-gradient(90deg, rgba(18,18,18,0.80) 0%, rgba(18,18,18,0.45) 55%, rgba(18,18,18,0.20) 100%),
+        url('hero-bg.jpg') center center / cover no-repeat,
+        var(--bg);
+    }
 
     /* Scroll indicator */
     .scroll-indicator {
@@ -138,63 +151,7 @@
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-    }
-    .hero-photo-blob {
-      position: relative;
-      width: 280px;
-      height: 280px;
-    }
-    .hero-photo-blob svg.blob-border {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      animation: rotateBlobBorder 8s linear infinite;
-    }
-    @keyframes rotateBlobBorder {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
-    }
-    .hero-photo-blob .blob-clip-wrap {
-      position: absolute;
-      inset: 14px;
-      border-radius: 50%;
-      overflow: hidden;
-      animation: morphBlob 8s ease-in-out infinite;
-      box-shadow: 0 0 40px rgba(243,156,18,0.35), 0 0 80px rgba(231,76,60,0.18);
-    }
-    @keyframes morphBlob {
-      0%   { border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; }
-      20%  { border-radius: 45% 55% 40% 60% / 55% 45% 60% 40%; }
-      40%  { border-radius: 50% 50% 60% 40% / 40% 60% 45% 55%; }
-      60%  { border-radius: 40% 60% 45% 55% / 60% 40% 55% 45%; }
-      80%  { border-radius: 55% 45% 50% 50% / 45% 55% 50% 50%; }
-      100% { border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; }
-    }
-    .hero-photo-blob .blob-clip-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .hero-photo-blob .blob-clip-wrap .photo-placeholder {
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, #1e1e1e, #2a2a2a);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      color: var(--text-muted);
-      font-size: 0.8rem;
-      text-align: center;
-      padding: 1rem;
-    }
-    .hero-photo-blob .blob-clip-wrap .photo-placeholder svg {
-      width: 48px; height: 48px;
-      fill: var(--primary);
-      opacity: 0.5;
+      align-self: flex-end; /* stats sit at the bottom-right, clear of the face */
     }
 
     /* Hero Stats — compact counters, sits under the hero photo (still part of the Hero) */
@@ -1124,7 +1081,7 @@
       nav#siteNav.open { max-height: 400px; opacity: 1; }
       nav#siteNav a { margin-left: 0; padding: 0.7rem 0.9rem; width: 100%; border-radius: 8px; }
 
-      .hero { text-align: center; justify-content: center; padding-top: 2rem; }
+      .hero { text-align: center; justify-content: center; padding-top: calc(var(--header-h, 70px) + 2rem); background: linear-gradient(180deg, rgba(18,18,18,0.65), rgba(18,18,18,0.65)), url('hero-bg.jpg') center center / cover no-repeat, var(--bg); }
       .hero-content { order: 1; }
       .hero-photo-wrap { order: 2; }
 
@@ -1163,55 +1120,6 @@
     <a href="https://www.linkedin.com/in/humayuncreative/" class="btn" target="_blank">View My LinkedIn</a>
   </div>
   <div class="hero-photo-wrap">
-    <div class="hero-photo-blob">
-      <!-- Animated gradient border ring -->
-      <svg class="blob-border" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="blobGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#f39c12"/>
-            <stop offset="50%" stop-color="#e74c3c"/>
-            <stop offset="100%" stop-color="#f39c12"/>
-          </linearGradient>
-        </defs>
-        <circle cx="140" cy="140" r="134" fill="none" stroke="url(#blobGrad)" stroke-width="4" stroke-dasharray="30 12" stroke-linecap="round"/>
-      </svg>
-      <div class="blob-clip-wrap">
-        <!-- Just drop a photo file next to this HTML file named "profile"
-             or "your-photo" — any of .jpg/.jpeg/.png/.gif will be found
-             automatically and the placeholder below will disappear. -->
-        <img id="profile-photo" alt="Talha Humayun" style="display:none;" />
-        <div class="photo-placeholder" id="profile-photo-placeholder">
-          <svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
-          <span>Please Wait<br>Loading</span>
-        </div>
-      </div>
-      <script>
-        (function () {
-          var names = ['profile', 'your-photo'];
-          var exts  = ['jpg', 'jpeg', 'png', 'gif'];
-          var candidates = [];
-          names.forEach(function (n) { exts.forEach(function (e) { candidates.push(n + '.' + e); }); });
-
-          var img = document.getElementById('profile-photo');
-          var placeholder = document.getElementById('profile-photo-placeholder');
-          var i = 0;
-
-          function tryNext() {
-            if (i >= candidates.length) { return; } // none found, placeholder stays
-            img.src = candidates[i++];
-          }
-
-          img.addEventListener('error', tryNext);
-          img.addEventListener('load', function () {
-            img.style.display = 'block';
-            placeholder.style.display = 'none';
-          });
-
-          tryNext();
-        })();
-      </script>
-    </div>
-
     <!-- Compact stat counters, part of the Hero — animate once on scroll into view -->
     <div class="hero-stats" id="heroStats">
       <div class="stat">
@@ -2149,6 +2057,12 @@
 </div>
 
 <script>
+  /* Keep the hero tucked under the sticky header at any header height */
+  (function () {
+    const h = document.querySelector('header');
+    const set = () => document.documentElement.style.setProperty('--header-h', h.offsetHeight + 'px');
+    set(); addEventListener('resize', set); addEventListener('load', set);
+  })();
   /* ══════════════════════════════════════════
      MOBILE NAV TOGGLE
   ══════════════════════════════════════════ */
