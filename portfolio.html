@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Talha Humayun | Creative Designer</title>
+  <script>document.documentElement.classList.add('js')</script>
   <style>
     :root {
       --primary: #f39c12;
@@ -1092,6 +1093,195 @@
       .whatsapp-btn { width: 54px; height: 54px; }
       .whatsapp-btn svg { width: 26px; height: 26px; }
     }
+  
+    /* ═══════════════════════════════════════════════════════
+       ANIMATIONS + SECTION REDESIGN
+    ═══════════════════════════════════════════════════════ */
+    :root { --ease: cubic-bezier(.22,1,.36,1); }
+
+    @keyframes rvUp    { from { opacity:0; transform: translate3d(0,46px,0) scale(.98); } to { opacity:1; transform:none; } }
+    @keyframes rvLeft  { from { opacity:0; transform: translate3d(-70px,0,0); }           to { opacity:1; transform:none; } }
+    @keyframes rvRight { from { opacity:0; transform: translate3d(70px,0,0); }            to { opacity:1; transform:none; } }
+    @keyframes rvZoom  { from { opacity:0; transform: scale(.8); }                         to { opacity:1; transform:none; } }
+    @keyframes wordUp  { from { opacity:0; transform: translate3d(0,115%,0) rotate(5deg); filter: blur(8px); } to { opacity:1; transform:none; filter: blur(0); } }
+    @keyframes headDown{ from { opacity:0; transform: translateY(-100%); } to { opacity:1; transform:none; } }
+    @keyframes lineGrow{ from { transform: scaleY(0); } to { transform: scaleY(1); } }
+    @keyframes dotPop  { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+    @keyframes dotPulse{ 0%,100% { box-shadow: 0 0 0 4px rgba(243,156,18,.15); } 50% { box-shadow: 0 0 0 10px rgba(243,156,18,0); } }
+    @keyframes tabIn   { from { opacity:0; transform: translateY(26px); } to { opacity:1; transform:none; } }
+    @keyframes swFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+    @keyframes arrowPulse { 0% { box-shadow: 0 0 0 0 rgba(243,156,18,.55); } 70%,100% { box-shadow: 0 0 0 14px rgba(243,156,18,0); } }
+    @keyframes ftLine  { to { background-position: -200% 0; } }
+    @keyframes sparkSpin { to { transform: rotate(360deg); } }
+
+    /* generic scroll reveal (JS adds .rv, then .in when it enters the screen) */
+    .js .rv:not(.in) { opacity: 0; }
+    .rv.in { animation: rvUp .95s var(--ease) var(--d,0ms) backwards; }
+    .rv[data-a="left"].in  { animation-name: rvLeft; }
+    .rv[data-a="right"].in { animation-name: rvRight; }
+    .rv[data-a="zoom"].in  { animation-name: rvZoom; }
+
+    /* word-by-word text reveal */
+    .sw { display:inline-block; overflow:hidden; vertical-align:top; padding:0 .04em .14em; margin:0 -.04em -.14em; background:none; -webkit-text-fill-color: currentColor; }
+    .sw > i { display:inline-block; font-style:normal; }
+    .sw.g > i { background: linear-gradient(45deg, var(--primary), var(--secondary)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color: transparent; color: transparent; }
+    .js .split:not(.split-ready),
+    .js .section-title h2:not(.split-ready),
+    .js .hero-content h1:not(.split-ready) { visibility: hidden; }
+    .js .split:not(.in) .sw > i,
+    .js .section-title:not(.in) h2 .sw > i,
+    .js .hero-content:not(.in) h1 .sw > i { opacity: 0; }
+    .split.in .sw > i                { animation: wordUp 1s var(--ease) calc(var(--i) * 85ms) backwards; }
+    .section-title.in h2 .sw > i     { animation: wordUp 1s var(--ease) calc(160ms + var(--i) * 90ms) backwards; }
+    .hero-content.in h1 .sw > i      { animation: wordUp 1.1s var(--ease) calc(350ms + var(--i) * 120ms) backwards; }
+
+    /* page load: header + hero */
+    header { animation: headDown .9s var(--ease) backwards; }
+    header .logo { animation: rvLeft .9s var(--ease) .25s backwards; }
+    nav a { animation: rvUp .7s var(--ease) backwards; }
+    nav a:nth-child(1){animation-delay:.35s} nav a:nth-child(2){animation-delay:.43s} nav a:nth-child(3){animation-delay:.51s}
+    nav a:nth-child(4){animation-delay:.59s} nav a:nth-child(5){animation-delay:.67s}
+    .js .hero-content:not(.in) > *:not(h1) { opacity: 0; }
+    .hero-content.in h3   { animation: rvUp .9s var(--ease) .15s backwards; }
+    .hero-content.in p    { animation: rvUp 1s var(--ease) .9s backwards; }
+    .hero-content.in .btn { animation: rvUp 1s var(--ease) 1.1s backwards; }
+
+    /* scroll progress bar */
+    .scroll-progress { position:fixed; top:0; left:0; width:100%; height:3px; z-index:100000; pointer-events:none; transform-origin:0 50%; transform:scaleX(0); background:linear-gradient(90deg,var(--primary),var(--secondary)); }
+
+    /* section headings: eyebrow + words + subtitle + growing bar */
+    .section-title { position: relative; }
+    .section-title h2 { font-size: clamp(2.1rem, 5vw, 3rem); }
+    .js .section-title:not(.in) .section-eyebrow,
+    .js .section-title:not(.in) > p { opacity: 0; }
+    .section-title.in .section-eyebrow { animation: rvUp .8s var(--ease) backwards; }
+    .section-title.in > p { animation: rvUp 1s var(--ease) .5s backwards; }
+    .section-title::after { content:''; display:block; width:84px; height:4px; margin:1.3rem auto 0; border-radius:4px; background:linear-gradient(90deg,var(--primary),var(--secondary)); transition: transform 1.1s var(--ease) .6s; }
+    .js .section-title:not(.in)::after { transform: scaleX(0); }
+
+    /* experience & education */
+    .timeline-col h3 { font-size: 1.5rem; gap: 14px; }
+    .timeline-col h3 svg { width:46px; height:46px; padding:11px; border-radius:14px; fill:#fff; background:linear-gradient(45deg,var(--primary),var(--secondary)); box-shadow:0 8px 24px rgba(243,156,18,.3); transition: transform .5s var(--ease); }
+    .timeline-col h3:hover svg { transform: rotate(-8deg) scale(1.1); }
+    .timeline { padding-left: 34px; }
+    .timeline::before { left:8px; top:8px; bottom:8px; width:3px; border-radius:3px; opacity:.55; transform-origin: top; }
+    .timeline.in::before { animation: lineGrow 2s var(--ease) backwards; }
+    .js .timeline:not(.in)::before { transform: scaleY(0); }
+    .timeline .timeline-item,
+    .timeline .timeline-item:last-child { padding:1.2rem 1.4rem; margin-bottom:1.4rem; background:rgba(30,30,30,.55); border:1px solid #262626; border-radius:14px; transition: transform .4s var(--ease), border-color .3s, background .3s, box-shadow .3s; }
+    .timeline .timeline-item:last-child { margin-bottom:0; }
+    .timeline-item:hover { transform: translateX(8px); border-color: rgba(243,156,18,.45); background: rgba(34,34,34,.85); box-shadow: 0 12px 30px rgba(0,0,0,.35); }
+    .timeline-item::before { left:-33px; top:1.5rem; width:14px; height:14px; }
+    .js .timeline-item:not(.in)::before { transform: scale(0); }
+    .timeline-item.in::before { animation: dotPop .7s cubic-bezier(.34,1.56,.64,1) calc(var(--d,0ms) + 150ms) backwards, dotPulse 2.8s ease-in-out calc(var(--d,0ms) + 1.2s) infinite; }
+    .js .timeline-item:not(.in) > * { opacity: 0; }
+    .timeline-item.in > * { animation: rvUp .8s var(--ease) backwards; }
+    .timeline-item.in > :nth-child(1) { animation-delay: calc(var(--d,0ms) + 250ms); }
+    .timeline-item.in > :nth-child(2) { animation-delay: calc(var(--d,0ms) + 340ms); }
+    .timeline-item.in > :nth-child(3) { animation-delay: calc(var(--d,0ms) + 430ms); }
+    .timeline-item.in > :nth-child(4) { animation-delay: calc(var(--d,0ms) + 520ms); }
+    .timeline-item h4 { transition: color .3s; }
+    .timeline-item:hover h4 { color: var(--primary); }
+
+    /* services */
+    .svc-grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(250px,1fr)); gap:1.6rem; max-width:1300px; margin:0 auto; }
+    .svc-card { position:relative; overflow:hidden; isolation:isolate; padding:2.2rem 1.8rem 2rem; border-radius:22px; background:linear-gradient(160deg,#1f1f1f,#161616); border:1px solid #262626; transition: transform .45s var(--ease), box-shadow .45s, border-color .3s; }
+    .svc-card::before { content:''; position:absolute; inset:0; border-radius:inherit; padding:1.5px; background:linear-gradient(135deg,var(--primary),transparent 45%,var(--secondary)); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; opacity:0; transition: opacity .4s; pointer-events:none; z-index:2; }
+    .svc-card::after { content:''; position:absolute; left:0; bottom:0; width:100%; height:3px; background:linear-gradient(90deg,var(--primary),var(--secondary)); transform:scaleX(0); transform-origin:left; transition: transform .6s var(--ease); z-index:2; }
+    .svc-card:hover { transform: translateY(-12px); box-shadow: 0 24px 50px rgba(0,0,0,.5), 0 0 40px rgba(243,156,18,.08); }
+    .svc-card:hover::before { opacity:1; }
+    .svc-card:hover::after  { transform:scaleX(1); }
+    .svc-glow { position:absolute; inset:0; z-index:0; pointer-events:none; opacity:0; transition: opacity .35s; background: radial-gradient(380px circle at var(--mx,50%) var(--my,0%), rgba(243,156,18,.18), transparent 60%); }
+    .svc-card:hover .svc-glow { opacity:1; }
+    .svc-num { position:absolute; top:14px; right:20px; z-index:1; font-size:3.6rem; font-weight:800; line-height:1; color:transparent; -webkit-text-stroke:1px rgba(255,255,255,.13); transition: -webkit-text-stroke-color .4s, transform .5s var(--ease); }
+    .svc-card:hover .svc-num { -webkit-text-stroke-color: rgba(243,156,18,.75); transform: translateY(-4px) scale(1.06); }
+    .svc-icon, .svc-card h3, .svc-card p, .svc-tags { position:relative; z-index:1; }
+    .svc-icon { width:60px; height:60px; border-radius:18px; display:flex; align-items:center; justify-content:center; margin-bottom:1.4rem; background:linear-gradient(135deg,var(--primary),var(--secondary)); box-shadow:0 10px 26px rgba(243,156,18,.28); transition: transform .5s var(--ease), border-radius .5s; }
+    .svc-icon svg { width:28px; height:28px; fill:#fff; }
+    .svc-card:hover .svc-icon { transform: rotate(-8deg) scale(1.1); border-radius:50%; }
+    .svc-card h3 { margin:0 0 .7rem; font-size:1.25rem; }
+    .svc-card p  { margin:0 0 1.3rem; color:var(--text-muted); font-size:.93rem; line-height:1.65; }
+    .svc-tags { list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:.45rem; }
+    .svc-tags li { font-size:.72rem; font-weight:600; letter-spacing:.4px; padding:5px 12px; border-radius:20px; color:#d8d8d8; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.08); transition: color .3s, border-color .3s; }
+    .svc-card:hover .svc-tags li { color:var(--primary); border-color: rgba(243,156,18,.4); }
+
+    /* portfolio sections: tabs + content */
+    .js .portfolio-tabs:not(.in) .tab-btn { opacity: 0; }
+    .portfolio-tabs.in .tab-btn { animation: rvUp .7s var(--ease) calc(var(--i,0) * 90ms + 150ms) backwards; }
+    .tab-content.active { animation: tabIn .8s var(--ease); }
+
+    /* View-all buttons */
+    .portfolio-view-all { display:flex; align-items:center; justify-content:center; gap:1.4rem; margin-top:3.5rem; }
+    .portfolio-view-all::before, .portfolio-view-all::after { content:''; flex:1; max-width:240px; height:1px; background:linear-gradient(90deg, transparent, rgba(243,156,18,.5)); }
+    .portfolio-view-all::after { background:linear-gradient(270deg, transparent, rgba(243,156,18,.5)); }
+    .portfolio-view-all .va-btn { position:relative; overflow:hidden; display:inline-flex; align-items:center; gap:20px; padding:8px 8px 8px 32px; border-radius:50px; background:rgba(243,156,18,.06); border:1.5px solid rgba(243,156,18,.55); color:#fff; font-size:.88rem; font-weight:700; letter-spacing:1.2px; text-transform:uppercase; transition: border-color .3s, transform .4s var(--ease), box-shadow .4s; }
+    .va-btn::before { content:''; position:absolute; inset:0; z-index:0; background:linear-gradient(45deg,var(--primary),var(--secondary)); transform:translateX(-101%); transition: transform .55s var(--ease); }
+    .va-btn:hover::before { transform:none; }
+    .va-btn .va-text, .va-btn .va-arrow { position:relative; z-index:1; }
+    .va-arrow { width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center; background:linear-gradient(45deg,var(--primary),var(--secondary)); animation: arrowPulse 2.4s infinite; transition: transform .5s var(--ease), background .3s; }
+    .va-arrow svg { width:20px; height:20px; fill:none; stroke:#fff; stroke-width:2.4; stroke-linecap:round; stroke-linejoin:round; transition: stroke .3s; }
+    .portfolio-view-all .va-btn:hover { transform: translateY(-4px); border-color: transparent; box-shadow: 0 16px 40px rgba(243,156,18,.35); }
+    .va-btn:hover .va-arrow { transform: rotate(-45deg); background:#fff; animation:none; }
+    .va-btn:hover .va-arrow svg { stroke: var(--secondary); }
+
+    /* software expertise — one line */
+    .sw-row { display:flex; flex-wrap:nowrap; gap:1.2rem; max-width:1300px; margin:0 auto; }
+    .sw-tile { position:relative; flex:1 1 0; min-width:0; overflow:hidden; text-align:center; padding:2rem 1rem 1.6rem; border-radius:22px; background:linear-gradient(170deg,#1d1d1d,#151515); border:1px solid #262626; --cr:243,156,18; transition: transform .45s var(--ease), border-color .3s, box-shadow .45s; }
+    .sw-tile::before { content:''; position:absolute; inset:0; pointer-events:none; opacity:0; transition: opacity .35s; background: radial-gradient(260px circle at var(--mx,50%) var(--my,0%), rgba(var(--cr),.25), transparent 65%); }
+    .sw-tile:hover { transform: translateY(-10px); border-color: rgba(var(--cr),.55); box-shadow: 0 22px 45px rgba(var(--cr),.18); }
+    .sw-tile:hover::before { opacity:1; }
+    .sw-icons { position:relative; z-index:1; display:flex; justify-content:center; gap:.7rem; margin-bottom:1.2rem; animation: swFloat 4.5s ease-in-out infinite; animation-delay: calc(var(--n,0) * -.9s); }
+    .sw-icon { width:84px; height:84px; border-radius:22px; display:flex; align-items:center; justify-content:center; background:rgba(var(--cr),.1); border:1px solid rgba(var(--cr),.3); transition: transform .4s var(--ease), background .3s; }
+    .sw-icon b { font-size:1.7rem; font-weight:800; color:rgb(var(--cr)); }
+    .sw-icon img { width:56px; height:56px; object-fit:contain; display:block; }
+    .sw-icon.has-img b { display:none; }
+    .sw-icons.dual .sw-icon { width:68px; height:68px; border-radius:18px; }
+    .sw-icons.dual .sw-icon img { width:42px; height:42px; }
+    .sw-icons.dual .sw-icon b { font-size:1.3rem; }
+    .sw-tile:hover .sw-icon { transform: scale(1.1); background: rgba(var(--cr),.2); }
+    .sw-tile h3 { position:relative; z-index:1; margin:0 0 .3rem; font-size:1.05rem; }
+    .sw-tile p  { position:relative; z-index:1; margin:0; font-size:.82rem; color:var(--text-muted); }
+    @media (max-width: 900px) {
+      .sw-row { overflow-x:auto; scroll-snap-type:x mandatory; padding:14px 4px 18px; scrollbar-width:thin; -webkit-overflow-scrolling:touch; }
+      .sw-tile { flex:0 0 190px; scroll-snap-align:center; }
+    }
+
+    /* footer */
+    footer { position:relative; overflow:hidden; padding:5.5rem 5% 3.4rem; background:#0a0a0a; border-top:none; }
+    footer::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--primary),var(--secondary),transparent); background-size:200% 100%; animation: ftLine 5s linear infinite; }
+    .ft-glow { position:absolute; top:-180px; left:50%; width:700px; max-width:100%; height:360px; transform:translateX(-50%); background:radial-gradient(ellipse, rgba(243,156,18,.18), transparent 65%); pointer-events:none; }
+    .ft-inner { position:relative; max-width:1000px; margin:0 auto; }
+    footer h2 { font-size:clamp(1.9rem, 4.6vw, 3.2rem); line-height:1.15; margin:.3rem 0 1rem; }
+    .ft-sub { color:var(--text-muted); margin:0 0 2.2rem; font-size:1.05rem; }
+    .ft-cta { padding:16px 44px; font-size:1rem; letter-spacing:.5px; }
+    .ft-links { display:flex; flex-wrap:wrap; justify-content:center; gap:.8rem; margin-top:2.6rem; }
+    .ft-links a { display:inline-flex; align-items:center; gap:8px; padding:10px 20px; border-radius:40px; background:#141414; border:1px solid #2a2a2a; color:#fff; font-weight:600; font-size:.9rem; transition: transform .35s var(--ease), border-color .3s, background .3s, box-shadow .3s, color .3s; }
+    .ft-links a span { color:var(--primary); transition: transform .3s; }
+    .ft-links a:hover { transform:translateY(-5px); border-color:var(--primary); background:rgba(243,156,18,.08); box-shadow:0 12px 26px rgba(243,156,18,.15); }
+    .ft-links a:hover span { transform: translate(2px,-2px); }
+    .ft-links a.wa span { color:#25d366; }
+    .ft-links a.wa:hover { border-color:#25d366; background:rgba(37,211,102,.1); box-shadow:0 12px 26px rgba(37,211,102,.15); }
+    .ft-bottom { position:relative; max-width:900px; margin:4rem auto 0; padding-top:2rem; border-top:1px solid #1f1f1f; display:flex; flex-direction:column; align-items:center; gap:1rem; }
+    .ft-made { margin:0; display:inline-block; padding:.85rem 1.7rem; border-radius:40px; border:1px dashed rgba(243,156,18,.45); background:rgba(243,156,18,.05); color:#d0d0d0; font-size:.95rem; line-height:1.5; }
+    .ft-made b { background:linear-gradient(45deg,var(--primary),var(--secondary)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+    .ft-made .spark { display:inline-block; color:var(--primary); margin-right:6px; animation: sparkSpin 4s linear infinite; }
+    .ft-copy { margin:0; color:#777; font-size:.82rem; }
+
+    @media (max-width: 600px) {
+      .hero-photo-wrap { width:100%; }
+      .hero-stats { gap:1rem; }
+      .hero-stats .stat h2 { font-size:2rem; }
+      .hero-stats .stat p  { font-size:.8rem; }
+      .portfolio-view-all::before, .portfolio-view-all::after { display:none; }
+      .portfolio-view-all .va-btn { font-size:.78rem; padding-left:24px; gap:14px; }
+      .va-arrow { width:40px; height:40px; }
+      .svc-grid { grid-template-columns: 1fr; }
+      .ft-made { font-size:.85rem; padding:.8rem 1.2rem; border-radius:22px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration:.01ms !important; animation-delay:0ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; transition-delay:0ms !important; }
+    }
   </style>
 </head>
 <body>
@@ -1253,7 +1443,9 @@
 <!-- EXPERIENCE & EDUCATION -->
 <section class="timeline-section" id="experience">
   <div class="section-title">
+    <span class="section-eyebrow">My Journey</span>
     <h2>Experience <span>&amp; Education</span></h2>
+    <p>Where I've worked and what I've studied</p>
   </div>
   <div class="timeline-columns">
 
@@ -1321,25 +1513,43 @@
 <!-- SERVICES -->
 <section class="services" id="services">
   <div class="section-title">
+    <span class="section-eyebrow">What I Do</span>
     <h2>My <span>Services</span></h2>
+    <p>Design solutions built to make your brand stand out and convert</p>
   </div>
-  <div class="grid">
-    <div class="card">
+  <div class="svc-grid">
+    <article class="svc-card">
+      <span class="svc-glow"></span>
+      <span class="svc-num">01</span>
+      <div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49A1.003 1.003 0 0 0 20 4H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg></div>
       <h3>Amazon A+ Content</h3>
       <p>Designing high-converting Amazon listing images and EBC (Enhanced Brand Content) that establish trust and highlight product features.</p>
-    </div>
-    <div class="card">
+      <ul class="svc-tags"><li>Listing Images</li><li>A+ Content</li><li>Storefronts</li></ul>
+    </article>
+    <article class="svc-card">
+      <span class="svc-glow"></span>
+      <span class="svc-num">02</span>
+      <div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg></div>
       <h3>Social Media Design</h3>
       <p>Creating scroll-stopping posts, banners, and digital assets that boost engagement and strengthen your brand presence.</p>
-    </div>
-    <div class="card">
+      <ul class="svc-tags"><li>Posts</li><li>Carousels</li><li>Banners</li></ul>
+    </article>
+    <article class="svc-card">
+      <span class="svc-glow"></span>
+      <span class="svc-num">03</span>
+      <div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zm4.24 16L12 15.45 7.77 18l1.12-4.81-3.73-3.23 4.92-.42L12 5l1.92 4.53 4.92.42-3.73 3.23L16.23 18z"/></svg></div>
       <h3>Brand Identity</h3>
       <p>Building strong, memorable brand identities, from typography to comprehensive style guidelines that stand out in the market.</p>
-    </div>
-    <div class="card">
-      <h3>Web Banners & UI</h3>
+      <ul class="svc-tags"><li>Logo</li><li>Typography</li><li>Style Guide</li></ul>
+    </article>
+    <article class="svc-card">
+      <span class="svc-glow"></span>
+      <span class="svc-num">04</span>
+      <div class="svc-icon"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-5 14H4v-4h11v4zm0-5H4V9h11v4zm5 5h-4V9h4v9z"/></svg></div>
+      <h3>Web Banners &amp; UI</h3>
       <p>Crafting intuitive digital interfaces and striking website banners tailored for modern, seamless web experiences.</p>
-    </div>
+      <ul class="svc-tags"><li>Web Banners</li><li>UI Design</li><li>Graphics</li></ul>
+    </article>
   </div>
 </section>
 
@@ -1664,7 +1874,7 @@
   </div>
 
   <div class="portfolio-view-all">
-    <a href="amazon-portfolio.html" class="btn">View All Amazon Work</a>
+    <a href="amazon-portfolio.html" class="btn va-btn"><span class="va-text">View All Amazon Work</span><span class="va-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
   </div>
 
 </section>
@@ -1791,7 +2001,7 @@
   </div>
 
   <div class="portfolio-view-all">
-    <a href="social-portfolio.html" class="btn">View All Social Media Work</a>
+    <a href="social-portfolio.html" class="btn va-btn"><span class="va-text">View All Social Media Work</span><span class="va-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
   </div>
 
 </section>
@@ -1953,7 +2163,7 @@
   </div>
 
   <div class="portfolio-view-all">
-    <a href="video-portfolio.html" class="btn">View All Video Work</a>
+    <a href="video-portfolio.html" class="btn va-btn"><span class="va-text">View All Video Work</span><span class="va-arrow"><svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a>
   </div>
 
 </section>
@@ -1971,51 +2181,65 @@
 
 
 <!-- SKILLS -->
+<!-- Add your PNG logos in a folder named "software" next to this file:
+     photoshop.png · illustrator.png · premiere.png · aftereffects.png · canva.png · capcut.png
+     Until a PNG is added, a letter badge (Ps, Ai ...) is shown automatically. -->
 <section class="skills" id="skills">
   <div class="section-title">
+    <span class="section-eyebrow">My Toolbox</span>
     <h2>Software <span>Expertise</span></h2>
+    <p>The tools I use every day to bring ideas to life</p>
   </div>
-  <div class="grid">
-    <div class="card">
+  <div class="sw-row">
+    <div class="sw-tile" style="--cr:49,168,255;--n:0">
+      <div class="sw-icons"><span class="sw-icon"><img src="software/photoshop.png" alt="Adobe Photoshop" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()"><b>Ps</b></span></div>
       <h3>Adobe Photoshop</h3>
-      <p>Expert photo manipulation, complex masking, retouching, and stunning visual compositions.</p>
+      <p>Photo Editing &amp; Retouching</p>
     </div>
-    <div class="card">
+    <div class="sw-tile" style="--cr:255,154,0;--n:1">
+      <div class="sw-icons"><span class="sw-icon"><img src="software/illustrator.png" alt="Adobe Illustrator" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()"><b>Ai</b></span></div>
       <h3>Adobe Illustrator</h3>
-      <p>Precision vector graphics, clean logo design, typography, and scalable brand illustrations.</p>
+      <p>Vector Graphics &amp; Logos</p>
     </div>
-    <div class="card">
+    <div class="sw-tile" style="--cr:153,153,255;--n:2">
+      <div class="sw-icons"><span class="sw-icon"><img src="software/premiere.png" alt="Adobe Premiere Pro" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()"><b>Pr</b></span></div>
       <h3>Adobe Premiere Pro</h3>
-      <p>Professional video editing, color grading, multi-track timelines, and polished export for all platforms.</p>
+      <p>Video Editing &amp; Color Grading</p>
     </div>
-    <div class="card">
+    <div class="sw-tile" style="--cr:207,150,255;--n:3">
+      <div class="sw-icons"><span class="sw-icon"><img src="software/aftereffects.png" alt="Adobe After Effects" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()"><b>Ae</b></span></div>
       <h3>Adobe After Effects</h3>
-      <p>Motion graphics, visual effects, kinetic typography, and stunning animations that elevate any brand video.</p>
+      <p>Motion Graphics &amp; VFX</p>
     </div>
-    <div class="card">
-      <h3>Canva & CapCut</h3>
-      <p>Fast, professional content generation and dynamic video editing for social media deliverables.</p>
+    <div class="sw-tile" style="--cr:0,196,204;--n:4">
+      <div class="sw-icons dual"><span class="sw-icon"><img src="software/canva.png" alt="Canva" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()"><b>Ca</b></span><span class="sw-icon"><img src="software/capcut.png" alt="CapCut" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()"><b>Cc</b></span></div>
+      <h3>Canva &amp; CapCut</h3>
+      <p>Fast Social &amp; Reel Content</p>
     </div>
   </div>
 </section>
 
 <!-- FOOTER / CONTACT -->
 <footer id="contact">
-  <h2>Ready to start your next project?</h2>
-  <p style="color: var(--text-muted); margin-bottom: 2rem;">Let's collaborate and create something extraordinary.</p>
-  <a href="mailto:talhahama367@gmail.com" class="btn">Get In Touch</a>
-  <div class="social-links">
-    <a href="https://www.linkedin.com/in/humayuncreative/" target="_blank">LinkedIn</a>
-    <a href="https://www.behance.net/humayuncreative" target="_blank">Behance</a>
-    <a href="https://www.instagram.com/iamnothumayun" target="_blank">Instagram</a>
-    <a href="https://dribbble.com/humayuncreative" target="_blank">Dribbble</a>
-    <a href="https://wa.me/923143251305" target="_blank" style="color:#25d366;">WhatsApp</a>
-    <a href="mailto:talhahama367@gmail.com" style="color:var(--primary);">Email</a>
+  <div class="ft-glow"></div>
+  <div class="ft-inner">
+    <span class="section-eyebrow ft-eyebrow">Let's Work Together</span>
+    <h2 class="split">Ready to start your <span>next project?</span></h2>
+    <p class="ft-sub">Let's collaborate and create something extraordinary.</p>
+    <a href="mailto:talhahama367@gmail.com" class="btn ft-cta">Get In Touch</a>
+    <div class="ft-links">
+      <a href="https://www.linkedin.com/in/humayuncreative/" target="_blank" rel="noopener">LinkedIn <span>&#8599;</span></a>
+      <a href="https://www.behance.net/humayuncreative" target="_blank" rel="noopener">Behance <span>&#8599;</span></a>
+      <a href="https://www.instagram.com/iamnothumayun" target="_blank" rel="noopener">Instagram <span>&#8599;</span></a>
+      <a href="https://dribbble.com/humayuncreative" target="_blank" rel="noopener">Dribbble <span>&#8599;</span></a>
+      <a class="wa" href="https://wa.me/923143251305" target="_blank" rel="noopener">WhatsApp <span>&#8599;</span></a>
+      <a href="mailto:talhahama367@gmail.com">Email <span>&#8599;</span></a>
+    </div>
   </div>
-  <p style="margin-top: 3rem; color: var(--text-muted); font-size: 0.85rem;">&copy; 2024 Talha Humayun. All rights reserved.</p>
-  <p style="margin-top: 0.75rem; color: var(--text-muted); font-size: 0.82rem; font-style: italic;">
-    ✦ This entire website was designed &amp; built by me — Talha Humayun — from scratch.
-  </p>
+  <div class="ft-bottom">
+    <p class="ft-made"><span class="spark">&#10022;</span>The entire website was designed &amp; built by me, <b>Talha Humayun</b>, from scratch.</p>
+    <p class="ft-copy">&copy; <span id="yr">2026</span> Talha Humayun. All rights reserved.</p>
+  </div>
 </footer>
 
 <!-- FLOATING WHATSAPP BUTTON -->
@@ -2613,5 +2837,99 @@
   document.querySelectorAll('.portfolio-grid, .video-grid').forEach(initShowcaseCarousel);
 </script>
 
+
+<script>
+/* ═══════════ Scroll animations ═══════════ */
+(function () {
+  try {
+    var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var targets = [];
+
+    /* split headings into words (keeps the gradient <span> words gradient) */
+    function split(el) {
+      var label = el.textContent.trim(), i = 0, frag = document.createDocumentFragment();
+      function words(text, g) {
+        text.split(/(\s+)/).forEach(function (t) {
+          if (!t) return;
+          if (/^\s+$/.test(t)) { frag.appendChild(document.createTextNode(' ')); return; }
+          var w = document.createElement('span'); w.className = 'sw' + (g ? ' g' : ''); w.style.setProperty('--i', i++);
+          var inner = document.createElement('i'); inner.textContent = t; w.appendChild(inner); frag.appendChild(w);
+        });
+      }
+      Array.prototype.forEach.call(el.childNodes, function (n) {
+        if (n.nodeType === 3) words(n.textContent, false); else if (n.nodeType === 1) words(n.textContent, true);
+      });
+      el.setAttribute('aria-label', label); el.textContent = ''; el.appendChild(frag); el.classList.add('split-ready');
+    }
+    document.querySelectorAll('.section-title h2, .hero-content h1, h2.split').forEach(split);
+
+    /* mark elements for reveal */
+    function R(sel, o) {
+      o = o || {};
+      document.querySelectorAll(sel).forEach(function (el, i) {
+        el.classList.add('rv');
+        if (o.a) el.setAttribute('data-a', typeof o.a === 'function' ? o.a(i) : o.a);
+        el.style.setProperty('--d', ((o.base || 0) + i * (o.step || 0)) + 'ms');
+        targets.push(el);
+      });
+    }
+    R('.trusted-by');
+    R('.hero-stats .stat', { step: 140, base: 900 });
+    R('.timeline-col h3', { a: function (i) { return i ? 'right' : 'left'; } });
+    document.querySelectorAll('.timeline').forEach(function (tl, col) {
+      targets.push(tl);
+      tl.querySelectorAll('.timeline-item').forEach(function (it, i) {
+        it.classList.add('rv'); it.setAttribute('data-a', col ? 'right' : 'left');
+        it.style.setProperty('--d', (i * 170) + 'ms'); targets.push(it);
+      });
+    });
+    R('.svc-card', { step: 110 });
+    R('.sw-tile', { step: 100 });
+    R('.pcarousel');
+    R('.portfolio-view-all', { a: 'zoom' });
+    R('.ft-sub, .ft-cta', { step: 120 });
+    R('.ft-links a', { step: 80 });
+    R('.ft-made, .ft-copy', { step: 150 });
+    document.querySelectorAll('.portfolio-tabs').forEach(function (t) {
+      t.querySelectorAll('.tab-btn').forEach(function (b, i) { b.style.setProperty('--i', i); });
+      targets.push(t);
+    });
+    document.querySelectorAll('.section-title, h2.split').forEach(function (t) { targets.push(t); });
+
+    /* observe */
+    if (reduce || !('IntersectionObserver' in window)) {
+      targets.forEach(function (el) { el.classList.add('in'); });
+    } else {
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: 0.12, rootMargin: '0px 0px -3% 0px' });
+      targets.forEach(function (el) { io.observe(el); });
+    }
+    var hero = document.querySelector('.hero-content');
+    if (hero) requestAnimationFrame(function () { requestAnimationFrame(function () { hero.classList.add('in'); }); });
+
+    /* cursor-following glow on service + software cards */
+    document.querySelectorAll('.svc-card, .sw-tile').forEach(function (c) {
+      c.addEventListener('pointermove', function (e) {
+        var r = c.getBoundingClientRect();
+        c.style.setProperty('--mx', (e.clientX - r.left) + 'px'); c.style.setProperty('--my', (e.clientY - r.top) + 'px');
+      });
+    });
+
+    /* scroll progress bar */
+    var bar = document.createElement('div'); bar.className = 'scroll-progress'; document.body.appendChild(bar);
+    function prog() {
+      var h = document.documentElement.scrollHeight - innerHeight;
+      bar.style.transform = 'scaleX(' + (h > 0 ? Math.min(1, scrollY / h) : 0) + ')';
+    }
+    addEventListener('scroll', prog, { passive: true }); prog();
+
+    var yr = document.getElementById('yr'); if (yr) yr.textContent = new Date().getFullYear();
+  } catch (err) {
+    document.documentElement.classList.remove('js');   // never leave content hidden if something fails
+    console.error(err);
+  }
+})();
+</script>
 </body>
 </html>
