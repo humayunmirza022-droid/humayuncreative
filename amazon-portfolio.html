@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amazon Portfolio | Talha Humayun</title>
+  <style>
+:root{--primary:#f39c12;--secondary:#e74c3c;--bg:#121212;--text:#fff;--text-muted:#a0a0a0;--card-bg:#1e1e1e}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;background:var(--bg);color:var(--text);margin:0;padding:0;line-height:1.6}
+a{color:var(--primary);text-decoration:none}
+h1 span,h2 span,.logo span{background:linear-gradient(45deg,var(--primary),var(--secondary));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+header{display:flex;justify-content:space-between;align-items:center;padding:1.5rem 5%;background:rgba(18,18,18,.95);position:sticky;top:0;z-index:100;border-bottom:1px solid #333}
+.logo{font-size:1.5rem;font-weight:bold;letter-spacing:1px}
+.logo a{color:var(--text)}
+nav a{margin-left:.4rem;padding:.5rem .9rem;border-radius:8px;color:var(--text);font-weight:600;letter-spacing:.4px;transition:color .3s,background .3s;font-size:.85rem;text-transform:uppercase}
+nav a:hover{color:var(--primary);background:rgba(243,156,18,.08)}
+.nav-toggle{display:none;flex-direction:column;justify-content:center;gap:5px;width:34px;height:34px;background:none;border:none;cursor:pointer;padding:0;z-index:110}
+.nav-toggle span{display:block;width:100%;height:2px;background:var(--text);border-radius:2px;transition:transform .3s,opacity .3s}
+.nav-toggle.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-toggle.open span:nth-child(2){opacity:0}
+.nav-toggle.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.btn{display:inline-block;padding:12px 30px;background:linear-gradient(45deg,var(--primary),var(--secondary));color:#fff;border-radius:30px;font-weight:bold;transition:transform .3s,box-shadow .3s}
+.btn:hover{transform:translateY(-3px);box-shadow:0 10px 20px rgba(243,156,18,.3)}
+.page-hero{padding:4rem 5% 1rem;text-align:center}
+.back-link{display:inline-block;margin-bottom:1.5rem;color:var(--text-muted);font-weight:600;font-size:.9rem;transition:color .3s}
+.back-link:hover{color:var(--primary)}
+.section-eyebrow{display:inline-block;font-size:.72rem;font-weight:700;letter-spacing:3px;text-transform:uppercase;background:linear-gradient(45deg,var(--primary),var(--secondary));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:.5rem}
+.page-hero h1{font-size:clamp(2.2rem,6vw,3.5rem);margin:0 0 .5rem;line-height:1.15}
+.page-hero p{color:var(--text-muted);max-width:620px;margin:0 auto}
+.portfolio-section{padding:2.5rem 5% 5rem}
+.portfolio-tabs{display:flex;justify-content:center;gap:.75rem;margin:2rem 0 3rem;flex-wrap:wrap}
+.tab-btn{padding:10px 22px;border-radius:30px;border:2px solid #333;background:transparent;color:var(--text-muted);font-size:.85rem;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:all .3s;white-space:nowrap}
+.tab-btn:hover,.tab-btn.active{background:linear-gradient(45deg,var(--primary),var(--secondary));color:#fff;border-color:transparent}
+.portfolio-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:2rem;max-width:1400px;margin:0 auto}
+.portfolio-card{background:var(--card-bg);border-radius:15px;overflow:hidden;cursor:pointer;transition:transform .3s,box-shadow .3s;border-bottom:3px solid transparent}
+.portfolio-card.hidden{display:none}
+.portfolio-card:hover{transform:translateY(-10px);border-bottom:3px solid var(--primary);box-shadow:0 15px 40px rgba(0,0,0,.4)}
+.portfolio-thumb{width:100%;aspect-ratio:4/3;position:relative;overflow:hidden;background:#161616}
+.portfolio-thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease}
+.portfolio-card:hover .portfolio-thumb img{transform:scale(1.06)}
+.portfolio-badge{position:absolute;top:14px;right:14px;z-index:4;background:linear-gradient(45deg,var(--primary),var(--secondary));color:#fff;font-size:.7rem;font-weight:700;padding:4px 12px;border-radius:20px;text-transform:uppercase;letter-spacing:1px}
+.thumb-overlay,.video-play-overlay{position:absolute;inset:0;background:rgba(0,0,0,0);display:flex;align-items:center;justify-content:center;transition:background .3s;z-index:3}
+.portfolio-card:hover .thumb-overlay,.video-card:hover .video-play-overlay{background:rgba(0,0,0,.55)}
+.thumb-overlay-icon,.vid-play-btn{opacity:0;transform:scale(.7);transition:opacity .3s,transform .3s;width:56px;height:56px;border-radius:50%;background:linear-gradient(45deg,var(--primary),var(--secondary));display:flex;align-items:center;justify-content:center}
+.portfolio-card:hover .thumb-overlay-icon,.video-card:hover .vid-play-btn{opacity:1;transform:scale(1)}
+.thumb-overlay-icon svg{width:24px;height:24px;fill:#fff}
+.vid-play-btn{width:64px;height:64px;box-shadow:0 8px 30px rgba(243,156,18,.5)}
+.vid-play-btn svg{width:28px;height:28px;fill:#fff;margin-left:4px}
+.portfolio-info{padding:1.5rem}
+.portfolio-info h4{margin:0 0 .5rem;font-size:1.1rem;font-weight:700;color:var(--text);border-left:3px solid var(--primary);padding-left:10px}
+.portfolio-info p{color:var(--text-muted);font-size:.88rem;margin:0;line-height:1.5}
+.portfolio-fallback-thumb{width:100%;height:100%;display:none;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;background:linear-gradient(135deg,#1e1e1e,#2a2a2a)}
+.portfolio-fallback-thumb svg{width:40px;height:40px;fill:var(--primary);opacity:.4}
+.portfolio-fallback-thumb span{font-size:.8rem;letter-spacing:1px;text-transform:uppercase;opacity:.55;text-align:center;padding:0 1rem;color:var(--text-muted)}
+.video-card{border-bottom:3px solid transparent}
+.video-card:hover{border-bottom:3px solid var(--secondary)!important}
+.video-badge-inline{display:inline-block;margin-top:.75rem;font-size:.72rem;font-weight:700;letter-spacing:1px;color:var(--secondary);border:1px solid var(--secondary);padding:3px 10px;border-radius:20px;text-transform:uppercase}
+.video-grid{grid-template-columns:repeat(auto-fill,minmax(340px,1fr))}
+.portfolio-view-all{text-align:center;margin-top:3.5rem}
+#video-modal{display:none;position:fixed;inset:0;z-index:99995;background:rgba(0,0,0,.92);align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(6px)}
+#video-modal.open{display:flex}
+#video-modal-inner{position:relative;width:100%;max-width:900px;background:#111;border-radius:16px;overflow:hidden;box-shadow:0 40px 100px rgba(0,0,0,.8),0 0 0 1px #333}
+#video-modal-close{position:absolute;top:14px;right:18px;z-index:10;background:rgba(0,0,0,.6);border:none;color:#fff;font-size:1.4rem;line-height:1;width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s,transform .2s}
+#video-modal-close:hover{background:var(--secondary);transform:rotate(90deg)}
+#video-modal-title{padding:1.1rem 3.5rem .6rem 1.5rem;font-size:1rem;font-weight:700;background:linear-gradient(45deg,var(--primary),var(--secondary));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+#video-modal-player{width:100%;aspect-ratio:16/9;display:block;background:#000;outline:none}
+#lightbox{display:flex;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.94);align-items:center;justify-content:center;padding:20px;opacity:0;visibility:hidden;transition:opacity .28s ease}
+#lightbox.open{opacity:1;visibility:visible}
+#lightbox-inner{position:relative;width:95vw;height:88vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
+#lightbox-viewport{display:flex;width:100%;flex:1;min-height:0;overflow-y:auto;overflow-x:hidden;touch-action:pan-y}
+#lightbox-img{margin:auto;display:block;border-radius:10px;box-shadow:0 30px 80px rgba(0,0,0,.8);user-select:none;-webkit-user-drag:none;cursor:zoom-in;transition:width .28s cubic-bezier(.25,.46,.45,.94),height .28s cubic-bezier(.25,.46,.45,.94)}
+#lightbox-img.zoomed{cursor:zoom-out}
+#lightbox-img.no-transition{transition:none!important}
+#lightbox-caption{position:fixed;top:24px;left:50%;transform:translateX(-50%);max-width:65vw;color:#fff;font-size:1rem;font-weight:600;letter-spacing:1px;opacity:.85;text-align:center;transition:opacity .3s;z-index:10000;pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#lightbox-caption.hide{opacity:0}
+#lightbox-close{position:fixed;top:20px;right:28px;font-size:2.2rem;color:#fff;cursor:pointer;line-height:1;opacity:.7;transition:opacity .2s,transform .2s;background:none;border:none;z-index:10000}
+#lightbox-close:hover{opacity:1;transform:rotate(90deg)}
+#lightbox-zoombar{position:fixed;bottom:26px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;padding:10px 18px;border-radius:30px;background:rgba(30,30,30,.75);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(8px);z-index:10000}
+.lb-zoom-label{font-size:.75rem;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--text-muted);user-select:none;white-space:nowrap}
+#lightbox-zoom-slider{-webkit-appearance:none;appearance:none;width:160px;height:4px;border-radius:4px;background:linear-gradient(90deg,var(--primary),var(--secondary));outline:none;cursor:pointer}
+#lightbox-zoom-slider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:16px;height:16px;border-radius:50%;background:#fff;border:2px solid var(--primary);cursor:pointer}
+#lightbox-zoom-slider::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:#fff;border:2px solid var(--primary);cursor:pointer}
+#lightbox-zoom-pct{font-size:.75rem;font-weight:700;color:#fff;min-width:34px;text-align:center;user-select:none}
+.lightbox-nav-btn{position:fixed;top:50%;transform:translateY(-50%);background:rgba(30,30,30,.65);border:1px solid rgba(255,255,255,.15);color:#fff;width:46px;height:46px;border-radius:50%;font-size:1.1rem;cursor:pointer;z-index:10000;display:flex;align-items:center;justify-content:center;opacity:.85;transition:background .2s,opacity .2s}
+.lightbox-nav-btn:hover{background:rgba(30,30,30,.9);opacity:1}
+.lightbox-nav-btn.hide{display:none}
+.lightbox-prev{left:20px}.lightbox-next{right:20px}
+#lightbox-slidebar{position:fixed;bottom:84px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;padding:8px 16px;border-radius:30px;background:rgba(30,30,30,.75);border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(8px);z-index:10000}
+#lightbox-slidebar.hide{display:none}
+#lightbox-playpause{background:none;border:none;color:#fff;font-size:.8rem;letter-spacing:1px;cursor:pointer;opacity:.9;display:flex;align-items:center;justify-content:center;width:22px}
+#lightbox-dots{display:flex;gap:7px}
+.lightbox-dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.35);cursor:pointer;border:none;padding:0;transition:background .2s,transform .2s}
+.lightbox-dot.active{background:#fff;transform:scale(1.3)}
+#lightbox-counter{font-size:.75rem;font-weight:700;color:#fff;min-width:40px;text-align:center;user-select:none}
+footer{text-align:center;padding:4rem 5%;background:#0a0a0a;border-top:1px solid #222}
+footer h2{margin-bottom:.5rem}
+.social-links{margin-top:2rem;display:flex;justify-content:center;flex-wrap:wrap;gap:.5rem 0}
+.social-links a{display:inline-block;margin:0 15px;font-weight:bold;border-bottom:1px solid transparent;padding-bottom:2px;transition:border-color .3s}
+.social-links a:hover{border-color:var(--primary)}
+.whatsapp-float{position:fixed;right:24px;bottom:32px;z-index:99998;display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.whatsapp-tooltip{background:#fff;color:#111;font-size:.82rem;font-weight:600;padding:7px 14px;border-radius:20px;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,.25);opacity:0;transform:translateX(10px);transition:opacity .3s,transform .3s;pointer-events:none}
+.whatsapp-float:hover .whatsapp-tooltip{opacity:1;transform:translateX(0)}
+.whatsapp-btn{width:60px;height:60px;background:#25d366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 28px rgba(37,211,102,.5),0 2px 8px rgba(0,0,0,.3);animation:waPulse 2.2s ease-in-out infinite;transition:transform .2s}
+.whatsapp-btn:hover{transform:scale(1.12);animation:none}
+.whatsapp-btn svg{width:32px;height:32px;fill:#fff}
+@keyframes waPulse{0%{box-shadow:0 6px 28px rgba(37,211,102,.5),0 0 0 0 rgba(37,211,102,.45)}60%{box-shadow:0 6px 28px rgba(37,211,102,.5),0 0 0 16px rgba(37,211,102,0)}100%{box-shadow:0 6px 28px rgba(37,211,102,.5),0 0 0 0 rgba(37,211,102,0)}}
+@media(max-width:768px){
+.nav-toggle{display:flex}
+nav#siteNav{display:flex;position:fixed;top:68px;right:0;left:0;background:rgba(18,18,18,.98);border-bottom:1px solid #333;flex-direction:column;align-items:flex-start;padding:.5rem 5% 1.5rem;gap:.9rem;max-height:0;overflow:hidden;opacity:0;transition:max-height .35s ease,opacity .25s ease}
+nav#siteNav.open{max-height:400px;opacity:1}
+nav#siteNav a{margin-left:0;padding:.7rem .9rem;width:100%;border-radius:8px}
+.whatsapp-btn{width:54px;height:54px}.whatsapp-btn svg{width:26px;height:26px}
+.video-grid{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+#lightbox-caption{max-width:55vw;font-size:.85rem;top:20px}
+#lightbox-zoombar{bottom:16px;padding:8px 14px;gap:8px}
+#lightbox-zoom-slider{width:110px}
+.lightbox-nav-btn{width:38px;height:38px;font-size:.95rem}
+.lightbox-prev{left:8px}.lightbox-next{right:8px}
+#lightbox-slidebar{bottom:68px;gap:10px;padding:6px 12px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo"><a href="index.html">Talha <span>Humayun</span></a></div>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <nav id="siteNav">
+    <a href="index.html#home">Home</a>
+    <a href="index.html#experience">Experience</a>
+    <a href="index.html#services">Services</a>
+    <a href="index.html#ecommerce-portfolio">Portfolio</a>
+    <a href="index.html#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="page-hero">
+  <a href="index.html" class="back-link">&larr; Back to Home</a><br>
+  <span class="section-eyebrow">E-Commerce &amp; Amazon</span>
+  <h1>Amazon <span>Portfolio</span></h1>
+  <p>Listing images, A+ content, brand stories, and full storefronts</p>
+</section>
+
+<section class="portfolio-section">
+  <div class="portfolio-tabs"><button class="tab-btn active" onclick="filterCards('all', this)">All Work</button>
+    <button class="tab-btn" onclick="filterCards('listing', this)">Amazon Listing</button>
+    <button class="tab-btn" onclick="filterCards('aplus', this)">Amazon A+ &amp; Premium A+</button>
+    <button class="tab-btn" onclick="filterCards('mainimages', this)">Main Images</button>
+    <button class="tab-btn" onclick="filterCards('storefront', this)">StoreFront</button>
+    <button class="tab-btn" onclick="filterCards('brandstory', this)">Brand Story</button></div>
+  <div class="portfolio-grid">
+
+      <div class="portfolio-card" data-cat="listing" onclick="openLightbox(&quot;Amazon Listing/Listing_1.jpg&quot;, &quot;Fire Blanket Amazon Listing | Conversion-Focused Product Design&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT1.jpg" data-base="Amazon Listing/LT1" onerror="tryImgExt(this)" alt="Listing 1" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>Fire Blanket Amazon Listing | Conversion-Focused Product Design</span></div>
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Fire Blanket Amazon Listing | Conversion-Focused Product Design</h4><p>Designed a complete Amazon product listing for the Guardian Fire Blanket, highlighting key features, safety standards, and heat-resistant construction through clean layouts, infographics, and lifestyle imagery.</p></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="listing" onclick="openLightbox(&quot;Amazon Listing/Listing_2.jpg&quot;, &quot;TYGA Insoles | E-Commerce Product Design&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT2.jpg" data-base="Amazon Listing/LT2" onerror="tryImgExt(this)" alt="Listing 2" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>TYGA Insoles | E-Commerce Product Design</span></div>
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>TYGA Insoles | E-Commerce Product Design</h4><p>A premium Amazon product listing created to present the product with clear visual storytelling, feature highlights, and an intuitive layout. Every section is designed to improve customer understanding and enhance the overall shopping experience.</p></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="listing" onclick="openLightbox(&quot;Amazon Listing/Listing_3.jpg&quot;, &quot;TYGA Disposable Aprons | Amazon Listing Design&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT3.jpg" data-base="Amazon Listing/LT3" onerror="tryImgExt(this)" alt="Listing 3" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>TYGA Disposable Aprons | Amazon Listing Design</span></div>
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>TYGA Disposable Aprons | Amazon Listing Design</h4><p>A complete Amazon product listing crafted to present TYGA Disposable Aprons through modern visual storytelling. Featuring feature highlights, comparison graphics, and professional lifestyle imagery, the design effectively communicates reliability, convenience, and everyday performance.</p></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="listing" onclick="openLightbox(&quot;Amazon Listing/Listing_4.jpg&quot;, &quot;Biochar Product Listing Design&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT4.jpg" data-base="Amazon Listing/LT4" onerror="tryImgExt(this)" alt="Listing 4" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>Biochar Product Listing Design</span></div>
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Biochar Product Listing Design</h4><p>Designed a complete Amazon product listing for Wakefield Biochar Premium Soil Conditioner, including hero banners, feature highlights, usage instructions, lifestyle imagery, comparison visuals, and environmental benefit sections</p></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="listing" onclick="openLightbox(&quot;Amazon Listing/Listing_5.jpg&quot;, &quot;Healthy Snacking Meets High-Converting Design&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT5.jpg" data-base="Amazon Listing/LT5" onerror="tryImgExt(this)" alt="Listing 5" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>Healthy Snacking Meets High-Converting Design</span></div>
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Healthy Snacking Meets High-Converting Design</h4><p>Designed a vibrant Amazon listing showcasing BeanVivo Savory Snack Mix with engaging visuals, nutritional highlights, product benefits, and lifestyle imagery to create a premium shopping experience and boost conversions.</p></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="listing" onclick="openLightbox(&quot;Amazon Listing/Listing_6.jpg&quot;, &quot;Elegant Crystal Flower Hair Clip&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT6.jpg" data-base="Amazon Listing/LT6" onerror="tryImgExt(this)" alt="Listing 6" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>Elegant Crystal Flower Hair Clip</span></div>
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Elegant Crystal Flower Hair Clip</h4><p>Created a stylish Amazon listing with premium visuals, feature callouts, lifestyle photography, and informative graphics to elevate the product&#x27;s appeal and improve conversions.</p></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="listing" onclick="openLightbox(&quot;Amazon Listing/Listing_7.jpg&quot;, &quot;Visi Arctic White Toothpaste | Amazon Listing&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT7.jpg" data-base="Amazon Listing/LT7" onerror="tryImgExt(this)" alt="Listing 7" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>Visi Arctic White Toothpaste | Amazon Listing</span></div>
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Visi Arctic White Toothpaste | Amazon Listing</h4><p>Designed a clean and modern Amazon listing featuring premium product visuals, ingredient highlights, lifestyle imagery, and key benefits to showcase Visi Arctic White Toothpaste while enhancing customer trust and conversions.</p></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="listing" onclick="openLightbox(&quot;Amazon Listing/Listing_8.jpg&quot;, &quot;TYGA Colorful Hair Rubber Bands&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT8.jpg" data-base="Amazon Listing/LT8" onerror="tryImgExt(this)" alt="Listing 8" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>TYGA Colorful Hair Rubber Bands</span></div>
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>TYGA Colorful Hair Rubber Bands</h4><p>Created a colorful Amazon listing with product highlights, lifestyle visuals, and informative graphics to emphasize comfort, durability, versatility, and everyday use for all ages.</p></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="listing" onclick="openLightbox(&quot;Amazon Listing/Listing_9.jpg&quot;, &quot;TeamKeto Meal Replacement&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT9.jpg" data-base="Amazon Listing/LT9" onerror="tryImgExt(this)" alt="Listing 9" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>TeamKeto Meal Replacement</span></div>
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>TeamKeto Meal Replacement</h4><p>Created a modern Amazon listing with product benefits, nutrition facts, lifestyle visuals, and informative graphics to promote TeamKeto Meal Replacement while enhancing brand appeal and conversions.</p></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="listing" onclick="openLightbox(&quot;Amazon Listing/Listing_10.jpg&quot;, &quot;Amor Vines Concord Grape Juice&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Amazon Listing/LT10.jpg" data-base="Amazon Listing/LT10" onerror="tryImgExt(this)" alt="Listing 10" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>Amor Vines Concord Grape Juice</span></div>
+          <span class="portfolio-badge">Amazon Listing</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Amor Vines Concord Grape Juice</h4><p>Created a sophisticated Amazon listing with premium visuals, product benefits, nutrition facts, and lifestyle imagery to elevate the brand experience and drive conversions.</p></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="aplus" onclick="openLightbox(&quot;Amazon A+/AP_1.jpg&quot;, &quot;Premium Edible Flowers Product&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Amazon A+/APT1.jpg" data-base="Amazon A+/APT1" onerror="tryImgExt(this)" alt="A+ Content 1" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>Premium Edible Flowers Product</span></div>
+          <span class="portfolio-badge">A+ Content</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Premium Edible Flowers Product</h4><p>Designed a premium Amazon Basic A+ Content experience for a freeze-dried edible flowers brand, focusing on a clean, elegant, and conversion-oriented presentation. The goal was to highlight the product&#x27;s natural beauty while clearly communicating its features, applications, and benefits through a modern visual hierarchy.</p></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="aplus" onclick="openLightbox(&quot;Amazon A+/AP_2.jpg&quot;, &quot;BeanVivo | Amazon EBC / A+ Content Design&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Amazon A+/APT2.jpg" data-base="Amazon A+/APT2" onerror="tryImgExt(this)" alt="A+ Content 2" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>BeanVivo | Amazon EBC / A+ Content Design</span></div>
+          <span class="portfolio-badge">A+ Content</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>BeanVivo | Amazon EBC / A+ Content Design</h4><p>A modern Amazon A+ Content design created for BeanVivo&#x27;s plant-based snack mix. This project emphasizes product storytelling through premium layouts, high-quality lifestyle imagery, nutritional highlights, ingredient showcases, comparison sections, and branded visual elements to help customers quickly understand the product&#x27;s value.</p></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="aplus" onclick="openLightbox(&quot;Amazon A+/AP_3.jpg&quot;, &quot;Sticky Notes Holder | Mia DayKor&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Amazon A+/APT3.jpg" data-base="Amazon A+/APT3" onerror="tryImgExt(this)" alt="A+ Content 3" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>Sticky Notes Holder | Mia DayKor</span></div>
+          <span class="portfolio-badge">A+ Content</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Sticky Notes Holder | Mia DayKor</h4><p>A playful yet premium Amazon A+ Content design crafted for a desktop sticky notes holder. The layout combines soft pastel colors, lifestyle photography, and feature-focused sections to create an engaging and conversion-driven product presentation.</p></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="aplus" onclick="openLightbox(&quot;Amazon A+/AP_4.jpg&quot;, &quot;Pop-Up Travel Sukkah \u2013 Amazon A+ Content Design&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Amazon A+/APT4.jpg" data-base="Amazon A+/APT4" onerror="tryImgExt(this)" alt="A+ Content 4" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>Pop-Up Travel Sukkah – Amazon A+ Content Design</span></div>
+          <span class="portfolio-badge">A+ Content</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Pop-Up Travel Sukkah – Amazon A+ Content Design</h4><p>Designed a premium Amazon A+ Content layout for a Pop-Up Travel Sukkah, focusing on a clean visual hierarchy, strong branding, and high-converting product storytelling.</p></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="aplus" onclick="openLightbox(&quot;Amazon A+/AP_5.jpg&quot;, &quot;Kosmic Dust \u2013 Premium Supplement Brand Experience&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Amazon A+/APT5.jpg" data-base="Amazon A+/APT5" onerror="tryImgExt(this)" alt="A+ Content 5" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>Kosmic Dust – Premium Supplement Brand Experience</span></div>
+          <span class="portfolio-badge">A+ Content</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Kosmic Dust – Premium Supplement Brand Experience</h4><p>Designed a high-impact Amazon Enhanced Brand Content (A+) experience for Kosmic Dust, focusing on a bold, futuristic visual identity that communicates performance, energy, and premium quality. The objective was to create a compelling shopping experience that increases customer engagement, builds trust, and improves conversion rates.</p></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="mainimages" onclick="openLightbox(&quot;Main Images/MI_1.jpg&quot;, &quot;MI_Name_1&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Main Images/MIT1.jpg" data-base="Main Images/MIT1" onerror="tryImgExt(this)" alt="Main Image 1" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>MI_Name_1</span></div>
+          <span class="portfolio-badge">Main Image</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>MI_Name_1</h4><p>MI_Description_1</p></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="mainimages" onclick="openLightbox(&quot;Main Images/MI_2.jpg&quot;, &quot;MI_Name_2&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Main Images/MIT2.jpg" data-base="Main Images/MIT2" onerror="tryImgExt(this)" alt="Main Image 2" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>MI_Name_2</span></div>
+          <span class="portfolio-badge">Main Image</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>MI_Name_2</h4><p>MI_Description_2</p></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="mainimages" onclick="openLightbox(&quot;Main Images/MI_3.jpg&quot;, &quot;MI_Name_3&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Main Images/MIT3.jpg" data-base="Main Images/MIT3" onerror="tryImgExt(this)" alt="Main Image 3" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>MI_Name_3</span></div>
+          <span class="portfolio-badge">Main Image</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>MI_Name_3</h4><p>MI_Description_3</p></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="storefront" onclick="openLightbox(&quot;Store Front/Storefront_1.jpg&quot;, &quot;The DustPick Project&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Store Front/T1.jpg" data-base="Store Front/T1" onerror="tryImgExt(this)" alt="Storefront 1" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>The DustPick Project</span></div>
+          <span class="portfolio-badge">Storefront</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>The DustPick Project</h4><p>A modern e-commerce layout designed to highlight the features and benefits of the DustPick cleaning tool.</p></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="storefront" onclick="openLightbox(&quot;Store Front/Storefront_2.jpg&quot;, &quot;The Sukkah Store Project&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Store Front/T2.jpg" data-base="Store Front/T2" onerror="tryImgExt(this)" alt="Storefront 2" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>The Sukkah Store Project</span></div>
+          <span class="portfolio-badge">Storefront</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>The Sukkah Store Project</h4><p>An elegant, long-form e-commerce layout for hand-painted Sukkah tapestries.</p></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="storefront" onclick="openLightbox(&quot;Store Front/Storefront_3.jpg&quot;, &quot;Kaffa Energy Project&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Store Front/T3.jpg" data-base="Store Front/T3" onerror="tryImgExt(this)" alt="Storefront 3" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>Kaffa Energy Project</span></div>
+          <span class="portfolio-badge">Storefront</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Kaffa Energy Project</h4><p>Dynamic product compositing and lifestyle photography for zero-nicotine energy pouches.</p></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="storefront" onclick="openLightbox(&quot;Store Front/Storefront_4.jpg&quot;, &quot;Calla Lily Love | Amazon Storefront Design&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Store Front/T4.jpg" data-base="Store Front/T4" onerror="tryImgExt(this)" alt="Storefront 4" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>Calla Lily Love | Amazon Storefront Design</span></div>
+          <span class="portfolio-badge">Storefront</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Calla Lily Love | Amazon Storefront Design</h4><p>Created a modern Amazon Storefront featuring sophisticated layouts, lifestyle photography, collection highlights, and compelling brand messaging to deliver a seamless and visually engaging shopping experience.</p></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="storefront" onclick="openLightbox(&quot;Store Front/Storefront_5.jpg&quot;, &quot;Subset | Amazon Brand Storefront Design&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Store Front/T5.jpg" data-base="Store Front/T5" onerror="tryImgExt(this)" alt="Storefront 5" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>Subset | Amazon Brand Storefront Design</span></div>
+          <span class="portfolio-badge">Storefront</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>Subset | Amazon Brand Storefront Design</h4><p>Designed a modern Amazon Brand Storefront featuring clean layouts, lifestyle photography, category navigation, and product-focused sections to create a seamless shopping experience while strengthening the brand&#x27;s premium identity.</p></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="brandstory" onclick="openLightbox(&quot;Brand Story/BS_1.jpg&quot;, &quot;BS_Name_1&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Brand Story/BST1.jpg" data-base="Brand Story/BST1" onerror="tryImgExt(this)" alt="Brand Story 1" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>BS_Name_1</span></div>
+          <span class="portfolio-badge">Brand Story</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>BS_Name_1</h4><p>BS_Description_1</p></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="brandstory" onclick="openLightbox(&quot;Brand Story/BS_2.jpg&quot;, &quot;BS_Name_2&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Brand Story/BST2.jpg" data-base="Brand Story/BST2" onerror="tryImgExt(this)" alt="Brand Story 2" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>BS_Name_2</span></div>
+          <span class="portfolio-badge">Brand Story</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>BS_Name_2</h4><p>BS_Description_2</p></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="brandstory" onclick="openLightbox(&quot;Brand Story/BS_3.jpg&quot;, &quot;BS_Name_3&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Brand Story/BST3.jpg" data-base="Brand Story/BST3" onerror="tryImgExt(this)" alt="Brand Story 3" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>BS_Name_3</span></div>
+          <span class="portfolio-badge">Brand Story</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>BS_Name_3</h4><p>BS_Description_3</p></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="brandstory" onclick="openLightbox(&quot;Brand Story/BS_4.jpg&quot;, &quot;BS_Name_4&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Brand Story/BST4.jpg" data-base="Brand Story/BST4" onerror="tryImgExt(this)" alt="Brand Story 4" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>BS_Name_4</span></div>
+          <span class="portfolio-badge">Brand Story</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>BS_Name_4</h4><p>BS_Description_4</p></div>
+      </div>
+
+      <div class="portfolio-card" data-cat="brandstory" onclick="openLightbox(&quot;Brand Story/BS_5.jpg&quot;, &quot;BS_Name_5&quot;)">
+        <div class="portfolio-thumb">
+          <img src="Brand Story/BST5.jpg" data-base="Brand Story/BST5" onerror="tryImgExt(this)" alt="Brand Story 5" loading="lazy" />
+          <div class="portfolio-fallback-thumb"><svg viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.9 13.98l2.1 2.52 3.1-3.99L18 17H6l2.9-3.02z"/></svg><span>BS_Name_5</span></div>
+          <span class="portfolio-badge">Brand Story</span>
+          <div class="thumb-overlay"><div class="thumb-overlay-icon"><svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg></div></div>
+        </div>
+        <div class="portfolio-info"><h4>BS_Name_5</h4><p>BS_Description_5</p></div>
+      </div>
+  </div>
+  <div class="portfolio-view-all"><a href="index.html" class="btn">&larr; Back to Home</a></div>
+</section>
+
+<div id="lightbox" onclick="closeLightbox()">
+  <button id="lightbox-close" onclick="closeLightbox()" title="Close (Esc)">&#x2715;</button>
+  <button id="lightbox-prev" class="lightbox-nav-btn lightbox-prev hide" onclick="event.stopPropagation();prevSlide()" title="Previous">&#10094;</button>
+  <button id="lightbox-next" class="lightbox-nav-btn lightbox-next hide" onclick="event.stopPropagation();nextSlide()" title="Next">&#10095;</button>
+  <div id="lightbox-zoombar" onclick="event.stopPropagation()">
+    <span class="lb-zoom-label">Fit</span>
+    <input type="range" id="lightbox-zoom-slider" min="0" max="100" value="0" step="1" aria-label="Zoom level" />
+    <span class="lb-zoom-label">Fill</span>
+    <span id="lightbox-zoom-pct">0%</span>
+  </div>
+  <div id="lightbox-slidebar" class="hide" onclick="event.stopPropagation()">
+    <button id="lightbox-playpause" title="Pause">&#10073;&#10073;</button>
+    <div id="lightbox-dots"></div>
+    <span id="lightbox-counter">1 / 1</span>
+  </div>
+  <div id="lightbox-inner" onclick="event.stopPropagation()">
+    <div id="lightbox-viewport"><img id="lightbox-img" src="" alt="" draggable="false" /></div>
+    <div id="lightbox-caption"></div>
+  </div>
+</div>
+
+<footer id="contact">
+  <h2>Ready to start your next project?</h2>
+  <p style="color:var(--text-muted);margin-bottom:2rem;">Let's collaborate and create something extraordinary.</p>
+  <a href="mailto:talhahama367@gmail.com" class="btn">Get In Touch</a>
+  <div class="social-links">
+    <a href="https://www.linkedin.com/in/humayuncreative/" target="_blank">LinkedIn</a>
+    <a href="https://www.behance.net/humayuncreative" target="_blank">Behance</a>
+    <a href="https://www.instagram.com/iamnothumayun" target="_blank">Instagram</a>
+    <a href="https://dribbble.com/humayuncreative" target="_blank">Dribbble</a>
+    <a href="https://wa.me/923143251305" target="_blank" style="color:#25d366;">WhatsApp</a>
+    <a href="mailto:talhahama367@gmail.com" style="color:var(--primary);">Email</a>
+  </div>
+  <p style="margin-top:3rem;color:var(--text-muted);font-size:.85rem;">&copy; 2024 Talha Humayun. All rights reserved.</p>
+</footer>
+
+<div class="whatsapp-float">
+  <div class="whatsapp-tooltip">Chat on WhatsApp 💬</div>
+  <a class="whatsapp-btn" href="https://wa.me/923143251305" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg"><path d="M16 2C8.268 2 2 8.268 2 16c0 2.494.655 4.835 1.8 6.86L2 30l7.34-1.775A13.93 13.93 0 0 0 16 30c7.732 0 14-6.268 14-14S23.732 2 16 2zm0 25.6a11.57 11.57 0 0 1-5.93-1.628l-.424-.253-4.358 1.054 1.085-4.24-.277-.437A11.57 11.57 0 0 1 4.4 16C4.4 9.592 9.592 4.4 16 4.4S27.6 9.592 27.6 16 22.408 27.6 16 27.6zm6.38-8.68c-.35-.175-2.07-1.02-2.39-1.136-.32-.116-.553-.175-.786.175s-.9 1.136-1.103 1.37c-.203.233-.407.262-.757.087-.35-.175-1.478-.545-2.814-1.737-1.04-.928-1.742-2.074-1.946-2.424-.203-.35-.022-.539.153-.713.157-.157.35-.408.525-.612.175-.203.233-.35.35-.583.116-.233.058-.437-.029-.612-.087-.175-.786-1.895-1.077-2.595-.283-.681-.57-.588-.786-.6-.203-.01-.437-.013-.67-.013s-.612.087-.932.437c-.32.35-1.224 1.196-1.224 2.916 0 1.72 1.253 3.382 1.428 3.615.175.233 2.467 3.766 5.98 5.282.836.36 1.488.575 1.996.736.838.267 1.602.229 2.205.139.673-.1 2.07-.847 2.362-1.664.29-.816.29-1.516.203-1.664-.087-.146-.32-.233-.67-.408z"/></svg></a>
+</div>
+
+<script>
+const navToggle=document.getElementById('navToggle'),siteNav=document.getElementById('siteNav');
+if(navToggle&&siteNav){
+  navToggle.addEventListener('click',()=>{const o=siteNav.classList.toggle('open');navToggle.classList.toggle('open',o);navToggle.setAttribute('aria-expanded',String(o))});
+  siteNav.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>{siteNav.classList.remove('open');navToggle.classList.remove('open')}));
+}
+/* Neon orange trail cursor */
+(function(){
+  const canvas=document.createElement('canvas');
+  Object.assign(canvas.style,{position:'fixed',top:'0',left:'0',pointerEvents:'none',zIndex:'999999',width:'100%',height:'100%'});
+  document.body.appendChild(canvas);
+  const ctx=canvas.getContext('2d');
+  function rs(){canvas.width=innerWidth;canvas.height=innerHeight}rs();addEventListener('resize',rs);
+  const L=16,C='243,156,18',trail=[];
+  function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    if(trail.length>1){
+      for(let i=1;i<trail.length;i++){
+        const t=i/(trail.length-1);
+        ctx.beginPath();ctx.moveTo(trail[i-1].x,trail[i-1].y);ctx.lineTo(trail[i].x,trail[i].y);
+        ctx.lineCap='round';ctx.shadowColor='rgba('+C+',1)';ctx.shadowBlur=12;
+        ctx.strokeStyle='rgba('+C+','+(t*.9)+')';ctx.lineWidth=1+t*2.5;ctx.stroke();
+      }
+      const h=trail[trail.length-1];
+      ctx.beginPath();ctx.arc(h.x,h.y,2,0,Math.PI*2);ctx.shadowColor='rgba('+C+',1)';ctx.shadowBlur=14;ctx.fillStyle='#fff5e6';ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  let shrink=null,idle=null;
+  function startShrink(){clearInterval(shrink);shrink=setInterval(()=>{if(trail.length>0)trail.shift();else clearInterval(shrink)},20)}
+  document.addEventListener('mousemove',e=>{
+    trail.push({x:e.clientX,y:e.clientY});if(trail.length>L)trail.shift();
+    clearInterval(shrink);clearTimeout(idle);idle=setTimeout(startShrink,60);
+  });
+  document.body.style.cursor='none';
+  const st=document.createElement('style');st.textContent='*,*:hover{cursor:none !important}';document.head.appendChild(st);
+  document.addEventListener('mouseleave',()=>{canvas.style.display='none';trail.length=0});
+  document.addEventListener('mouseenter',()=>{canvas.style.display='block'});
+  requestAnimationFrame(draw);
+})();
+/* Filter tabs */
+function filterCards(cat,btn){
+  btn.closest('.portfolio-tabs').querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.portfolio-card').forEach(c=>{
+    c.classList.toggle('hidden',cat!=='all'&&c.dataset.cat!==cat);
+  });
+}
+/* Thumbnail extension fallback */
+window.tryImgExt=function(imgEl){
+  const exts=['jpg','jpeg','png'];
+  const base=imgEl.dataset.base;
+  let idx=imgEl.dataset.extIdx?parseInt(imgEl.dataset.extIdx,10):0;
+  idx++;
+  if(base&&idx<exts.length){imgEl.dataset.extIdx=idx;imgEl.src=base+'.'+exts[idx];}
+  else{imgEl.style.display='none';if(imgEl.nextElementSibling)imgEl.nextElementSibling.style.display='flex';}
+};
+
+(function(){
+  const lb=document.getElementById('lightbox'),viewport=document.getElementById('lightbox-viewport'),img=document.getElementById('lightbox-img'),cap=document.getElementById('lightbox-caption'),slider=document.getElementById('lightbox-zoom-slider'),pctLabel=document.getElementById('lightbox-zoom-pct'),prevBtn=document.getElementById('lightbox-prev'),nextBtn=document.getElementById('lightbox-next'),slidebar=document.getElementById('lightbox-slidebar'),playBtn=document.getElementById('lightbox-playpause'),dotsWrap=document.getElementById('lightbox-dots'),counterEl=document.getElementById('lightbox-counter');
+  const AUTO_MS=2000;let natW=0,natH=0,t=0,slides=[],slideIdx=0,baseCaption='',autoTimer=null,isPlaying=true;
+  function sizeAt(v){const cw=viewport.clientWidth,ch=viewport.clientHeight;if(!natW||!natH||!cw||!ch)return null;const f=Math.min(cw/natW,ch/natH),fl=cw/natW,s=f+(fl-f)*(v/100);return{w:natW*s,h:natH*s}}
+  function applySize(){const s=sizeAt(t);if(!s)return;img.style.width=s.w+'px';img.style.height=s.h+'px';img.classList.toggle('zoomed',t>0);cap.classList.toggle('hide',t>30);pctLabel.textContent=Math.round(t)+'%'}
+  function setZoom(n,anim){t=Math.min(100,Math.max(0,n));slider.value=t;if(!anim)img.classList.add('no-transition');viewport.scrollTop=0;applySize();if(!anim)requestAnimationFrame(()=>img.classList.remove('no-transition'))}
+  const EXTS=['jpg','jpeg','png'];
+  function strip(p){const m=p.match(/^(.*)\.(jpg|jpeg|png)$/i);return m?m[1]:p}
+  function loadImage(src){
+    natW=0;natH=0;t=0;img.classList.add('no-transition');img.classList.remove('zoomed');slider.value=0;pctLabel.textContent='0%';viewport.scrollTop=0;
+    const base=strip(src);let ei=0;
+    img.onerror=function(){ei++;if(ei<EXTS.length)img.src=base+'.'+EXTS[ei];else img.onerror=null};
+    img.onload=function(){natW=img.naturalWidth;natH=img.naturalHeight;applySize();requestAnimationFrame(()=>img.classList.remove('no-transition'))};
+    img.src=base+'.'+EXTS[0];
+  }
+  function renderDots(){dotsWrap.innerHTML='';slides.forEach((_,i)=>{const d=document.createElement('button');d.className='lightbox-dot'+(i===slideIdx?' active':'');d.setAttribute('aria-label','Slide '+(i+1));d.onclick=e=>{e.stopPropagation();goTo(i,true)};dotsWrap.appendChild(d)})}
+  function updateUI(){const m=slides.length>1;prevBtn.classList.toggle('hide',!m);nextBtn.classList.toggle('hide',!m);slidebar.classList.toggle('hide',!m);if(m){counterEl.textContent=(slideIdx+1)+' / '+slides.length;renderDots();playBtn.innerHTML=isPlaying?'&#10073;&#10073;':'&#9654;'}cap.textContent=baseCaption;cap.classList.remove('hide')}
+  function goTo(i,user){slideIdx=(i+slides.length)%slides.length;loadImage(slides[slideIdx]);updateUI();if(user)pause()}
+  window.nextSlide=()=>goTo(slideIdx+1,true);
+  window.prevSlide=()=>goTo(slideIdx-1,true);
+  function start(){stop();if(slides.length<=1)return;autoTimer=setInterval(()=>{slideIdx=(slideIdx+1)%slides.length;loadImage(slides[slideIdx]);updateUI()},AUTO_MS)}
+  function stop(){if(autoTimer){clearInterval(autoTimer);autoTimer=null}}
+  function pause(){isPlaying=false;stop();updateUI()}
+  function resume(){isPlaying=true;start();updateUI()}
+  playBtn.addEventListener('click',e=>{e.stopPropagation();isPlaying?pause():resume()});
+  window.openLightbox=function(src,caption){slides=Array.isArray(src)?src:[src];slideIdx=0;baseCaption=caption||'';isPlaying=true;loadImage(slides[0]);updateUI();lb.classList.add('open');document.body.style.overflow='hidden';if(slides.length>1)start()};
+  window.closeLightbox=function(){stop();lb.classList.remove('open');img.classList.add('no-transition');img.classList.remove('zoomed');t=0;img.src='';slides=[];document.body.style.overflow=''};
+  img.addEventListener('click',e=>{e.stopPropagation();setZoom(t>0?0:100,true)});
+  slider.addEventListener('input',()=>{img.classList.add('no-transition');t=Number(slider.value);applySize()});
+  slider.addEventListener('change',()=>requestAnimationFrame(()=>img.classList.remove('no-transition')));
+  addEventListener('resize',()=>{if(lb.classList.contains('open')&&natW)applySize()});
+})();
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){if(window.closeLightbox)closeLightbox();if(window.closeVideoModal)closeVideoModal()}
+  const lb=document.getElementById('lightbox');
+  if(lb&&lb.classList.contains('open')){if(e.key==='ArrowRight')nextSlide();if(e.key==='ArrowLeft')prevSlide()}
+});
+</script>
+</body>
+</html>
